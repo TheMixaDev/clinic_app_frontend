@@ -1,6 +1,6 @@
 <template>
   <button @click="showSelect = !showSelect" class="placeholder">
-    {{ !showSelect ? 'Выбрать' : 'Выберите' }}
+    {{ !showSelect ? (selected.length > 0 ? selected.length+' элементов' : 'Выбрать') : 'Выберите' }}
   </button>
   <template v-if="showSelect">
     <input class="search animate__animated animate__fadeInDownBig" type="text" placeholder="Поиск" v-model="search">
