@@ -5,14 +5,14 @@
     <div class="container form">
       <div class="mb-3">
         <label for="exampleInputEmail" class="form-label">Адрес электронной почты</label>
-        <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp">
+        <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" v-model="login">
       </div>
       <div class="mb-3">
         <label for="exampleInputPassword1" class="form-label">Пароль</label>
-        <input type="password" class="form-control" id="exampleInputPassword1">
+        <input type="password" class="form-control" id="exampleInputPassword1" v-model="password">
       </div>
-<!--      <button type="submit" class="btn btn-primary">Войти</button>-->
-      <router-link class="btn btn-primary" to="/appointments">Войти</router-link>
+      <button type="submit" class="btn btn-primary" @click="auth">Войти</button>
+      <!--<router-link class="btn btn-primary" to="/appointments">Войти</router-link>-->
     </div>
   </div>
 </template>
@@ -48,9 +48,52 @@
 </style>
 
 <script>
+import axios from "axios";
+import {settings} from "@/utils/settings";
+import router from "@/router/index";
 export default {
+  data() {
+    return {
+      login: "",
+      password: ""
+    };
+  },
   name: 'LogInForm',
   components: {
+  },
+  methods: {
+    checkCookies() {
+      if(settings.designMode)
+        return;
+      // TODO Check cookies for already logged in user
+      if(this.$cookies.get("token") != null) {
+        router.push({ name: "appointments" }); // TODO: OR ADMIN PANEL DEPENDING ON ROLE, SENDING GET MODEL REQUEST
+      }
+    },
+    auth() {
+      if(settings.designMode)
+        return router.push({ name: "appointments" });
+      let data = {
+        "login": this.login,
+        "password": this.password
+      }
+      axios.post(`${settings.serverUrl}/user/login`, data).then(response => {
+        if(response.status == 200) {
+          this.$cookies.set("token",response.data.body,"1y");
+          router.push({ name: "appointments" }); // TODO: OR ADMIN PANEL DEPENDING ON ROLE
+        }
+      }).catch(error => {
+        // TODO: ERROR POPUPS
+        if(error.code == "ERR_NETWORK") {
+          alert("Не удалось подключиться к серверу");
+          return;
+        }
+        alert("Неверный логин или пароль");
+      });
+    }
+  },
+  beforeMount() {
+    this.checkCookies()
   }
 }
 </script>

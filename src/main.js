@@ -4,6 +4,7 @@ import App from './App.vue'
 import router from './router'
 
 import Datepicker from '@vuepic/vue-datepicker';
+import VueCookies from 'vue-cookies';
 import '@vuepic/vue-datepicker/dist/main.css'
 
 import { QuillEditor } from '@vueup/vue-quill'
@@ -12,4 +13,10 @@ import '@vueup/vue-quill/dist/vue-quill.bubble.css'
 
 import Multiselect from 'vue-multiselect'
 
-createApp(App).component('multiselect', Multiselect).component('Datepicker', Datepicker).component('QuillEditor', QuillEditor).use(router).mount('#app')
+createApp(App)
+    .component('multiselect', Multiselect)
+    .component('Datepicker', Datepicker)
+    .component('QuillEditor', QuillEditor)
+    .use(router)
+    .use(VueCookies)
+    .mount('#app')
