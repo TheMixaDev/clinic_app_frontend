@@ -1,4 +1,5 @@
 <template>
+  <div id="notification"></div>
   <div class="container-fluid">
     <img class="logo" src="../assets/logo.svg"/>
     <h1>Система управления</h1>
@@ -12,7 +13,6 @@
         <input type="password" class="form-control" id="exampleInputPassword1" v-model="password">
       </div>
       <button type="submit" class="btn btn-primary" @click="auth">Войти</button>
-      <!--<router-link class="btn btn-primary" to="/appointments">Войти</router-link>-->
     </div>
   </div>
 </template>
@@ -50,6 +50,7 @@
 <script>
 import axios from "axios";
 import {settings} from "@/utils/settings";
+import {methods} from "@/utils/methods";
 import router from "@/router/index";
 export default {
   data() {
@@ -59,8 +60,7 @@ export default {
     };
   },
   name: 'LogInForm',
-  components: {
-  },
+  components: {},
   methods: {
     checkCookies() {
       if(settings.designMode)
@@ -78,17 +78,16 @@ export default {
         "password": this.password
       }
       axios.post(`${settings.serverUrl}/user/login`, data).then(response => {
-        if(response.status == 200) {
+        if(response.status === 200) {
           this.$cookies.set("token",response.data.body,"1y");
           router.push({ name: "appointments" }); // TODO: OR ADMIN PANEL DEPENDING ON ROLE
         }
       }).catch(error => {
-        // TODO: ERROR POPUPS
-        if(error.code == "ERR_NETWORK") {
-          alert("Не удалось подключиться к серверу");
+        if(error.code === "ERR_NETWORK") {
+          methods.runNotification("Не удалось подключиться к серверу");
           return;
         }
-        alert("Неверный логин или пароль");
+        methods.runNotification("Неверный логин или пароль");
       });
     }
   },

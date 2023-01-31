@@ -2,16 +2,35 @@
   <div class="container-fluid notification-body">
     <div class="container notification-box animation__animate animate__slideInDown">
       <div class="progress">
-        <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+        <div class="progress-bar" role="progressbar" aria-valuenow="{{ value }}" aria-valuemin="0" aria-valuemax="100"></div>
       </div>
-      <h5 class="notification-heading">Удаление завершено</h5>
+      <h5 class="notification-heading">{{ text }}</h5>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "NotificationProgress"
+  data() {
+    return {
+      value: 100
+    }
+  },
+  name: "NotificationProgress",
+  props: ['text'],
+  methods: {
+    run() {
+      this.value--;
+      if(this.value == 0) {
+        this.$.appContext.app.unmount();
+      } else {
+        setTimeout(this.run, 20);
+      }
+    }
+  },
+  mounted() {
+    this.run()
+  }
 }
 </script>
 
