@@ -26,7 +26,7 @@
     <div className="container main-part">
       <table className="table align-middle mb-0 table-hover table-striped table-bordered bg-white">
         <thead className="bg-light">
-        <tr>
+        <tr class="table-first-row">
           <th>Фамилия</th>
           <th>Имя</th>
           <th>Отчество</th>
@@ -185,7 +185,14 @@ td {
 
 tr {
 }
-
+.table-first-row {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+.btn:disabled {
+  opacity: 0.3!important;
+}
 .ms-3 {
   margin-left: 0 !important;
 }

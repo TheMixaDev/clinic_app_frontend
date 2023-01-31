@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid appointments">
       <div class="row header">
         <div class="col">
         <h1 class="heading">Приёмы</h1>
@@ -11,7 +11,7 @@
               <i class="fas fa-search"></i>
             </button>
             <div class="form-outline">
-              <input type="search" id="form1" class="form-control" />
+              <input type="search" id="form1" class="form-control form-search" />
               <label class="form-label" for="form1">Поиск</label>
             </div>
           </div>
@@ -24,7 +24,7 @@
       <div class="container main-part">
         <table class="table align-middle mb-0 table-hover table-striped table-bordered bg-white">
           <thead class="bg-light">
-          <tr>
+          <tr class="table-first-row">
             <th>Имя</th>
             <th>Фамилия</th>
             <th>Отчество</th>
@@ -625,12 +625,18 @@
   </div>
 </template>
 <style>
+.form-search {
+  border-radius: 0px 9px 9px 0px!important;
+}
 .container-fluid {
   background: #FAFAFA;
   width: 90vw;
   height: 50vw;
   border-radius: 25px;
   box-shadow: 0px 16px 47px 16px rgb(61 61 61 / 10%);
+}
+.container-fluid.appointments {
+  overflow-y: hidden;
 }
 .header {
  padding-left: 3rem;
@@ -639,6 +645,13 @@
   display: flex;
   align-items: center;
  }
+.table-first-row {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
 .heading {
   text-align: left;
 }
@@ -705,7 +718,7 @@ th:last-child {
   height: 100%;
   max-height: 60vh;
   width: 100vw;
-  overflow-y: scroll;
+  overflow-y: scroll!important;
 }
 thead {
   position: sticky;
@@ -733,6 +746,9 @@ thead {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+.btn:disabled {
+  opacity: 0.3!important;
 }
 .first-add {
   width: 15vw;

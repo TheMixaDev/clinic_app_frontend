@@ -61,6 +61,9 @@ thead {
   background: linear-gradient(94.83deg, #00A3FF 1.33%, #00C2FF 100%);
   border-radius: 10px 10px 0px 0px;
 }
+.btn:disabled {
+  opacity: 0.3!important;
+}
 
 th {
   text-align: left;

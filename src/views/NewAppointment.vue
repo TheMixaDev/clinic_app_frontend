@@ -1,4 +1,6 @@
 <template>
+
+
   <div class="container-fluid">
     <div class="row header">
       <div class="col">
@@ -100,7 +102,7 @@
         <h4>Анализы</h4>
         <table class="table align-middle mb-0 table-hover table-striped table-bordered bg-white">
         <thead class="bg-light">
-        <tr>
+        <tr class="table-first-row">
           <th></th>
           <th>2018</th>
           <th>07.03.22(I)</th>
@@ -526,7 +528,7 @@
         </div>
         <table class="table align-middle mb-0 table-hover table-striped table-bordered bg-white">
           <thead class="bg-light">
-          <tr>
+          <tr class="table-first-row">
             <th></th>
             <th>2018</th>
             <th>07.03.22(I)</th>
@@ -914,7 +916,7 @@
         </div>
         <table class="table align-middle mb-0 table-hover table-striped table-bordered bg-white">
           <thead class="bg-light">
-          <tr>
+          <tr class="table-first-row">
             <th></th>
             <th>2018</th>
             <th>07.03.22(I)</th>
@@ -1157,7 +1159,7 @@
         <h4>Посевы</h4>
         <table class="table align-middle mb-0 table-hover table-striped table-bordered bg-white">
           <thead class="bg-light">
-          <tr>
+          <tr class="table-first-row">
             <th>Дата анализа</th>
             <th>Локализация посева</th>
             <th>Микрофлора</th>
@@ -1903,6 +1905,11 @@ P.V.: шейка матки: конич, цилиндр формы, наружн
   </div>
 </template>
 <style>
+.table-first-row {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
 .checkbox-col {
   display: flex;
   flex-direction: column;
@@ -2075,6 +2082,9 @@ h6 {
   height: auto;
   border-radius: 0;
   box-shadow: none;
+}
+.btn:disabled {
+  opacity: 0.3!important;
 }
 .container-fluid.main-items {
   overflow-y: auto;
@@ -2306,7 +2316,7 @@ thead {
 }
 .col-buttons {
   display: flex;
-  flex-direction: row;
+  flex-direction: row!important;
   padding-left: 1rem;
   gap: 1rem;
 }
@@ -2320,6 +2330,13 @@ thead {
 }
 .anamnesis-text {
   height: 20rem;
+  border-left: 1px solid rgba(0, 117, 255, 0.3)!important;
+  border-radius: 9px!important;
+}
+.recomendations-text {
+  height: 20rem;
+  border-left: 1px solid rgba(0, 117, 255, 0.3)!important;
+  border-radius: 9px!important;
 }
 .second-add {
   background: linear-gradient(94.83deg, #00A3FF 1.33%, #00C2FF 100%);
@@ -2352,7 +2369,6 @@ edit:hover {
 }
 .delete {
   background: linear-gradient(92.84deg, #EF5DA8 0.31%, #FF003D 152.41%);
-  background: linear-gradient(92.84deg, #EF5DA8 0.31%, #FF003D 152.41%);
   box-shadow: 0 4px 9px -4px #FF003D;
   border-radius: 9px;
   padding-left: 2rem;
@@ -2369,7 +2385,7 @@ edit:hover {
 input.form-control {
   background: #F5F9FF!important;
   border: 1px solid rgba(0, 163, 255, 0.3)!important;
-  border-radius: 9px!important;
+  border-radius: 9px;
 }
 select {
   background: #F5F9FF!important;

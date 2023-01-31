@@ -23,7 +23,7 @@
     <div className="container main-part">
       <table className="table align-middle mb-0 table-hover table-striped table-bordered bg-white">
         <thead className="bg-light">
-        <tr>
+        <tr class="table-first-row">
           <th>Фамилия</th>
           <th>Имя</th>
           <th>Отчество</th>
@@ -154,6 +154,11 @@
 
 .heading {
   text-align: left;
+}
+.table-first-row {
+  border-top: none;
+  border-left: none;
+  border-right: none;
 }
 
 thead {
