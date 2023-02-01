@@ -1,8 +1,7 @@
 <template>
-  <div className="container-fluid">
+  <div className="container-fluid new-patient animate__animated animate__fadeIn">
     <div className="row header">
       <div className="col">
-
         <h1 className="heading"><router-link className="btn back btn-primary second-add" to="/patients-directory"><i class="fa-solid fa-arrow-left"></i>
         </router-link>Новый пациент</h1>
       </div>
@@ -34,6 +33,9 @@
   border-radius: 9px!important;
   color: #7e7e7e;
   width: 30vw;
+}
+.main-part {
+  overflow-y: hidden!important;
 }
 .container-fluid {
   background: #FAFAFA;

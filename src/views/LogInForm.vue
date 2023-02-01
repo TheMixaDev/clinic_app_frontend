@@ -1,6 +1,6 @@
 <template>
   <div id="notification"></div>
-  <div class="container-fluid login-box">
+  <div class="container-fluid login-box animate__animated animate__fadeIn">
     <img class="logo" src="../assets/logo.svg"/>
     <h1>Система управления</h1>
     <div class="container form">

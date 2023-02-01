@@ -1,7 +1,7 @@
 <template>
   <div id="notification"></div>
   <div id="modal"></div>
-  <div class="container-fluid appointments">
+  <div class="container-fluid appointments animate__animated animate__fadeIn">
       <div class="row header">
         <div class="col">
         <h1 class="heading">Приёмы</h1>
@@ -173,14 +173,24 @@ tr {}
 .sort-button {
   background: transparent;
   box-shadow: none;
-  padding-left: 0.5rem;
-  padding-top: 0;
-  padding-bottom: 0;
+  padding-left: 0;
+  width: 1rem;
+  margin-left: 0.5rem;
+}
+.sort-button:hover {
+  background: transparent;
+  box-shadow: none!important;
+  padding-left: 0;
+  color: #323232;
+  width: 1rem;
+  margin-left: 0.5rem;
 }
 .date-icon {
   padding-right: 0.5rem;
 }
 .date {
+  display: flex;
+  align-items: center;
 }
 th:first-child {
   border-radius: 14px 0px 0px 0px;
@@ -226,7 +236,8 @@ thead {
   opacity: 0.3!important;
 }
 .first-add {
-  width: 15vw;
+  width: 20vw;
+  height: 2.4rem;
   background: linear-gradient(94.83deg, #00A3FF 1.33%, #00C2FF 100%);
   border: 1px solid rgba(0, 117, 255, 0.3);
   border-radius: 9px;
@@ -234,6 +245,8 @@ thead {
   padding-right: 2rem;
 }
 .second-add {
+  width: 20vw;
+  height: 2.4rem;
   background: linear-gradient(94.83deg, #00A3FF 1.33%, #00C2FF 100%);
   border: 1px solid rgba(0, 117, 255, 0.3);
   border-radius: 9px;
@@ -251,7 +264,6 @@ edit:hover {
   border: none!important;
 }
 .delete {
-  background: linear-gradient(92.84deg, #EF5DA8 0.31%, #FF003D 152.41%);
   background: linear-gradient(92.84deg, #EF5DA8 0.31%, #FF003D 152.41%);
   box-shadow: 0 4px 9px -4px #FF003D;
   border-radius: 9px;

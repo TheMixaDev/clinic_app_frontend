@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid animate__animated animate__fadeIn">
     <div class="row header">
       <div class="col">
         <h1 class="heading">
@@ -2090,6 +2090,7 @@ P.V.: шейка матки: конич, цилиндр формы, наружн
   padding-left: 0;
   padding-right: 0;
   box-shadow: none;
+  width: 2vw;
 }
 .back:hover {
   background: transparent!important;

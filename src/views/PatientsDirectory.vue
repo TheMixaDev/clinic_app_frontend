@@ -1,5 +1,5 @@
 <template>
-  <div className="container-fluid patients-container">
+  <div className="container-fluid patients-container animate__animated animate__fadeIn">
     <div className="row header">
       <div className="col">
 

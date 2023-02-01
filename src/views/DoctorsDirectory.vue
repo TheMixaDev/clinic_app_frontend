@@ -1,5 +1,5 @@
 <template>
-  <div className="container-fluid doctors-container">
+  <div className="container-fluid doctors-container animate__animated animate__fadeIn">
     <div className="row header">
       <div className="col">
         <h1 className="heading">
@@ -8,7 +8,7 @@
           </router-link>
           Справочник врачей
         </h1>
-      </div>patients
+      </div>
       <div className="col">
         <div className="container table-container">
           <div className="input-group">
@@ -30,7 +30,10 @@
           <th>Фамилия</th>
           <th>Имя</th>
           <th>Отчество</th>
-          <th>Дата рождения</th>
+          <th>Должность</th>
+          <th>Звание</th>
+          <th>Логин</th>
+          <th>Пароль</th>
         </tr>
         </thead>
         <tbody>
@@ -59,7 +62,28 @@
           <td>
             <div className="d-flex align-items-center">
               <div className="ms-3">
-                <p className="fw-bold mb-1">13.02.2023</p>
+                <p className="fw-bold mb-1">Врач-стоматолог</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div className="d-flex align-items-center">
+              <div className="ms-3">
+                <p className="fw-bold mb-1">Генерал-майор</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div className="d-flex align-items-center">
+              <div className="ms-3">
+                <p className="fw-bold mb-1">login</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div className="d-flex align-items-center">
+              <div className="ms-3">
+                <button class="btn btn-primary password"><i class="fa-solid fa-key"></i> Пароль</button>
               </div>
             </div>
           </td>
@@ -89,7 +113,28 @@
           <td>
             <div className="d-flex align-items-center">
               <div className="ms-3">
-                <p className="fw-bold mb-1">13.02.2023</p>
+                <p className="fw-bold mb-1">Врач-стоматолог</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div className="d-flex align-items-center">
+              <div className="ms-3">
+                <p className="fw-bold mb-1">Генерал-майор</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div className="d-flex align-items-center">
+              <div className="ms-3">
+                <p className="fw-bold mb-1">login</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div className="d-flex align-items-center">
+              <div className="ms-3">
+                <button class="btn btn-primary password"><i class="fa-solid fa-key"></i> Пароль</button>
               </div>
             </div>
           </td>
@@ -119,7 +164,28 @@
           <td>
             <div className="d-flex align-items-center">
               <div className="ms-3">
-                <p className="fw-bold mb-1">13.02.2023</p>
+                <p className="fw-bold mb-1">Врач-стоматолог</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div className="d-flex align-items-center">
+              <div className="ms-3">
+                <p className="fw-bold mb-1">Генерал-майор</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div className="d-flex align-items-center">
+              <div className="ms-3">
+                <p className="fw-bold mb-1">login</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div className="d-flex align-items-center">
+              <div className="ms-3">
+                <button class="btn btn-primary password"><i class="fa-solid fa-key"></i> Пароль</button>
               </div>
             </div>
           </td>
@@ -139,6 +205,20 @@
   </div>
 </template>
 <style>
+.password {
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  color: #323232;
+  padding: 0;
+}
+.password:hover {
+  background: transparent;
+  box-shadow: none!important;
+  border: none;
+  color: #4d4d4d;
+  padding: 0;
+}
 .container-fluid.doctors-container {
   overflow-y: hidden;
 }
@@ -212,6 +292,7 @@ tr {
   border: none !important;
   font-size: 1rem;
   box-shadow: none;
+  width: 2vw;
 }
 
 .back:hover {
