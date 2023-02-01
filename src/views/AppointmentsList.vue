@@ -38,7 +38,7 @@
           </tr>
           </thead>
           <tbody v-for="appointment in appointments" :key="appointment.id">
-            <tr @click="selectAppointment(appointment)" :style="appointment.highlight ? `background-color: #00C2FF` : ``">
+            <tr @click="selectAppointment(appointment)" :style="appointment.highlight ? `background-color: #cceffd` : ``">
               <td>
                 <div class="d-flex align-items-center">
                   <div class="ms-3">

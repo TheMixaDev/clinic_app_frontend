@@ -1,6 +1,6 @@
 <template>
   <div id="notification"></div>
-  <div class="container-fluid">
+  <div class="container-fluid login-box">
     <img class="logo" src="../assets/logo.svg"/>
     <h1>Система управления</h1>
     <div class="container form">
@@ -18,6 +18,9 @@
 </template>
 
 <style scoped>
+.container-fluid.login-box {
+  overflow-y: hidden;
+}
 .container-fluid {
   background: #FAFAFA;
   width: 40vw;
