@@ -2,7 +2,7 @@
   <div class="container-fluid notification-body">
     <div class="container notification-box animation__animate animate__slideInDown">
       <div class="progress">
-        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" :style="`width: ${value}%`"></div>
       </div>
       <h5 class="notification-heading">{{ text }}</h5>
     </div>
@@ -20,11 +20,11 @@ export default {
   props: ['text'],
   methods: {
     run() {
-      this.value--;
-      if(this.value == 0) {
-        this.$.appContext.app.unmount();
+      this.value -= 5;
+      if(this.value <= 0) {
+        setTimeout(this.$.appContext.app.unmount,400);
       } else {
-        // setTimeout(this.run, 99999);
+        setTimeout(this.run, 100);
       }
     }
   },
@@ -43,7 +43,7 @@ export default {
   border-radius: 10px;
 }
 .progress-bar {
-  width: 10%;
+  width: 0;
   border-radius: 10px;
 }
 .container.notification-box {
