@@ -15,10 +15,23 @@ export const methods = {
     checkCookies(cookies, access) {
         if(settings.designMode)
             return;
-        if(cookies.get("token") != null) { // TODO Check cookies for already logged in user
-            if(access === constants.Role.UNAUTHORIZED) {
-                router.push({name: "appointments"}); // TODO: OR ADMIN PANEL DEPENDING ON ROLE, SENDING GET MODEL REQUEST
-            }
+        if(cookies.get("token") != null) {
+            this.authorizedGETRequest(cookies, "/user/current", response => {
+                console.log(response.data.body.role)
+                console.log(access)
+                if(response.data.body.role !== access) {
+                    if(response.data.body.role === constants.Role.DOCTOR)
+                        router.push({name: "appointments"});
+                    else if(response.data.body.role === constants.Role.ADMIN)
+                        router.push({name: "doctors-directory"});
+                }
+            }, error => {
+                console.log(error);
+                if(error.code === "ERR_NETWORK")
+                    this.runNotification("Не удалось подключиться к серверу");
+                if(access !== constants.Role.UNAUTHORIZED)
+                    router.push({ name: "login" })
+            });
         } else if(access !== constants.Role.UNAUTHORIZED) {
             router.push({ name: "login" })
         }

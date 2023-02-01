@@ -75,7 +75,7 @@ export default {
       }
       axios.post(`${settings.serverUrl}/user/login`, data).then(response => {
         if(response.status === 200) {
-          this.$cookies.set("token",response.data.body,"1y");
+          this.$cookies.set("token",response.data.body.token,"1y");
           router.push({ name: "appointments" }); // TODO: OR ADMIN PANEL DEPENDING ON ROLE
         }
       }).catch(error => {
