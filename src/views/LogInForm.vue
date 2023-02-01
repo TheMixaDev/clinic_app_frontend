@@ -4,7 +4,7 @@
     <h1>Система управления</h1>
     <div class="container form">
       <div class="mb-3">
-        <label for="exampleInputEmail" class="form-label">Адрес электронной почты</label>
+        <label for="exampleInputEmail" class="form-label">Логин</label>
         <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" v-model="login">
       </div>
       <div class="mb-3">
@@ -66,6 +66,8 @@ export default {
   components: {},
   methods: {
     auth() {
+      if(settings.designMode && this.login === "admin")
+        return router.push({ name: "doctors-directory" });
       if(settings.designMode)
         return router.push({ name: "appointments" });
       let data = {

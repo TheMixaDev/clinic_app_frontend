@@ -2107,11 +2107,11 @@ export default {
     },
     preload() {
       this.loadState();
-      if(settings.designMode)
-        return;
       for(let pid = 1; pid < 8; pid++) {
         this.$refs[`options${pid}`].updateSelected(this.state.detailed[`options${pid}`]);
       }
+      if(settings.designMode)
+        return;
       let meta = methods.getMeta();
       if(meta) {
         console.log(meta);

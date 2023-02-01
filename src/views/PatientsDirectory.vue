@@ -347,15 +347,13 @@ export default {
     loadData() {
       if(settings.designMode) {
         for(let i = 0; i < 13; i++)
-          this.doctors.push({
+          this.patients.push({
             id: i,
             surname: "Иванова",
             name: "Ивана",
             patronymic: "Ивановна",
-            birthday: "13.02.2023",
-            rank: "Пациент",
-
-            highlight: false
+            rank: 'Пациент',
+            birthdate: "24.04.2004"
           });
         return;
       }

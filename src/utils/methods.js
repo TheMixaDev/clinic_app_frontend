@@ -14,7 +14,7 @@ export const methods = {
     },
     checkCookies(cookies, access, callback) {
         if(settings.designMode)
-            return;
+            return callback ? callback() : null;
         if(cookies.get("token") != null) {
             this.authorizedGETRequest(cookies, "/user/current", response => {
                 localStorage.setItem("model", JSON.stringify(response.data.body))
