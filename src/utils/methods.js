@@ -49,6 +49,18 @@ export const methods = {
             headers: {'Authorization': `Bearer ${cookies.get("token")}`}
         }).then(success).catch(fail);
     },
+    authorizedDELRequest(cookies, route, success, fail) {
+        axios.delete(`${settings.serverUrl}${route}`,
+            {
+                headers: {'Authorization': `Bearer ${cookies.get("token")}`}
+            }).then(success).catch(fail);
+    },
+    authorizedPATCHRequest(cookies, route, data, success, fail) {
+        axios.patch(`${settings.serverUrl}${route}`, data,
+            {
+                headers: {'Authorization': `Bearer ${cookies.get("token")}`}
+            }).then(success).catch(fail);
+    },
     setMeta(data) {
         if(settings.alertMode)
             console.log("Wrote to meta: ", data);

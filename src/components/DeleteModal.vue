@@ -2,8 +2,8 @@
   <div class="container-fluid delete-modal-body animate__animated animate__fadeIn">
     <div class="container modal-box animate__animated animate__backInUp">
       <img src="../assets/delete.svg">
-      <h2 class="delete-heading">Удаление записи</h2>
-      <p class="delete-text">Подтвердите удаление записи <span class="delete-name">{{ appointment.surname + " " + appointment.name + " " + appointment.patronymic }}</span> на <span class="delete-date">{{ appointment.date }}</span></p>
+      <h2 class="delete-heading">Удаление {{ info.name }}</h2>
+      <p class="delete-text">Подтвердите удаление {{ info.name }} <span class="delete-name">{{ info.object.surname + " " + info.object.name + " " + info.object.patronymic }}</span> - <span class="delete-date">{{ info.object.date || info.object.rank }}</span></p>
       <a class="btn btn-primary delete" @click="proceed()"><i class="fa-solid fa-trash button-icon"></i>Удалить</a>
       <a class="btn btn-primary back-btn" @click="this.$.appContext.app.unmount();"><i class="fa-solid fa-arrow-left"></i> Вернуться к списку</a>
     </div>
@@ -15,12 +15,13 @@ import {settings} from "@/utils/settings";
 
 export default {
   name: "DeleteModal",
-  props: ['appointment'],
+  props: ['info', 'callback'],
   methods: {
     proceed() {
       if(settings.designMode)
         return;
-      // TODO delition
+      this.callback();
+      this.$.appContext.app.unmount();
     }
   }
 }

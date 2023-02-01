@@ -1,5 +1,4 @@
 <template>
-  <div id="notification"></div>
   <div class="container-fluid login-box animate__animated animate__fadeIn">
     <img class="logo" src="../assets/logo.svg"/>
     <h1>Система управления</h1>
@@ -10,7 +9,7 @@
       </div>
       <div class="mb-3">
         <label for="exampleInputPassword1" class="form-label">Пароль</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" v-model="password">
+        <input type="password" class="form-control" id="exampleInputPassword1" v-model="password" v-on:keyup.enter="auth()">
       </div>
       <button type="submit" class="btn btn-primary" @click="auth">Войти</button>
     </div>

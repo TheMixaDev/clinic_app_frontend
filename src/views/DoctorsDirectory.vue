@@ -1,5 +1,5 @@
 <template>
-  <div id="notification"></div>
+  <div id="modal"></div>
   <div className="container-fluid doctors-container animate__animated animate__fadeIn">
     <div className="row header">
       <div className="col">
@@ -10,11 +10,11 @@
       <div className="col">
         <div className="container table-container">
           <div className="input-group">
-            <button type="button" className="btn btn-primary search-button">
+            <button type="button" className="btn btn-primary search-button" @click="applyFiltersSearch()">
               <i className="fas fa-search"></i>
             </button>
             <div className="form-outline">
-              <input type="search" id="form1" className="form-control"/>
+              <input type="search" id="form1" className="form-control" ref="searchInput" v-on:keyup.enter="applyFiltersSearch()"/>
               <label className="form-label" htmlFor="form1">Поиск</label>
             </div>
           </div>
@@ -35,7 +35,7 @@
         </tr>
         </thead>
         <tbody v-for="doctor in doctors" :key="doctor.id">
-        <tr>
+        <tr @click="selectDoctor(doctor)" :style="doctor.highlight ? `background-color: #cceffd` : ``">
           <td>
             <div className="d-flex align-items-center">
               <div className="ms-3">
@@ -94,6 +94,8 @@
         <router-link className="btn btn-primary first-add" to="/new-doctor"><i
             className="fa-solid fa-plus button-icon"></i>Новый
         </router-link>
+        <button class="btn btn-primary edit" v-bind:disabled="this.selectedDoctor === -1" @click="editDoctor()"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>
+        <button class="btn btn-primary delete" v-bind:disabled="this.selectedDoctor === -1" @click="requestDelete()"><i class="fa-solid fa-trash button-icon"></i>Удалить</button>
         <!--router-link className="btn btn-primary second-add" to="/new-appointment">Выбрать
         </router-link-->
       </div>
@@ -326,24 +328,27 @@ edit:hover {
 import {methods} from "@/utils/methods";
 import {constants} from "@/utils/constants";
 import {settings} from "@/utils/settings";
+import {createApp} from "vue";
+import DeleteModal from "@/components/DeleteModal.vue";
+import router from "@/router";
 
 export default {
   name: 'DoctorsDirectory',
   data() {
     return {
-      doctors: []
+      doctors: [],
+      selectedDoctor: -1
     }
   },
   methods: {
     applyFiltersSearch() {
       if(settings.designMode)
         return;
-      // TODO Filters
       let filters = {
         filters: {
           role: 1,
           page: 1,
-          fullName: ""
+          fullName: this.$refs.searchInput.value
         }
       };
       methods.authorizedPOSTRequest(
@@ -388,7 +393,9 @@ export default {
             patronymic: "Ивановна",
             rank: "Врач",
             position: "Звание",
-            login: "login"
+            login: "login",
+
+            highlight: false
           });
         return;
       }
@@ -396,6 +403,50 @@ export default {
     },
     changePassword() {
       // TODO via modal
+    },
+    selectDoctor(data) {
+      if(this.selectedDoctor !== -1)
+        this.selectedDoctor.highlight = false;
+      if(this.selectedDoctor.id === data.id) {
+        data.highlight = false;
+        this.selectedDoctor = -1;
+        return;
+      }
+      data.highlight = true;
+      this.selectedDoctor = data;
+    },
+    deleteDoctor() {
+      methods.authorizedDELRequest(
+          this.$cookies,
+          `/user/${this.selectedDoctor.id}`,
+          () => {
+            methods.runNotification("Пользователь удален");
+            this.applyFiltersSearch();
+          },
+          error => {
+            if(error.code === "ERR_NETWORK") {
+              methods.runNotification("Не удалось подключиться к серверу");
+              return;
+            }
+            methods.runNotification("Нельзя удалить пользователя, к которому привязаны приемы");
+            console.log(error);
+          }
+      )
+    },
+    requestDelete() {
+      const div = document.getElementById("modal");
+      const app = createApp(DeleteModal, {
+        info: {
+          name: 'пользователя',
+          object: this.selectedDoctor,
+        },
+        callback: this.deleteDoctor
+      });
+      app.mount(div);
+    },
+    editDoctor() {
+      methods.setMeta(this.selectedDoctor);
+      router.push({name: 'new-doctor'});
     }
   },
   beforeMount() {

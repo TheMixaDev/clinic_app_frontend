@@ -1,27 +1,26 @@
 <template>
-  <div id="notification"></div>
   <div className="container-fluid animate__animated animate__fadeIn">
     <div className="row header">
       <div className="col">
         <h1 className="heading"><router-link className="btn back btn-primary second-add" to="/doctors-directory"><i class="fa-solid fa-arrow-left"></i>
-        </router-link>Новый врач</h1>
+        </router-link>{{edit.enabled ? `Редактирование врача` : `Новый врач`}}</h1>
       </div>
     </div>
     <div class="container main-part">
       <h6>Фамилия</h6>
-      <input class="input-outline" type="text" ref="surname">
+      <input class="input-outline" type="text" ref="surname" v-model="edit.doctor.surname">
       <h6>Имя</h6>
-      <input class="input-outline" type="text" ref="name">
+      <input class="input-outline" type="text" ref="name" v-model="edit.doctor.name">
       <h6>Отчество</h6>
-      <input class="input-outline" type="text" ref="patronymic">
+      <input class="input-outline" type="text" ref="patronymic" v-model="edit.doctor.lastname">
       <h6>Должность</h6>
-      <input class="input-outline" type="text" ref="position">
+      <input class="input-outline" type="text" ref="position" v-model="edit.doctor.position">
       <!--router-link className="btn btn-primary first-add" to="/doctors-directory">Сбросить пароль
       </router-link-->
       <h6>Логин</h6>
-      <input class="input-outline" type="text" ref="login">
+      <input class="input-outline" type="text" ref="login" v-model="edit.doctor.login">
       <h6>Пароль</h6>
-      <input class="input-outline" type="text" ref="password">
+      <input class="input-outline" type="text" ref="password" v-bind:disabled="edit.enabled" v-model="edit.doctor.password">
     </div>
     <div className="container buttons-container">
       <div className="col row-buttons">
@@ -248,27 +247,47 @@ import {settings} from "@/utils/settings";
 
 
 export default {
+  data() {
+    return {
+      edit: {
+        enabled: false,
+        doctor: {
+          role: 1,
+          surname: '',
+          name: '',
+          lastname: '',
+          position: '',
+          rank: "Доктор",
+          login: '',
+          password: ''
+        }
+      }
+    }
+  },
   name: 'NewDoctor',
   methods: {
+    preload() {
+      let meta = methods.getMeta();
+      if(meta) {
+        this.edit.enabled = true;
+        this.edit.doctor = meta;
+        this.edit.doctor.role = 1;
+        this.edit.doctor.password = "Редактируется на главной странице";
+        this.edit.doctor.lastname = this.edit.doctor.patronymic;
+      }
+    },
     createDoctor() {
       if(settings.designMode)
-        return router.go(-1)
+        return router.go(-1);
+      if(this.edit.enabled)
+        return this.editDoctor();
       methods.authorizedPOSTRequest(
           this.$cookies,
           `/user`,
-          {
-            role: 1,
-            surname: this.$refs.surname.value,
-            name: this.$refs.name.value,
-            lastname: this.$refs.patronymic.value,
-            position: this.$refs.position.value,
-            rank: "Доктор",
-            login: this.$refs.login.value,
-            password: this.$refs.password.value
-          },
+          this.edit.doctor,
           () => {
-            methods.runNotification("Доктор создан");
             router.go(-1);
+            methods.runNotification("Пользователь создан");
           },
           error => {
             if(error.code === "ERR_NETWORK") {
@@ -278,10 +297,33 @@ export default {
             methods.runNotification("Не все поля корректно заполнены");
           }
       );
+    },
+    editDoctor() {
+      delete this.edit.doctor.password;
+      methods.authorizedPATCHRequest(
+          this.$cookies,
+          `/user`,
+          this.edit.doctor,
+          () => {
+            methods.runNotification("Данные сохранены");
+            router.go(-1);
+          },
+          error => {
+            this.edit.doctor.password = "Редактируется на главной странице";
+            if(error.code === "ERR_NETWORK") {
+              methods.runNotification("Не удалось подключиться к серверу");
+              return;
+            }
+            methods.runNotification("Не все поля корректно заполнены");
+          }
+      )
     }
   },
   beforeMount() {
-    methods.checkCookies(this.$cookies, constants.Role.ADMIN);
+    methods.checkCookies(this.$cookies, constants.Role.ADMIN)
+  },
+  mounted() {
+    this.preload()
   }
 }
 </script>

@@ -1,5 +1,4 @@
 <template>
-  <div id="notification"></div>
   <div id="modal"></div>
   <div class="container-fluid appointments animate__animated animate__fadeIn">
       <div class="row header">
@@ -9,11 +8,11 @@
         <div class="col">
         <div class="container table-container">
           <div class="input-group">
-            <button type="button" class="btn btn-primary search-button">
+            <button type="button" class="btn btn-primary search-button" @click="applyFiltersSearch()">
               <i class="fas fa-search"></i>
             </button>
             <div class="form-outline">
-              <input type="search" id="form1" class="form-control form-search" />
+              <input type="search" id="form1" class="form-control form-search" ref="searchInput" v-on:keyup.enter="applyFiltersSearch()"/>
               <label class="form-label" for="form1">Поиск</label>
             </div>
           </div>
@@ -32,7 +31,7 @@
             <th>Отчество</th>
             <th>Дата рождения</th>
             <th>Врач</th>
-            <th class="date"><i class="fa-regular fa-calendar-days date-icon"></i> Дата приёма <button type="button" class="btn btn-primary sort-button" @click="sortDesc = !sortDesc">
+            <th class="date"><i class="fa-regular fa-calendar-days date-icon"></i> Дата приёма <button type="button" class="btn btn-primary sort-button" @click="sortDesc = !sortDesc; applyFiltersSearch()">
               <i class="fa-solid" :class="sortDesc ? 'fa-arrow-up-wide-short' : 'fa-arrow-down-wide-short'"></i>
             </button> </th>
           </tr>
@@ -304,12 +303,11 @@ export default {
     applyFiltersSearch() {
       if(settings.designMode)
         return;
-      // TODO Filters
       let filters = {
         filters: {
-          sortDate: "ASC",
+          sortDate: this.sortDesc ? "DESC" : "ASC",
           page: 1,
-          patientFullname: ""
+          patientFullname: this.$refs.searchInput.value
         }
       };
       methods.authorizedPOSTRequest(
@@ -329,7 +327,9 @@ export default {
                   patronymic: appointment.patient.lastname,
                   birthdate: appointment.patient.birthday,
                   doctor: appointment.doctor.surname + " " + appointment.doctor.name.substring(0,1) + "." + appointment.doctor.lastname.substring(0,1)+".",
-                  date: appointment.patient.birthday
+                  date: appointment.patient.birthday,
+
+                  highlight: false
                 });
               }
             }
@@ -375,7 +375,12 @@ export default {
     },
     requestDelete() {
       const div = document.getElementById("modal");
-      const app = createApp(DeleteModal, {appointment: this.selectedAppointment});
+      const app = createApp(DeleteModal, {
+        info: {
+          name: 'записи',
+          object: this.selectedAppointment
+        }
+      });
       app.mount(div);
     },
     repeatAppointment() {
