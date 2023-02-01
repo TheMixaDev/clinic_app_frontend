@@ -1,17 +1,19 @@
 <template>
-
-
   <div class="container-fluid">
     <div class="row header">
       <div class="col">
-        <h1 class="heading">Создание приёма</h1>
+        <h1 class="heading">
+          <router-link className="btn back btn-primary second-add" to="/appointments"><i
+              className="fa-solid fa-arrow-left"></i>
+          </router-link>
+          Создание приёма</h1>
       </div>
     </div>
     <div class="container-fluid main-items">
       <div class="row main-info">
         <div class="col name-wrapper">
           <h6 class="patient-name">ФИО Пациента</h6>
-          <input type="text" id="name" class="form-control" placeholder="Выберите пациента из Справочника" @click="router().push({name: 'patients-directory'})">
+          <input type="text" id="name" class="form-control name-tag" placeholder="Выберите пациента из Справочника" @click="router().push({name: 'patients-directory'})" readonly>
         </div>
         <div class="col date-wrapper">
           <h6 class="patient-name">Дата рождения</h6>
@@ -1899,11 +1901,206 @@ P.V.: шейка матки: конич, цилиндр формы, наружн
 
         </div>
       </div>
+      <div class="container-fluid childbirth">
+        <h4>Роды</h4>
+        <table class="table align-middle mb-0 table-hover table-striped table-bordered bg-white">
+          <thead class="bg-light">
+          <tr class="table-first-row">
+            <th>Роды ч/з ЕРП</th>
+            <th>Характер КС</th>
+            <th>Вес плода</th>
+            <th>Апгар</th>
+            <th>Кровопотеря</th>
+            <th>Роды в срок</th>
+            <th>Осложнения послеродового периода</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1"></p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1"></p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1"></p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1"></p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1"></p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1"></p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1"></p>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1"></p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1"></p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1"></p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1"></p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1"></p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1"></p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1"></p>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1"></p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1"></p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1"></p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1"></p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1"></p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1"></p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1"></p>
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="row col-buttons">
+          <a class="btn btn-primary first-add" href="#"><i class="fa-solid fa-plus button-icon"></i>Добавить</a>
+          <a class="btn btn-primary edit" href="#"><i class="fa-solid fa-pen button-icon"></i>Редактировать</a>
+          <a class="btn btn-primary delete" href="#"><i class="fa-solid fa-trash button-icon"></i>Удалить</a>
+        </div>
+      </div>
     </div>
 
   </div>
 </template>
 <style>
+.btn.back {
+  background: transparent!important;
+  color: black;
+  border: none!important;
+  font-size: 1rem;
+  padding-left: 0;
+  padding-right: 0;
+  box-shadow: none;
+}
+.back:hover {
+  background: transparent!important;
+  color: black!important;
+  border: none!important;
+  font-size: 1rem!important;
+  box-shadow: none!important;
+}
+input.name-tag {
+  cursor: pointer;
+}
 .table-first-row {
   border-top: none;
   border-left: none;
@@ -1940,6 +2137,20 @@ h6 {
   margin: 0;
 }
 .container-fluid.diagnosis {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-bottom: 2rem;
+  text-align: left;
+  margin-top: 2rem;
+  background: transparent;
+  width: 100%;
+  height: auto;
+  border-radius: 0;
+  box-shadow: none;
+}
+.container-fluid.childbirth {
   overflow-y: auto;
   display: flex;
   flex-direction: column;

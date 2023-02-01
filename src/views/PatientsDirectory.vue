@@ -1,5 +1,5 @@
 <template>
-  <div className="container-fluid">
+  <div className="container-fluid patients-container">
     <div className="row header">
       <div className="col">
 
@@ -136,6 +136,9 @@
   </div>
 </template>
 <style>
+.container-fluid.patients-container {
+  overflow-y: hidden;
+}
 .container-fluid {
   background: #FAFAFA;
   width: 90vw;

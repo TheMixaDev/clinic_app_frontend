@@ -1,5 +1,5 @@
 <template>
-  <div className="container-fluid">
+  <div className="container-fluid doctors-container">
     <div className="row header">
       <div className="col">
         <h1 className="heading">
@@ -8,7 +8,7 @@
           </router-link>
           Справочник врачей
         </h1>
-      </div>
+      </div>patients
       <div className="col">
         <div className="container table-container">
           <div className="input-group">
@@ -139,6 +139,9 @@
   </div>
 </template>
 <style>
+.container-fluid.doctors-container {
+  overflow-y: hidden;
+}
 .container-fluid {
   background: #FAFAFA;
   width: 90vw;
