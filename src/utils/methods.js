@@ -17,8 +17,7 @@ export const methods = {
             return;
         if(cookies.get("token") != null) {
             this.authorizedGETRequest(cookies, "/user/current", response => {
-                console.log(response.data.body.role)
-                console.log(access)
+                localStorage.setItem("model", JSON.stringify(response.data.body))
                 if(response.data.body.role !== access) {
                     if(response.data.body.role === constants.Role.DOCTOR)
                         router.push({name: "appointments"});
@@ -37,12 +36,14 @@ export const methods = {
         }
     },
     authorizedGETRequest(cookies, route, success, fail) {
-        axios.request({
-            method: 'get',
-            url: `${settings.serverUrl}${route}`,
-            headers: {
-                'Authorization': `Bearer ${cookies.get("token")}`
-            }
+        axios.get(`${settings.serverUrl}${route}`, {
+            headers: {'Authorization': `Bearer ${cookies.get("token")}`}
+        }).then(success).catch(fail);
+    },
+    authorizedPOSTRequest(cookies, route, data, success, fail) {
+        axios.post(`${settings.serverUrl}${route}`, data,
+        {
+            headers: {'Authorization': `Bearer ${cookies.get("token")}`}
         }).then(success).catch(fail);
     }
 }

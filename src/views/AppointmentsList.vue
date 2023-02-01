@@ -288,7 +288,52 @@ export default {
     router() {
       return router
     },
+    applyFiltersSearch() {
+      if(settings.designMode)
+        return;
+      let filters = {
+        filters: {
+          sortDate: "ASC",
+          page: 1,
+          patientFullname: ""
+        }
+      };
+      methods.authorizedPOSTRequest(
+          this.$cookies,
+          `/appointment/all`,
+          filters,
+          response => {
+            if(response.status === 200) {
+              if(settings.alertMode)
+                methods.runNotification("Загружено "+response.data.body.length+" элементов");
+              for(let appointment of response.data.body) {
+                this.appointments.push({
+                  id: appointment.id,
+                  surname: appointment.patient.surname,
+                  name: appointment.patient.name,
+                  patronymic: appointment.patient.lastname,
+                  birthdate: appointment.patient.birthday,
+                  doctor: appointment.doctor.surname + " " + appointment.doctor.name.substring(0,1) + "." + appointment.doctor.lastname.substring(0,1),
+                  date: appointment.patient.birthday
+                });
+              }
+            }
+          },
+          error => {
+            if(error.code === "ERR_NETWORK") {
+              methods.runNotification("Не удалось подключиться к серверу");
+              return;
+            }
+            methods.runNotification("Не удалось получить данные");
+            console.log(error);
+          }
+      );
+    },
     loadData() {
+      if(localStorage.getItem("model")) {
+        let model = JSON.parse(localStorage.getItem("model"));
+        this.doctor.name = model.surname + " " + model.name + " " + model.lastname;
+      }
       if(settings.designMode) {
         for(let i = 0; i < 13; i++)
           this.appointments.push({
@@ -304,36 +349,7 @@ export default {
           });
         return;
       }
-      methods.authorizedGETRequest(
-        this.$cookies,
-        `/appointment`,
-        response => {
-          if(response.status === 200) {
-            if(settings.alertMode)
-              methods.runNotification("Загружено "+response.data.body.length+" элементов");
-            // TODO NORMAL LOAD APPOINTMENTS
-            for(let appointment of response.data.body) {
-              this.appointments.push({
-                id: appointment.id,
-                surname: appointment.patient_id,
-                name: appointment.is_first,
-                patronymic: appointment.doppler_id,
-                birthdate: appointment.diagnosis_id,
-                doctor: appointment.doctor_id,
-                date: appointment.files
-              });
-            }
-          }
-        },
-        error => {
-          if(error.code === "ERR_NETWORK") {
-            methods.runNotification("Не удалось подключиться к серверу");
-            return;
-          }
-          methods.runNotification("Не удалось получить данные");
-          console.log(error);
-        }
-      )
+      this.applyFiltersSearch();
     },
     selectAppointment(data) {
       if(this.selectedAppointment !== -1)
