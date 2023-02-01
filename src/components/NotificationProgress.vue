@@ -79,6 +79,7 @@ export default {
   overflow-y: hidden;
   position: absolute;
   background: transparent;
+  z-index: 999999;
 }
 
 </style>

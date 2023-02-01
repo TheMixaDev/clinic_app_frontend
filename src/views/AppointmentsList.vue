@@ -1,4 +1,6 @@
 <template>
+  <div id="notification"></div>
+  <div id="modal"></div>
   <div class="container-fluid appointments">
       <div class="row header">
         <div class="col">
@@ -18,15 +20,15 @@
         </div>
       </div>
         <div class="col">
-          <p class="doctor-name">Иванов Иван Иванович</p>
+          <p class="doctor-name">{{ doctor.name }}</p>
         </div>
       </div>
       <div class="container main-part">
         <table class="table align-middle mb-0 table-hover table-striped table-bordered bg-white">
           <thead class="bg-light">
           <tr class="table-first-row">
-            <th>Имя</th>
             <th>Фамилия</th>
+            <th>Имя</th>
             <th>Отчество</th>
             <th>Дата рождения</th>
             <th>Врач</th>
@@ -35,590 +37,63 @@
             </button> </th>
           </tr>
           </thead>
-          <tbody>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Иванова</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ивана</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ивановна</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">13.02.2023</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Павлович В.И.</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">29.03.2023</p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Иванова</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ивана</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ивановна</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">13.02.2023</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Павлович В.И.</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">29.03.2023</p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Иванова</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ивана</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ивановна</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">13.02.2023</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Павлович В.И.</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">29.03.2023</p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Иванова</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ивана</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ивановна</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">13.02.2023</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Павлович В.И.</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">29.03.2023</p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Иванова</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ивана</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ивановна</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">13.02.2023</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Павлович В.И.</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">29.03.2023</p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Иванова</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ивана</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ивановна</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">13.02.2023</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Павлович В.И.</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">29.03.2023</p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Иванова</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ивана</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ивановна</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">13.02.2023</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Павлович В.И.</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">29.03.2023</p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Иванова</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ивана</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ивановна</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">13.02.2023</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Павлович В.И.</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">29.03.2023</p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Иванова</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ивана</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ивановна</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">13.02.2023</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Павлович В.И.</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">29.03.2023</p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Иванова</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ивана</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ивановна</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">13.02.2023</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Павлович В.И.</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">29.03.2023</p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Иванова</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ивана</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ивановна</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">13.02.2023</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Павлович В.И.</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">29.03.2023</p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Иванова</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ивана</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ивановна</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">13.02.2023</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Павлович В.И.</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">29.03.2023</p>
-                </div>
-              </div>
-            </td>
-          </tr><tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Иванова</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ивана</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ивановна</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">13.02.2023</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Павлович В.И.</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">29.03.2023</p>
-                </div>
-              </div>
-            </td>
-          </tr>
+          <tbody v-for="appointment in appointments" :key="appointment.id">
+            <tr @click="selectAppointment(appointment)" :style="appointment.highlight ? `background-color: #00C2FF` : ``">
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ appointment.surname }}</p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ appointment.name }}</p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ appointment.patronymic }}</p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ appointment.birthdate }}</p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ appointment.doctor }}</p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ appointment.date }}</p>
+                  </div>
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
       <div class="container buttons-container">
         <div class="row row-buttons">
           <div class="col col-buttons">
-            <router-link class="btn btn-primary first-add" to="/new-appointment"><i class="fa-solid fa-plus button-icon"></i>Создать первичный приём</router-link>
-            <router-link class="btn btn-primary second-add" to="/appointments"><i class="fa-solid fa-plus button-icon"></i>Создать повторный приём</router-link>
+            <button class="btn btn-primary first-add" @click="router().push({name: 'new-appointment'})"><i class="fa-solid fa-plus button-icon"></i>Создать первичный приём</button>
+            <button class="btn btn-primary second-add" v-bind:disabled="selectedAppointment === -1"><i class="fa-solid fa-plus button-icon"></i>Создать повторный приём</button>
           </div>
           <div class="col col-buttons">
-            <router-link class="btn btn-primary edit" to="/appointments"><i class="fa-solid fa-pen button-icon"></i>Редактировать</router-link>
-            <router-link class="btn btn-primary delete" to="/appointments"><i class="fa-solid fa-trash button-icon"></i>Удалить</router-link>
+            <button class="btn btn-primary edit" v-bind:disabled="selectedAppointment === -1"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>
+            <button class="btn btn-primary delete" @click="requestDelete()" v-bind:disabled="selectedAppointment === -1"><i class="fa-solid fa-trash button-icon"></i>Удалить</button>
           </div>
         </div>
       </div>
@@ -791,3 +266,97 @@ edit:hover {
   padding: 0;
 }
 </style>
+<script>
+import {methods} from "@/utils/methods";
+import {constants} from "@/utils/constants";
+import {settings} from "@/utils/settings";
+import router from "@/router";
+import {createApp} from "vue";
+import DeleteModal from "@/components/DeleteModal.vue";
+
+export default {
+  data() {
+    return {
+      appointments: [],
+      doctor: {name: "Иванов Иван Иванович"},
+      selectedAppointment: -1
+    }
+  },
+  name: 'AppointmentsList',
+  components: {},
+  methods: {
+    router() {
+      return router
+    },
+    loadData() {
+      if(settings.designMode) {
+        for(let i = 0; i < 13; i++)
+          this.appointments.push({
+            id: i,
+            surname: "Иванова",
+            name: "Ивана",
+            patronymic: "Ивановна",
+            birthdate: "13.02.2023",
+            doctor: "Павлович В.И.",
+            date: "29.03.2023",
+
+            highlight: false
+          });
+        return;
+      }
+      methods.authorizedGETRequest(
+        this.$cookies,
+        `/appointment`,
+        response => {
+          if(response.status === 200) {
+            if(settings.alertMode)
+              methods.runNotification("Загружено "+response.data.body.length+" элементов");
+            // TODO NORMAL LOAD APPOINTMENTS
+            for(let appointment of response.data.body) {
+              this.appointments.push({
+                id: appointment.id,
+                surname: appointment.patient_id,
+                name: appointment.is_first,
+                patronymic: appointment.doppler_id,
+                birthdate: appointment.diagnosis_id,
+                doctor: appointment.doctor_id,
+                date: appointment.files
+              });
+            }
+          }
+        },
+        error => {
+          if(error.code === "ERR_NETWORK") {
+            methods.runNotification("Не удалось подключиться к серверу");
+            return;
+          }
+          methods.runNotification("Не удалось получить данные");
+          console.log(error);
+        }
+      )
+    },
+    selectAppointment(data) {
+      if(this.selectedAppointment !== -1)
+        this.selectedAppointment.highlight = false;
+      if(this.selectedAppointment.id === data.id) {
+        data.highlight = false;
+        this.selectedAppointment = -1;
+        return;
+      }
+      data.highlight = true;
+      this.selectedAppointment = data;
+    },
+    requestDelete() {
+      const div = document.getElementById("modal");
+      const app = createApp(DeleteModal, {appointment: this.selectedAppointment});
+      app.mount(div);
+    }
+  },
+  beforeMount() {
+    methods.checkCookies(this.$cookies, constants.Role.DOCTOR);
+  },
+  mounted() {
+    this.loadData()
+  }
+}
+</script>

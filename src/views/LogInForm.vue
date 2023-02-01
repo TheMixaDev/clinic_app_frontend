@@ -52,6 +52,7 @@ import axios from "axios";
 import {settings} from "@/utils/settings";
 import {methods} from "@/utils/methods";
 import router from "@/router/index";
+import {constants} from "@/utils/constants";
 export default {
   data() {
     return {
@@ -62,14 +63,6 @@ export default {
   name: 'LogInForm',
   components: {},
   methods: {
-    checkCookies() {
-      if(settings.designMode)
-        return;
-      // TODO Check cookies for already logged in user
-      if(this.$cookies.get("token") != null) {
-        router.push({ name: "appointments" }); // TODO: OR ADMIN PANEL DEPENDING ON ROLE, SENDING GET MODEL REQUEST
-      }
-    },
     auth() {
       if(settings.designMode)
         return router.push({ name: "appointments" });
@@ -92,7 +85,7 @@ export default {
     }
   },
   beforeMount() {
-    this.checkCookies()
+    methods.checkCookies(this.$cookies, constants.Role.UNAUTHORIZED)
   }
 }
 </script>

@@ -3,16 +3,26 @@
     <div class="container modal-box animate__animated animate__backInUp">
       <img src="../assets/delete.svg">
       <h2 class="delete-heading">Удаление записи</h2>
-      <p class="delete-text">Подтвердите удаление записи <span class="delete-name">Ивановой Иваны Ивановны</span> на <span class="delete-date">01.02.2023</span></p>
-      <a class="btn btn-primary delete" href="#"><i class="fa-solid fa-trash button-icon"></i>Удалить</a>
-      <a class="btn btn-primary back-btn" href="#"><i class="fa-solid fa-arrow-left"></i> Вернуться редактированию</a>
+      <p class="delete-text">Подтвердите удаление записи <span class="delete-name">{{ appointment.surname + " " + appointment.name + " " + appointment.patronymic }}</span> на <span class="delete-date">{{ appointment.date }}</span></p>
+      <a class="btn btn-primary delete" @click="proceed()"><i class="fa-solid fa-trash button-icon"></i>Удалить</a>
+      <a class="btn btn-primary back-btn" @click="this.$.appContext.app.unmount();"><i class="fa-solid fa-arrow-left"></i> Вернуться к списку</a>
     </div>
   </div>
 </template>
 
 <script>
+import {settings} from "@/utils/settings";
+
 export default {
-  name: "DeleteModal"
+  name: "DeleteModal",
+  props: ['appointment'],
+  methods: {
+    proceed() {
+      if(settings.designMode)
+        return;
+      // TODO delition
+    }
+  }
 }
 </script>
 

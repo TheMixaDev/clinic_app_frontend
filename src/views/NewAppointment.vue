@@ -11,8 +11,7 @@
       <div class="row main-info">
         <div class="col name-wrapper">
           <h6 class="patient-name">ФИО Пациента</h6>
-          <input type="text" id="name" class="form-control" placeholder="Выберите пациента из Справочника">
-          <router-link class="btn btn-primary" to="/patients-directory">Справочник пациентов(удалить)</router-link>
+          <input type="text" id="name" class="form-control" placeholder="Выберите пациента из Справочника" @click="router().push({name: 'patients-directory'})">
         </div>
         <div class="col date-wrapper">
           <h6 class="patient-name">Дата рождения</h6>
@@ -20,7 +19,7 @@
         </div>
         <div class="col doc-wrapper">
           <h6 class="patient-name">Врач</h6>
-          <input type="text" id="name" class="form-control" placeholder="Выберите врача из Справочника">
+          <input type="text" id="name" class="form-control" placeholder="Выберите врача из Справочника" disabled v-bind:value="'Sample Doctor'">
           <router-link class="btn btn-primary" to="/doctors-directory">Справочник врачей(удалить)</router-link>
         </div>
         <div class="col date-wrapper">
@@ -2400,9 +2399,15 @@ h4 {
 <script>
 
 import MultiSelect from "@/components/MultiSelect.vue";
+import router from "@/router";
 
 export default {
   name: "NewAppointment",
+  methods: {
+    router() {
+      return router
+    }
+  },
   components: {MultiSelect},
   data() {
     return {
