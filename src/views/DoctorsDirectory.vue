@@ -1,12 +1,10 @@
 <template>
+  <div id="notification"></div>
   <div className="container-fluid doctors-container animate__animated animate__fadeIn">
     <div className="row header">
       <div className="col">
         <h1 className="heading">
-          <router-link className="btn back btn-primary second-add" to="/new-appointment"><i
-              className="fa-solid fa-arrow-left"></i>
-          </router-link>
-          Справочник врачей
+          Панель администратора
         </h1>
       </div>
       <div className="col">
@@ -36,156 +34,54 @@
           <th>Пароль</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody v-for="doctor in doctors" :key="doctor.id">
         <tr>
           <td>
             <div className="d-flex align-items-center">
               <div className="ms-3">
-                <p className="fw-bold mb-1">Иванова</p>
+                <p className="fw-bold mb-1">{{ doctor.surname }}</p>
               </div>
             </div>
           </td>
           <td>
             <div className="d-flex align-items-center">
               <div className="ms-3">
-                <p className="fw-bold mb-1">Ивана</p>
+                <p className="fw-bold mb-1">{{ doctor.name }}</p>
               </div>
             </div>
           </td>
           <td>
             <div className="d-flex align-items-center">
               <div className="ms-3">
-                <p className="fw-bold mb-1">Ивановна</p>
+                <p className="fw-bold mb-1">{{ doctor.patronymic }}</p>
               </div>
             </div>
           </td>
           <td>
             <div className="d-flex align-items-center">
               <div className="ms-3">
-                <p className="fw-bold mb-1">Врач-стоматолог</p>
+                <p className="fw-bold mb-1">{{ doctor.position }}</p>
               </div>
             </div>
           </td>
           <td>
             <div className="d-flex align-items-center">
               <div className="ms-3">
-                <p className="fw-bold mb-1">Генерал-майор</p>
+                <p className="fw-bold mb-1">{{ doctor.rank }}</p>
               </div>
             </div>
           </td>
           <td>
             <div className="d-flex align-items-center">
               <div className="ms-3">
-                <p className="fw-bold mb-1">login</p>
+                <p className="fw-bold mb-1">{{ doctor.login }}</p>
               </div>
             </div>
           </td>
           <td>
             <div className="d-flex align-items-center">
               <div className="ms-3">
-                <button class="btn btn-primary password"><i class="fa-solid fa-key"></i> Пароль</button>
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div className="d-flex align-items-center">
-              <div className="ms-3">
-                <p className="fw-bold mb-1">Иванова</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div className="d-flex align-items-center">
-              <div className="ms-3">
-                <p className="fw-bold mb-1">Ивана</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div className="d-flex align-items-center">
-              <div className="ms-3">
-                <p className="fw-bold mb-1">Ивановна</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div className="d-flex align-items-center">
-              <div className="ms-3">
-                <p className="fw-bold mb-1">Врач-стоматолог</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div className="d-flex align-items-center">
-              <div className="ms-3">
-                <p className="fw-bold mb-1">Генерал-майор</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div className="d-flex align-items-center">
-              <div className="ms-3">
-                <p className="fw-bold mb-1">login</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div className="d-flex align-items-center">
-              <div className="ms-3">
-                <button class="btn btn-primary password"><i class="fa-solid fa-key"></i> Пароль</button>
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div className="d-flex align-items-center">
-              <div className="ms-3">
-                <p className="fw-bold mb-1">Иванова</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div className="d-flex align-items-center">
-              <div className="ms-3">
-                <p className="fw-bold mb-1">Ивана</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div className="d-flex align-items-center">
-              <div className="ms-3">
-                <p className="fw-bold mb-1">Ивановна</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div className="d-flex align-items-center">
-              <div className="ms-3">
-                <p className="fw-bold mb-1">Врач-стоматолог</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div className="d-flex align-items-center">
-              <div className="ms-3">
-                <p className="fw-bold mb-1">Генерал-майор</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div className="d-flex align-items-center">
-              <div className="ms-3">
-                <p className="fw-bold mb-1">login</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div className="d-flex align-items-center">
-              <div className="ms-3">
-                <button class="btn btn-primary password"><i class="fa-solid fa-key"></i> Пароль</button>
+                <button class="btn btn-primary password"><i class="fa-solid fa-key"></i> Изменить</button>
               </div>
             </div>
           </td>
@@ -198,8 +94,8 @@
         <router-link className="btn btn-primary first-add" to="/new-doctor"><i
             className="fa-solid fa-plus button-icon"></i>Новый
         </router-link>
-        <router-link className="btn btn-primary second-add" to="/new-appointment">Выбрать
-        </router-link>
+        <!--router-link className="btn btn-primary second-add" to="/new-appointment">Выбрать
+        </router-link-->
       </div>
     </div>
   </div>
@@ -426,3 +322,87 @@ edit:hover {
   padding: 0;
 }
 </style>
+<script>
+import {methods} from "@/utils/methods";
+import {constants} from "@/utils/constants";
+import {settings} from "@/utils/settings";
+
+export default {
+  name: 'DoctorsDirectory',
+  data() {
+    return {
+      doctors: []
+    }
+  },
+  methods: {
+    applyFiltersSearch() {
+      if(settings.designMode)
+        return;
+      // TODO Filters
+      let filters = {
+        filters: {
+          role: 1,
+          page: 1,
+          fullName: ""
+        }
+      };
+      methods.authorizedPOSTRequest(
+          this.$cookies,
+          `/user/all`,
+          filters,
+          response => {
+            if(response.status === 200) {
+              if(settings.alertMode)
+                methods.runNotification("Загружено "+response.data.body.length+" элементов");
+              this.doctors = [];
+              for(let doctor of response.data.body) {
+                this.doctors.push({
+                  id: doctor.id,
+                  surname: doctor.surname,
+                  name: doctor.name,
+                  patronymic: doctor.lastname,
+                  rank: doctor.rank,
+                  position: doctor.position,
+                  login: doctor.login
+                });
+              }
+            }
+          },
+          error => {
+            if(error.code === "ERR_NETWORK") {
+              methods.runNotification("Не удалось подключиться к серверу");
+              return;
+            }
+            methods.runNotification("Не удалось получить данные");
+            console.log(error);
+          }
+      );
+    },
+    loadData() {
+      if(settings.designMode) {
+        for(let i = 0; i < 13; i++)
+          this.doctors.push({
+            id: i,
+            surname: "Иванова",
+            name: "Ивана",
+            patronymic: "Ивановна",
+            rank: "Врач",
+            position: "Звание",
+            login: "login"
+          });
+        return;
+      }
+      this.applyFiltersSearch();
+    },
+    changePassword() {
+      // TODO via modal
+    }
+  },
+  beforeMount() {
+    methods.checkCookies(this.$cookies, constants.Role.ADMIN)
+  },
+  mounted() {
+    this.loadData()
+  }
+}
+</script>

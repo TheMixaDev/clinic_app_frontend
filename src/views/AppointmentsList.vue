@@ -304,6 +304,7 @@ export default {
     applyFiltersSearch() {
       if(settings.designMode)
         return;
+      // TODO Filters
       let filters = {
         filters: {
           sortDate: "ASC",
@@ -319,6 +320,7 @@ export default {
             if(response.status === 200) {
               if(settings.alertMode)
                 methods.runNotification("Загружено "+response.data.body.length+" элементов");
+              this.appointments = [];
               for(let appointment of response.data.body) {
                 this.appointments.push({
                   id: appointment.id,

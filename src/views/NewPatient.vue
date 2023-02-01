@@ -238,6 +238,7 @@ edit:hover {
 import {methods} from "@/utils/methods";
 import router from "@/router";
 import {settings} from "@/utils/settings";
+import {constants} from "@/utils/constants";
 
 export default {
   name: 'NewPatient',
@@ -281,6 +282,9 @@ export default {
           }
       );
     }
+  },
+  beforeMount() {
+    methods.checkCookies(this.$cookies, constants.Role.DOCTOR)
   }
 }
 </script>

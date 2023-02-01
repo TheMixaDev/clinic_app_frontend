@@ -12,7 +12,7 @@ export const methods = {
         const app = createApp(NotificationProgress, {text: text});
         app.mount(div);
     },
-    checkCookies(cookies, access) {
+    checkCookies(cookies, access, callback) {
         if(settings.designMode)
             return;
         if(cookies.get("token") != null) {
@@ -23,6 +23,9 @@ export const methods = {
                         router.push({name: "appointments"});
                     else if(response.data.body.role === constants.Role.ADMIN)
                         router.push({name: "doctors-directory"});
+                } else {
+                    if(callback)
+                        callback();
                 }
             }, error => {
                 console.log(error);

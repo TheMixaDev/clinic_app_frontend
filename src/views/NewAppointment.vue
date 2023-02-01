@@ -2613,6 +2613,7 @@ import MultiSelect from "@/components/MultiSelect.vue";
 import router from "@/router";
 import {settings} from "@/utils/settings";
 import {methods} from "@/utils/methods";
+import {constants} from "@/utils/constants";
 
 export default {
   name: "NewAppointment",
@@ -2743,7 +2744,7 @@ export default {
     }
   },
   beforeMount() {
-    this.preload()
+    methods.checkCookies(this.$cookies, constants.Role.DOCTOR, this.preload)
   }
 }
 

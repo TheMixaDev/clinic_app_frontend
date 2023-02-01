@@ -1,4 +1,5 @@
 <template>
+  <div id="notification"></div>
   <div className="container-fluid animate__animated animate__fadeIn">
     <div className="row header">
       <div className="col">
@@ -7,22 +8,24 @@
       </div>
     </div>
     <div class="container main-part">
-      <h6>Имя</h6>
-      <input class="input-outline" type="text">
       <h6>Фамилия</h6>
-      <input class="input-outline" type="text">
+      <input class="input-outline" type="text" ref="surname">
+      <h6>Имя</h6>
+      <input class="input-outline" type="text" ref="name">
       <h6>Отчество</h6>
-      <input class="input-outline" type="text">
-      <h6>Дата рождения</h6>
-      <input class="input-outline" type="date">
-      <router-link className="btn btn-primary first-add" to="/doctors-directory">Сбросить пароль
-      </router-link>
-      <input class="input-outline" type="text" placeholder="Новый пароль">
+      <input class="input-outline" type="text" ref="patronymic">
+      <h6>Должность</h6>
+      <input class="input-outline" type="text" ref="position">
+      <!--router-link className="btn btn-primary first-add" to="/doctors-directory">Сбросить пароль
+      </router-link-->
+      <h6>Логин</h6>
+      <input class="input-outline" type="text" ref="login">
+      <h6>Пароль</h6>
+      <input class="input-outline" type="text" ref="password">
     </div>
     <div className="container buttons-container">
       <div className="col row-buttons">
-        <router-link className="btn btn-primary first-add" to="/doctors-directory">Сохранить
-        </router-link>
+        <button className="btn btn-primary first-add" to="/doctors-directory" @click="createDoctor()">Сохранить</button>
       </div>
     </div>
   </div>
@@ -150,8 +153,8 @@ th:last-child {
   height: auto;
   flex-direction: column;
   display: flex;
-  max-height: 60vh;
-  gap: 2rem;
+  max-height: 70vh;
+  gap: 1.5rem;
   width: 100vw;
   align-items: center;
   overflow: hidden;
@@ -237,3 +240,48 @@ edit:hover {
   padding: 0;
 }
 </style>
+<script>
+import {methods} from "@/utils/methods";
+import {constants} from "@/utils/constants";
+import router from "@/router";
+import {settings} from "@/utils/settings";
+
+
+export default {
+  name: 'NewDoctor',
+  methods: {
+    createDoctor() {
+      if(settings.designMode)
+        return router.go(-1)
+      methods.authorizedPOSTRequest(
+          this.$cookies,
+          `/user`,
+          {
+            role: 1,
+            surname: this.$refs.surname.value,
+            name: this.$refs.name.value,
+            lastname: this.$refs.patronymic.value,
+            position: this.$refs.position.value,
+            rank: "Доктор",
+            login: this.$refs.login.value,
+            password: this.$refs.password.value
+          },
+          () => {
+            methods.runNotification("Доктор создан");
+            router.go(-1);
+          },
+          error => {
+            if(error.code === "ERR_NETWORK") {
+              methods.runNotification("Не удалось подключиться к серверу");
+              return;
+            }
+            methods.runNotification("Не все поля корректно заполнены");
+          }
+      );
+    }
+  },
+  beforeMount() {
+    methods.checkCookies(this.$cookies, constants.Role.ADMIN);
+  }
+}
+</script>
