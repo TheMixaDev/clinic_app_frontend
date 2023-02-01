@@ -252,7 +252,7 @@ export default {
       edit: {
         enabled: false,
         doctor: {
-          role: 1,
+          role: constants.Role.DOCTOR,
           surname: '',
           name: '',
           lastname: '',
@@ -271,7 +271,7 @@ export default {
       if(meta) {
         this.edit.enabled = true;
         this.edit.doctor = meta;
-        this.edit.doctor.role = 1;
+        this.edit.doctor.role = constants.Role.DOCTOR;
         this.edit.doctor.password = "Редактируется на главной странице";
         this.edit.doctor.lastname = this.edit.doctor.patronymic;
       }
@@ -320,10 +320,7 @@ export default {
     }
   },
   beforeMount() {
-    methods.checkCookies(this.$cookies, constants.Role.ADMIN)
-  },
-  mounted() {
-    this.preload()
+    methods.checkCookies(this.$cookies, constants.Role.ADMIN, this.preload)
   }
 }
 </script>

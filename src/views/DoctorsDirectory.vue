@@ -346,7 +346,7 @@ export default {
         return;
       let filters = {
         filters: {
-          role: 1,
+          role: constants.Role.DOCTOR,
           page: 1,
           fullName: this.$refs.searchInput.value
         }
@@ -421,6 +421,7 @@ export default {
           `/user/${this.selectedDoctor.id}`,
           () => {
             methods.runNotification("Пользователь удален");
+            this.selectedDoctor = -1;
             this.applyFiltersSearch();
           },
           error => {
@@ -450,10 +451,7 @@ export default {
     }
   },
   beforeMount() {
-    methods.checkCookies(this.$cookies, constants.Role.ADMIN)
-  },
-  mounted() {
-    this.loadData()
+    methods.checkCookies(this.$cookies, constants.Role.ADMIN, this.loadData)
   }
 }
 </script>

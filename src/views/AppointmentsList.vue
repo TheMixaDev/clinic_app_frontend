@@ -25,16 +25,16 @@
       <div class="container main-part">
         <table class="table align-middle mb-0 table-hover table-striped table-bordered bg-white">
           <thead class="bg-light">
-          <tr class="table-first-row">
-            <th>Фамилия</th>
-            <th>Имя</th>
-            <th>Отчество</th>
-            <th>Дата рождения</th>
-            <th>Врач</th>
-            <th class="date"><i class="fa-regular fa-calendar-days date-icon"></i> Дата приёма <button type="button" class="btn btn-primary sort-button" @click="sortDesc = !sortDesc; applyFiltersSearch()">
-              <i class="fa-solid" :class="sortDesc ? 'fa-arrow-up-wide-short' : 'fa-arrow-down-wide-short'"></i>
-            </button> </th>
-          </tr>
+            <tr class="table-first-row">
+              <th>Фамилия</th>
+              <th>Имя</th>
+              <th>Отчество</th>
+              <th>Дата рождения</th>
+              <th>Врач</th>
+              <th class="date"><i class="fa-regular fa-calendar-days date-icon"></i> Дата приёма <button type="button" class="btn btn-primary sort-button" @click="sortDesc = !sortDesc; applyFiltersSearch()">
+                <i class="fa-solid" :class="sortDesc ? 'fa-arrow-up-wide-short' : 'fa-arrow-down-wide-short'"></i>
+              </button> </th>
+            </tr>
           </thead>
           <tbody v-for="appointment in appointments" :key="appointment.id">
             <tr @click="selectAppointment(appointment)" :style="appointment.highlight ? `background-color: #cceffd` : ``">
@@ -87,7 +87,7 @@
       <div class="container buttons-container">
         <div class="row row-buttons">
           <div class="col col-buttons">
-            <button class="btn btn-primary first-add" @click="router().push({name: 'new-patient'})" v-bind:disabled="selectedAppointment !== -1"><i class="fa-solid fa-plus button-icon"></i>Создать первичный приём</button>
+            <button class="btn btn-primary first-add" @click="router().push({name: 'patients-directory'})" v-bind:disabled="selectedAppointment !== -1"><i class="fa-solid fa-plus button-icon"></i>Создать первичный приём</button>
             <button class="btn btn-primary second-add" @click="repeatAppointment()" v-bind:disabled="selectedAppointment === -1"><i class="fa-solid fa-plus button-icon"></i>Создать повторный приём</button>
           </div>
           <div class="col col-buttons">
@@ -373,13 +373,32 @@ export default {
       data.highlight = true;
       this.selectedAppointment = data;
     },
+    deleteAppointment() {
+      methods.authorizedDELRequest(
+          this.$cookies,
+          `/appointment/${this.selectedAppointment.id}`,
+          () => {
+            methods.runNotification("Прием удален");
+            this.applyFiltersSearch();
+          },
+          error => {
+            if(error.code === "ERR_NETWORK") {
+              methods.runNotification("Не удалось подключиться к серверу");
+              return;
+            }
+            methods.runNotification("Не удалось удалить прием");
+            console.log(error);
+          }
+      )
+    },
     requestDelete() {
       const div = document.getElementById("modal");
       const app = createApp(DeleteModal, {
         info: {
-          name: 'записи',
+          name: 'приема',
           object: this.selectedAppointment
-        }
+        },
+        callback: this.deleteAppointment
       });
       app.mount(div);
     },

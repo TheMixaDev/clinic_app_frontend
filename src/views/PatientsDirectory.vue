@@ -1,22 +1,24 @@
 <template>
+  <div id="modal"></div>
   <div className="container-fluid patients-container animate__animated animate__fadeIn">
     <div className="row header">
       <div className="col">
-
-        <h1 className="heading"><router-link className="btn back btn-primary second-add" to="/new-appointment"><i class="fa-solid fa-arrow-left"></i>
-        </router-link>Справочник пациентов</h1>
+        <h1 className="heading"><button className="btn back btn-primary second-add" @click="router().go(-1);"><i class="fa-solid fa-arrow-left"></i>
+        </button>Справочник пациентов</h1>
       </div>
+      Или сюда
       <div className="col">
         <div className="container table-container">
           <div className="input-group">
-            <button type="button" className="btn btn-primary search-button">
+            <button type="button" className="btn btn-primary search-button" @click="applyFiltersSearch()">
               <i className="fas fa-search"></i>
             </button>
             <div className="form-outline">
-              <input type="search" id="form1" className="form-control"/>
+              <input type="search" id="form1" className="form-control" ref="searchInput" v-on:keyup.enter="applyFiltersSearch()"/>
               <label className="form-label" htmlFor="form1">Поиск</label>
             </div>
           </div>
+          Ян добавь сюда чекбокс - "Только пациенты без первого приема"
         </div>
       </div>
     </div>
@@ -30,93 +32,33 @@
           <th>Дата рождения</th>
         </tr>
         </thead>
-        <tbody>
-        <tr>
+        <tbody v-for="patient in patients" :key="patient.id">
+        <tr @click="selectPatient(patient)" :style="patient.highlight ? `background-color: #cceffd` : ``">
           <td>
             <div className="d-flex align-items-center">
               <div className="ms-3">
-                <p className="fw-bold mb-1">Иванова</p>
+                <p className="fw-bold mb-1">{{ patient.surname }}</p>
               </div>
             </div>
           </td>
           <td>
             <div className="d-flex align-items-center">
               <div className="ms-3">
-                <p className="fw-bold mb-1">Ивана</p>
+                <p className="fw-bold mb-1">{{ patient.name }}</p>
               </div>
             </div>
           </td>
           <td>
             <div className="d-flex align-items-center">
               <div className="ms-3">
-                <p className="fw-bold mb-1">Ивановна</p>
+                <p className="fw-bold mb-1">{{ patient.patronymic }}</p>
               </div>
             </div>
           </td>
           <td>
             <div className="d-flex align-items-center">
               <div className="ms-3">
-                <p className="fw-bold mb-1">13.02.2023</p>
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div className="d-flex align-items-center">
-              <div className="ms-3">
-                <p className="fw-bold mb-1">Иванова</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div className="d-flex align-items-center">
-              <div className="ms-3">
-                <p className="fw-bold mb-1">Ивана</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div className="d-flex align-items-center">
-              <div className="ms-3">
-                <p className="fw-bold mb-1">Ивановна</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div className="d-flex align-items-center">
-              <div className="ms-3">
-                <p className="fw-bold mb-1">13.02.2023</p>
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div className="d-flex align-items-center">
-              <div className="ms-3">
-                <p className="fw-bold mb-1">Иванова</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div className="d-flex align-items-center">
-              <div className="ms-3">
-                <p className="fw-bold mb-1">Ивана</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div className="d-flex align-items-center">
-              <div className="ms-3">
-                <p className="fw-bold mb-1">Ивановна</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div className="d-flex align-items-center">
-              <div className="ms-3">
-                <p className="fw-bold mb-1">13.02.2023</p>
+                <p className="fw-bold mb-1">{{ patient.birthdate }}</p>
               </div>
             </div>
           </td>
@@ -126,11 +68,15 @@
     </div>
     <div className="container buttons-container">
       <div className="col row-buttons">
-          <router-link className="btn btn-primary first-add" to="/new-patient"><i
+          <router-link className="btn btn-primary first-add" to="/new-patient" v-bind:disabled="this.selectedPatient !== -1"><i
               className="fa-solid fa-plus button-icon"></i>Новый
           </router-link>
-          <router-link className="btn btn-primary second-add" to="/new-appointment">Выбрать
-          </router-link>
+          <button class="btn btn-primary edit" v-bind:disabled="this.selectedPatient === -1" @click="editPatient()"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>
+          <button class="btn btn-primary delete" v-bind:disabled="this.selectedPatient === -1" @click="requestDelete()"><i class="fa-solid fa-trash button-icon"></i>Удалить</button>
+      </div>
+      <div className="col row-buttons">
+      <button className="btn btn-primary second-add" v-bind:disabled="this.selectedPatient === -1" @click="proceed()">Выбрать</button>
+        и эту кнопку расположи под остальными, или тоже как-то красиво крч
       </div>
     </div>
   </div>
@@ -337,3 +283,134 @@ edit:hover {
   padding: 0;
 }
 </style>
+<script>
+import router from "@/router";
+import {constants} from "@/utils/constants";
+import {methods} from "@/utils/methods";
+import {settings} from "@/utils/settings";
+import {createApp} from "vue";
+import DeleteModal from "@/components/DeleteModal.vue";
+export default {
+  data() {
+    return {
+      patients: [],
+      selectedPatient: -1
+    }
+  },
+  name: 'PatientsDirectory',
+  methods: {
+    router() {
+      return router
+    },
+    applyFiltersSearch() {
+      if(settings.designMode)
+        return;
+      let filters = {
+        filters: {
+          role: constants.Role.PATIENT,
+          page: 1,
+          fullName: this.$refs.searchInput.value
+        }
+      };
+      methods.authorizedPOSTRequest(
+          this.$cookies,
+          `/user/all`,
+          filters,
+          response => {
+            if(response.status === 200) {
+              if(settings.alertMode)
+                methods.runNotification("Загружено "+response.data.body.length+" элементов");
+              this.patients = [];
+              for(let patient of response.data.body) {
+                this.patients.push({
+                  id: patient.id,
+                  surname: patient.surname,
+                  name: patient.name,
+                  patronymic: patient.lastname,
+                  rank: 'Пациент',
+                  birthdate: patient.birthday
+                });
+              }
+            }
+          },
+          error => {
+            if(error.code === "ERR_NETWORK") {
+              methods.runNotification("Не удалось подключиться к серверу");
+              return;
+            }
+            methods.runNotification("Не удалось получить данные");
+            console.log(error);
+          }
+      );
+    },
+    loadData() {
+      if(settings.designMode) {
+        for(let i = 0; i < 13; i++)
+          this.doctors.push({
+            id: i,
+            surname: "Иванова",
+            name: "Ивана",
+            patronymic: "Ивановна",
+            birthday: "13.02.2023",
+            rank: "Пациент",
+
+            highlight: false
+          });
+        return;
+      }
+      this.applyFiltersSearch();
+    },
+    selectPatient(data) {
+      if(this.selectedPatient !== -1)
+        this.selectedPatient.highlight = false;
+      if(this.selectedPatient.id === data.id) {
+        data.highlight = false;
+        this.selectedPatient = -1;
+        return;
+      }
+      data.highlight = true;
+      this.selectedPatient = data;
+    },
+    deletePatient() {
+      methods.authorizedDELRequest(
+          this.$cookies,
+          `/user/${this.selectedPatient.id}`,
+          () => {
+            methods.runNotification("Пользователь удален");
+            this.selectedPatient = -1;
+            this.applyFiltersSearch();
+          },
+          error => {
+            if(error.code === "ERR_NETWORK") {
+              methods.runNotification("Не удалось подключиться к серверу");
+              return;
+            }
+            methods.runNotification("Нельзя удалить пользователя, к которому привязаны приемы");
+            console.log(error);
+          }
+      )
+    },
+    requestDelete() {
+      const div = document.getElementById("modal");
+      const app = createApp(DeleteModal, {
+        info: {
+          name: 'пользователя',
+          object: this.selectedPatient,
+        },
+        callback: this.deletePatient
+      });
+      app.mount(div);
+    },
+    editPatient() {
+      methods.setMeta(this.selectedPatient);
+      router.push({name: 'new-patient'});
+    },
+    proceed() {
+      // TODO
+    }
+  },
+  beforeMount() {
+    methods.checkCookies(this.$cookies, constants.Role.DOCTOR, this.loadData);
+  }
+}
+</script>

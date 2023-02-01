@@ -1,21 +1,20 @@
 <template>
-  <div id="notification"></div>
   <div className="container-fluid new-patient animate__animated animate__fadeIn">
     <div className="row header">
       <div className="col">
-        <h1 className="heading"><router-link className="btn back btn-primary second-add" to="/appointments"><i class="fa-solid fa-arrow-left"></i>
-        </router-link>Новый пациент</h1>
+        <h1 className="heading"><button className="btn back btn-primary second-add" @click="router().go(-1)"><i class="fa-solid fa-arrow-left"></i>
+        </button>{{edit.enabled ? `Редактирование пациента` : `Новый пациент`}}</h1>
       </div>
     </div>
     <div class="container main-part">
       <h6>Фамилия</h6>
-      <input class="input-outline" type="text" ref="surname">
+      <input class="input-outline" type="text" v-model="edit.patient.surname">
       <h6>Имя</h6>
-      <input class="input-outline" type="text" ref="name">
+      <input class="input-outline" type="text" v-model="edit.patient.name">
       <h6>Отчество</h6>
-      <input class="input-outline" type="text" ref="patronymic">
+      <input class="input-outline" type="text" v-model="edit.patient.lastname">
       <h6>Дата рождения</h6>
-      <input class="input-outline" type="date" ref="birthdate">
+      <input class="input-outline" type="date" v-model="edit.patient.birthday">
     </div>
     <div className="container buttons-container">
       <div className="col row-buttons">
@@ -242,36 +241,65 @@ import {constants} from "@/utils/constants";
 
 export default {
   name: 'NewPatient',
-  methods: {
-    createPatient() {
-      if(settings.designMode) {
-        router.push({ name: "new-appointment" });
-        return;
+  data() {
+    return {
+      edit: {
+        enabled: false,
+        patient: {
+          role: constants.Role.PATIENT,
+          surname: '',
+          name: '',
+          lastname: '',
+          birthday: ''
+        }
       }
+    }
+  },
+  methods: {
+    router() {
+      return router
+    },
+    preload() {
+      let meta = methods.getMeta();
+      if(meta) {
+        this.edit.enabled = true;
+        this.edit.patient = meta;
+        this.edit.patient.role = constants.Role.PATIENT;
+        this.edit.patient.lastname = this.edit.patient.patronymic;
+        this.edit.patient.birthday = this.edit.patient.birthdate;
+        delete this.edit.patient.rank;
+      }
+    },
+    createPatient() {
+      if(settings.designMode)
+        return router.push({ name: "new-appointment" });
+      if(this.edit.enabled)
+        return this.editPatient();
       methods.authorizedPOSTRequest(
           this.$cookies,
           `/user`,
-          {
-            role: 2,
-            surname: this.$refs.surname.value,
-            name: this.$refs.name.value,
-            lastname: this.$refs.patronymic.value,
-            birthday: this.$refs.birthdate.value
-          },
-          response => {
-            let send = {
-              id: response.data.body.id,
-              surname: response.data.body.surname,
-              name: response.data.body.name,
-              patronymic: response.data.body.lastname,
-              birthdate: response.data.body.birthday
-            }
-            methods.setMeta({
-              type: 1,
-              data: send
-            });
+          this.edit.patient,
+          () => {
             methods.runNotification("Пациент создан");
-            router.push({ name: "new-appointment" });
+            router.go(-1);
+          },
+          error => {
+            if(error.code === "ERR_NETWORK") {
+              methods.runNotification("Не удалось подключиться к серверу");
+              return;
+            }
+            methods.runNotification("Не все поля корректно заполнены");
+          }
+      );
+    },
+    editPatient() {
+      methods.authorizedPATCHRequest(
+          this.$cookies,
+          `/user`,
+          this.edit.patient,
+          () => {
+            methods.runNotification("Данные сохранены");
+            router.go(-1);
           },
           error => {
             if(error.code === "ERR_NETWORK") {
@@ -284,7 +312,7 @@ export default {
     }
   },
   beforeMount() {
-    methods.checkCookies(this.$cookies, constants.Role.DOCTOR)
+    methods.checkCookies(this.$cookies, constants.Role.DOCTOR, this.preload)
   }
 }
 </script>
