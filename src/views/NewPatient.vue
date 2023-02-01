@@ -1,26 +1,25 @@
 <template>
+  <div id="notification"></div>
   <div className="container-fluid new-patient animate__animated animate__fadeIn">
     <div className="row header">
       <div className="col">
-        <h1 className="heading"><router-link className="btn back btn-primary second-add" to="/patients-directory"><i class="fa-solid fa-arrow-left"></i>
+        <h1 className="heading"><router-link className="btn back btn-primary second-add" to="/appointments"><i class="fa-solid fa-arrow-left"></i>
         </router-link>Новый пациент</h1>
       </div>
     </div>
     <div class="container main-part">
-      <h6>Имя</h6>
-      <input class="input-outline" type="text">
       <h6>Фамилия</h6>
-      <input class="input-outline" type="text">
+      <input class="input-outline" type="text" ref="surname">
+      <h6>Имя</h6>
+      <input class="input-outline" type="text" ref="name">
       <h6>Отчество</h6>
-      <input class="input-outline" type="text">
+      <input class="input-outline" type="text" ref="patronymic">
       <h6>Дата рождения</h6>
-      <input class="input-outline" type="date">
-
+      <input class="input-outline" type="date" ref="birthdate">
     </div>
     <div className="container buttons-container">
       <div className="col row-buttons">
-        <router-link className="btn btn-primary first-add" to="/patients-directory">Сохранить
-        </router-link>
+        <button className="btn btn-primary first-add" @click="createPatient()">Сохранить</button>
       </div>
     </div>
   </div>
@@ -235,3 +234,53 @@ edit:hover {
   padding: 0;
 }
 </style>
+<script>
+import {methods} from "@/utils/methods";
+import router from "@/router";
+import {settings} from "@/utils/settings";
+
+export default {
+  name: 'NewPatient',
+  methods: {
+    createPatient() {
+      if(settings.designMode) {
+        router.push({ name: "new-appointment" });
+        return;
+      }
+      methods.authorizedPOSTRequest(
+          this.$cookies,
+          `/user`,
+          {
+            role: 2,
+            surname: this.$refs.surname.value,
+            name: this.$refs.name.value,
+            lastname: this.$refs.patronymic.value,
+            birthday: this.$refs.birthdate.value
+          },
+          response => {
+            let send = {
+              id: response.data.body.id,
+              surname: response.data.body.surname,
+              name: response.data.body.name,
+              patronymic: response.data.body.lastname,
+              birthdate: response.data.body.birthday
+            }
+            methods.setMeta({
+              type: 1,
+              data: send
+            });
+            methods.runNotification("Пациент создан");
+            router.push({ name: "new-appointment" });
+          },
+          error => {
+            if(error.code === "ERR_NETWORK") {
+              methods.runNotification("Не удалось подключиться к серверу");
+              return;
+            }
+            methods.runNotification("Не все поля корректно заполнены");
+          }
+      );
+    }
+  }
+}
+</script>

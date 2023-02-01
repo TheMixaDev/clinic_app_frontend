@@ -20,7 +20,7 @@
         </div>
       </div>
         <div class="col">
-          <p class="doctor-name">{{ doctor.name }}</p>
+          <p class="doctor-name">{{ doctorName }}</p>
         </div>
       </div>
       <div class="container main-part">
@@ -32,8 +32,8 @@
             <th>Отчество</th>
             <th>Дата рождения</th>
             <th>Врач</th>
-            <th class="date"><i class="fa-regular fa-calendar-days date-icon"></i> Дата приёма <button type="button" class="btn btn-primary sort-button">
-              <i class="fa-solid fa-arrow-up-wide-short"></i>
+            <th class="date"><i class="fa-regular fa-calendar-days date-icon"></i> Дата приёма <button type="button" class="btn btn-primary sort-button" @click="sortDesc = !sortDesc">
+              <i class="fa-solid" :class="sortDesc ? 'fa-arrow-up-wide-short' : 'fa-arrow-down-wide-short'"></i>
             </button> </th>
           </tr>
           </thead>
@@ -88,11 +88,11 @@
       <div class="container buttons-container">
         <div class="row row-buttons">
           <div class="col col-buttons">
-            <button class="btn btn-primary first-add" @click="router().push({name: 'new-appointment'})"><i class="fa-solid fa-plus button-icon"></i>Создать первичный приём</button>
-            <button class="btn btn-primary second-add" v-bind:disabled="selectedAppointment === -1"><i class="fa-solid fa-plus button-icon"></i>Создать повторный приём</button>
+            <button class="btn btn-primary first-add" @click="router().push({name: 'new-patient'})" v-bind:disabled="selectedAppointment !== -1"><i class="fa-solid fa-plus button-icon"></i>Создать первичный приём</button>
+            <button class="btn btn-primary second-add" @click="repeatAppointment()" v-bind:disabled="selectedAppointment === -1"><i class="fa-solid fa-plus button-icon"></i>Создать повторный приём</button>
           </div>
           <div class="col col-buttons">
-            <button class="btn btn-primary edit" v-bind:disabled="selectedAppointment === -1"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>
+            <button class="btn btn-primary edit" @click="editAppointment()" v-bind:disabled="selectedAppointment === -1"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>
             <button class="btn btn-primary delete" @click="requestDelete()" v-bind:disabled="selectedAppointment === -1"><i class="fa-solid fa-trash button-icon"></i>Удалить</button>
           </div>
         </div>
@@ -290,8 +290,9 @@ export default {
   data() {
     return {
       appointments: [],
-      doctor: {name: "Иванов Иван Иванович"},
-      selectedAppointment: -1
+      selectedAppointment: -1,
+      sortDesc: true,
+      doctorName: methods.getDoctorName()
     }
   },
   name: 'AppointmentsList',
@@ -325,7 +326,7 @@ export default {
                   name: appointment.patient.name,
                   patronymic: appointment.patient.lastname,
                   birthdate: appointment.patient.birthday,
-                  doctor: appointment.doctor.surname + " " + appointment.doctor.name.substring(0,1) + "." + appointment.doctor.lastname.substring(0,1),
+                  doctor: appointment.doctor.surname + " " + appointment.doctor.name.substring(0,1) + "." + appointment.doctor.lastname.substring(0,1)+".",
                   date: appointment.patient.birthday
                 });
               }
@@ -342,10 +343,6 @@ export default {
       );
     },
     loadData() {
-      if(localStorage.getItem("model")) {
-        let model = JSON.parse(localStorage.getItem("model"));
-        this.doctor.name = model.surname + " " + model.name + " " + model.lastname;
-      }
       if(settings.designMode) {
         for(let i = 0; i < 13; i++)
           this.appointments.push({
@@ -378,6 +375,16 @@ export default {
       const div = document.getElementById("modal");
       const app = createApp(DeleteModal, {appointment: this.selectedAppointment});
       app.mount(div);
+    },
+    repeatAppointment() {
+      methods.setMeta({
+        type: 0,
+        data: this.selectedAppointment
+      });
+      router.push({name: 'new-appointment'});
+    },
+    editAppointment() {
+      // TODO
     }
   },
   beforeMount() {

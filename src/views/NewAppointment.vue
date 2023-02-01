@@ -13,15 +13,15 @@
       <div class="row main-info">
         <div class="col name-wrapper">
           <h6 class="patient-name">ФИО Пациента</h6>
-          <input type="text" id="name" class="form-control name-tag" placeholder="Выберите пациента из Справочника" @click="router().push({name: 'patients-directory'})" readonly>
+          <input type="text" id="name" class="form-control name-tag" placeholder="Выберите пациента из Справочника" @click="router().push({name: 'patients-directory'})" readonly v-bind:value="patient.id !== -1 ? patient.surname + ' ' + patient.name + ' ' + patient.patronymic : ''">
         </div>
         <div class="col date-wrapper">
           <h6 class="patient-name">Дата рождения</h6>
-          <input class="date" type="date">
+          <input class="date" type="date" v-bind:value="patient.birthdate" disabled>
         </div>
         <div class="col doc-wrapper">
           <h6 class="patient-name">Врач</h6>
-          <input type="text" id="name" class="form-control" placeholder="Выберите врача из Справочника" disabled v-bind:value="'Sample Doctor'">
+          <input type="text" id="name" class="form-control" placeholder="Выберите врача из Справочника" disabled v-bind:value="doctorName">
           <router-link class="btn btn-primary" to="/doctors-directory">Справочник врачей(удалить)</router-link>
         </div>
         <div class="col date-wrapper">
@@ -2078,7 +2078,6 @@ P.V.: шейка матки: конич, цилиндр формы, наружн
         </div>
       </div>
     </div>
-
   </div>
 </template>
 <style>
@@ -2612,12 +2611,26 @@ h4 {
 
 import MultiSelect from "@/components/MultiSelect.vue";
 import router from "@/router";
+import {settings} from "@/utils/settings";
+import {methods} from "@/utils/methods";
 
 export default {
   name: "NewAppointment",
   methods: {
     router() {
       return router
+    },
+    preload() {
+      if(settings.designMode)
+        return;
+      let meta = methods.getMeta();
+      if(meta !== null) {
+        if(meta.type === 0) {
+          // TODO load appointment
+        } else {
+          this.patient = meta.data;
+        }
+      }
     }
   },
   components: {MultiSelect},
@@ -2718,9 +2731,19 @@ export default {
         {name: "Наследственная тромбофилия", value: 1, selected: false},
         {name: "FV", value: 1, selected: false},
         {name: "FII", value: 1, selected: false},
-      ]
-
+      ],
+      patient: {
+        id: -1,
+        surname: "",
+        name: "",
+        patronymic: "",
+        birthdate: ""
+      },
+      doctorName: methods.getDoctorName()
     }
+  },
+  beforeMount() {
+    this.preload()
   }
 }
 
