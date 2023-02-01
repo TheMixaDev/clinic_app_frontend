@@ -305,6 +305,7 @@ export default {
     applyFiltersSearch() {
       if(settings.designMode)
         return;
+      // TODO filter of patients with appointment or not
       let filters = {
         filters: {
           role: constants.Role.PATIENT,
@@ -406,7 +407,12 @@ export default {
       router.push({name: 'new-patient'});
     },
     proceed() {
-      // TODO
+      methods.setMeta({
+        isNew: true,
+        copyFromLast: false,
+        patient: this.selectedPatient
+      });
+      router.push({name: 'new-appointment'});
     }
   },
   beforeMount() {

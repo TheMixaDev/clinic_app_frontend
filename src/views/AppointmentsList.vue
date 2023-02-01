@@ -404,8 +404,9 @@ export default {
     },
     repeatAppointment() {
       methods.setMeta({
-        type: 0,
-        data: this.selectedAppointment
+        isNew: true,
+        copyFromLast: true,
+        appointment: this.selectedAppointment
       });
       router.push({name: 'new-appointment'});
     },

@@ -1,11 +1,11 @@
 <template>
-  <button @click="showSelect = !showSelect" class="placeholder">
-    {{ !showSelect ? (selected.length > 0 ? selected.length+' элементов' : 'Выбрать') : 'Выберите' }}
+  <button @click="showSelect = !showSelect" class="placeholder" :style="selected.length > 0 && !showSelect ? `color: black; opacity: 1` : ``">
+    {{ !showSelect ? (selected.length > 0 ? selected.map(el => el.name).join(", ") : 'Выбрать') : 'Выберите' }}
   </button>
   <template v-if="showSelect">
     <input class="search animate__animated animate__fadeInDownBig" type="text" placeholder="Поиск" v-model="search">
     <div class="select">
-      <div class="option" :class="{'selected': option.selected}" @click="select(option)" v-for="option in options" :key="Date.now()+option.value">
+      <div class="option" :class="{'selected': option.selected}" @click="select(option)" v-for="option in options" :key="pid*1000+option.value">
         {{ option.name }}
       </div>
     </div>
@@ -17,6 +17,7 @@ export default {
   name: "MultiSelect",
   props: {
     input: Array,
+    pid: Number
   },
   data() {
     return {
@@ -27,21 +28,19 @@ export default {
   },
   methods: {
     select(option) {
-      if (option.selected) {
-        option.selected = false;
-        let i = 0;
-        let index = null;
-        this.selected.forEach(el => {
-          if (el.value == option.value) {
-            index = i;
-          }
-          i++;
-        })
-        if (index)
-          this.selected.splice(index, 1);
-      } else {
-        option.selected = true;
+      option.selected = !option.selected;
+      if(option.selected)
         this.selected.push(option);
+      this.selected = this.selected.filter(el => el.selected && el.name !== option.selected.name);
+      for(let el of this.input)
+        if(el.name === option.name)
+          el.selected = option.selected;
+    },
+    updateSelected(data) {
+      for(let i of data) {
+        if(i.selected) {
+          this.selected.push(i);
+        }
       }
     }
   },
@@ -49,7 +48,7 @@ export default {
     options() {
       return this.input.filter(el => el.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1)
     }
-  }
+  },
 }
 </script>
 
