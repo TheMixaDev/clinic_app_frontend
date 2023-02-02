@@ -409,7 +409,7 @@ export default {
             name: "Ивана",
             patronymic: "Ивановна",
             rank: "Врач",
-            position: "Звание",
+            position: "Генерал-майор",
             login: "login",
 
             highlight: false
