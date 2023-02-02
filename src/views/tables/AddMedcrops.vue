@@ -2,16 +2,24 @@
   <div className="container-fluid animate__animated animate__fadeIn">
     <div className="row header">
       <div className="col">
-        <h1 className="heading"><router-link className="btn back btn-primary second-add" to="/new-appointment"><i class="fa-solid fa-arrow-left"></i>
-        </router-link>Новые анализы</h1>
+        <h1 className="heading"><router-link className="btn back btn-primary second-add" to="/appointment"><i class="fa-solid fa-arrow-left"></i>
+        </router-link>Новые посевы</h1>
       </div>
     </div>
     <div class="container main-part">
-      <h4>АТ к β2-гликопротеину</h4>
+      <h4>Заголовок</h4>
       <div class="row analizes-row">
         <div class="col analizes-col">
-          <h6>Дата анализа</h6>
+          <h6>Дата посева</h6>
           <input class="date" type="date">
+        </div>
+        <div class="col analizes-col">
+          <h6>Локализация</h6>
+          <input class="input-outline" type="text">
+        </div>
+        <div class="col analizes-col">
+          <h6>Микрофлора</h6>
+          <input class="input-outline" type="text">
         </div>
         <div class="col analizes-col">
           <h6>Значение</h6>
@@ -23,11 +31,19 @@
         </div>
         <div class="row button-add"><button className="btn btn-primary first-add add"><i class="fa-solid fa-plus"></i> Добавить анализ</button></div>
       </div>
-      <h4>АТ к кардиолипину</h4>
+      <h4>Заголовок</h4>
       <div class="row analizes-row">
         <div class="col analizes-col">
-          <h6>Дата анализа</h6>
+          <h6>Дата посева</h6>
           <input class="date" type="date">
+        </div>
+        <div class="col analizes-col">
+          <h6>Локализация</h6>
+          <input class="input-outline" type="text">
+        </div>
+        <div class="col analizes-col">
+          <h6>Микрофлора</h6>
+          <input class="input-outline" type="text">
         </div>
         <div class="col analizes-col">
           <h6>Значение</h6>
@@ -39,11 +55,19 @@
         </div>
         <div class="row button-add"><button className="btn btn-primary first-add add"><i class="fa-solid fa-plus"></i> Добавить анализ</button></div>
       </div>
-      <h4>АТ к аннексину V</h4>
+      <h4>Заголовок</h4>
       <div class="row analizes-row">
         <div class="col analizes-col">
-          <h6>Дата анализа</h6>
+          <h6>Дата посева</h6>
           <input class="date" type="date">
+        </div>
+        <div class="col analizes-col">
+          <h6>Локализация</h6>
+          <input class="input-outline" type="text">
+        </div>
+        <div class="col analizes-col">
+          <h6>Микрофлора</h6>
+          <input class="input-outline" type="text">
         </div>
         <div class="col analizes-col">
           <h6>Значение</h6>
@@ -55,109 +79,19 @@
         </div>
         <div class="row button-add"><button className="btn btn-primary first-add add"><i class="fa-solid fa-plus"></i> Добавить анализ</button></div>
       </div>
-      <h4>АТ к ХГЧ</h4>
+      <h4>Заголовок</h4>
       <div class="row analizes-row">
         <div class="col analizes-col">
-          <h6>Дата анализа</h6>
+          <h6>Дата посева</h6>
           <input class="date" type="date">
         </div>
         <div class="col analizes-col">
-          <h6>Значение</h6>
+          <h6>Локализация</h6>
           <input class="input-outline" type="text">
         </div>
-        <div className="col row-buttons-analizes">
-          <button className="btn btn-primary save"><i class="fa-regular fa-circle-check save-icon"></i>  Сохранить</button>
-          <button className="btn btn-primary save"><i class="fa-regular fa-circle-xmark delete-icon"></i>  Удалить</button>
-        </div>
-        <div class="row button-add"><button className="btn btn-primary first-add add"><i class="fa-solid fa-plus"></i> Добавить анализ</button></div>
-      </div>
-      <!--router-link className="btn btn-primary first-add" to="/doctors-directory">Сбросить пароль
-      </router-link-->
-      <h4>АТ к протромбину</h4>
-      <div class="row analizes-row">
         <div class="col analizes-col">
-          <h6>Дата анализа</h6>
-          <input class="date" type="date">
-        </div>
-        <div class="col analizes-col">
-          <h6>Значение</h6>
+          <h6>Микрофлора</h6>
           <input class="input-outline" type="text">
-        </div>
-        <div className="col row-buttons-analizes">
-          <button className="btn btn-primary save"><i class="fa-regular fa-circle-check save-icon"></i>  Сохранить</button>
-          <button className="btn btn-primary save"><i class="fa-regular fa-circle-xmark delete-icon"></i>  Удалить</button>
-        </div>
-        <div class="row button-add"><button className="btn btn-primary first-add add"><i class="fa-solid fa-plus"></i> Добавить анализ</button></div>
-      </div>
-      <h4>АТ к фосфатидилсерину</h4>
-      <div class="row analizes-row">
-        <div class="col analizes-col">
-          <h6>Дата анализа</h6>
-          <input class="date" type="date">
-        </div>
-        <div class="col analizes-col">
-          <h6>Значение</h6>
-          <input class="input-outline" type="text">
-        </div>
-        <div className="col row-buttons-analizes">
-          <button className="btn btn-primary save"><i class="fa-regular fa-circle-check save-icon"></i>  Сохранить</button>
-          <button className="btn btn-primary save"><i class="fa-regular fa-circle-xmark delete-icon"></i>  Удалить</button>
-        </div>
-        <div class="row button-add"><button className="btn btn-primary first-add add"><i class="fa-solid fa-plus"></i> Добавить анализ</button></div>
-      </div>
-      <h4>АТ к фосфатидил к-те</h4>
-      <div class="row analizes-row">
-        <div class="col analizes-col">
-          <h6>Дата анализа</h6>
-          <input class="date" type="date">
-        </div>
-        <div class="col analizes-col">
-          <h6>Значение</h6>
-          <input class="input-outline" type="text">
-        </div>
-        <div className="col row-buttons-analizes">
-          <button className="btn btn-primary save"><i class="fa-regular fa-circle-check save-icon"></i>  Сохранить</button>
-          <button className="btn btn-primary save"><i class="fa-regular fa-circle-xmark delete-icon"></i>  Удалить</button>
-        </div>
-        <div class="row button-add"><button className="btn btn-primary first-add add"><i class="fa-solid fa-plus"></i> Добавить анализ</button></div>
-      </div>
-      <h4>АТ к фосфатидилинозитолу</h4>
-      <div class="row analizes-row">
-        <div class="col analizes-col">
-          <h6>Дата анализа</h6>
-          <input class="date" type="date">
-        </div>
-        <div class="col analizes-col">
-          <h6>Значение</h6>
-          <input class="input-outline" type="text">
-        </div>
-        <div className="col row-buttons-analizes">
-          <button className="btn btn-primary save"><i class="fa-regular fa-circle-check save-icon"></i>  Сохранить</button>
-          <button className="btn btn-primary save"><i class="fa-regular fa-circle-xmark delete-icon"></i>  Удалить</button>
-        </div>
-        <div class="row button-add"><button className="btn btn-primary first-add add"><i class="fa-solid fa-plus"></i> Добавить анализ</button></div>
-      </div>
-      <h4>Антинуклеарный фактор</h4>
-      <div class="row analizes-row">
-        <div class="col analizes-col">
-          <h6>Дата анализа</h6>
-          <input class="date" type="date">
-        </div>
-        <div class="col analizes-col">
-          <h6>Значение</h6>
-          <input class="input-outline" type="text">
-        </div>
-        <div className="col row-buttons-analizes">
-          <button className="btn btn-primary save"><i class="fa-regular fa-circle-check save-icon"></i>  Сохранить</button>
-          <button className="btn btn-primary save"><i class="fa-regular fa-circle-xmark delete-icon"></i>  Удалить</button>
-        </div>
-        <div class="row button-add"><button className="btn btn-primary first-add add"><i class="fa-solid fa-plus"></i> Добавить анализ</button></div>
-      </div>
-      <h4>АТ к 2сп ДНК</h4>
-      <div class="row analizes-row">
-        <div class="col analizes-col">
-          <h6>Дата анализа</h6>
-          <input class="date" type="date">
         </div>
         <div class="col analizes-col">
           <h6>Значение</h6>
@@ -212,6 +146,7 @@
   align-items: center;
   height: 6rem;
   align-content: center;
+  justify-content: center;
 }
 .analizes-row {
   gap: 2rem;

@@ -64,7 +64,6 @@
             <h6 class="patient-name">Аллергические реакции</h6>
             <MultiSelect :input="state.detailed.options4" :pid=4 ref="options4"></MultiSelect>
           </div>
-
         </div>
         <div class="row row-wrapper">
           <div class="col select-wrapper">
@@ -79,7 +78,6 @@
             <h6 class="patient-name">Обследование на наследственную тромбофилию</h6>
             <MultiSelect :input="state.detailed.options7" :pid=7 ref="options7"></MultiSelect>
           </div>
-
         </div>
       </div>
       <div class="container-fluid anamnesis">
@@ -511,9 +509,8 @@
         </tr>
         </tbody>
       </table>
-
         <div class="row col-buttons">
-          <router-link className="btn btn-primary first-add" to="/analizesfirst"><i class="fa-solid fa-plus button-icon"></i>Добавить
+          <router-link className="btn btn-primary first-add" to="/appointment/table/analyzes/1"><i class="fa-solid fa-plus button-icon"></i>Добавить
           </router-link>
           <a class="btn btn-primary edit" href="#"><i class="fa-solid fa-pen button-icon"></i>Редактировать</a>
           <a class="btn btn-primary delete" href="#"><i class="fa-solid fa-trash button-icon"></i>Удалить</a>
@@ -902,7 +899,7 @@
           </tbody>
         </table>
         <div class="row col-buttons">
-          <router-link className="btn btn-primary first-add" to="/analizessecond"><i class="fa-solid fa-plus button-icon"></i>Добавить
+          <router-link className="btn btn-primary first-add" to="/appointment/table/analyzes/2"><i class="fa-solid fa-plus button-icon"></i>Добавить
           </router-link>
           <a class="btn btn-primary edit" href="#"><i class="fa-solid fa-pen button-icon"></i>Редактировать</a>
           <a class="btn btn-primary delete" href="#"><i class="fa-solid fa-trash button-icon"></i>Удалить</a>
@@ -1143,7 +1140,7 @@
           </tbody>
         </table>
         <div class="row col-buttons">
-          <router-link className="btn btn-primary first-add" to="/analizesthird"><i class="fa-solid fa-plus button-icon"></i>Добавить
+          <router-link className="btn btn-primary first-add" to="/appointment/table/analyzes/3"><i class="fa-solid fa-plus button-icon"></i>Добавить
           </router-link>
           <a class="btn btn-primary edit" href="#"><i class="fa-solid fa-pen button-icon"></i>Редактировать</a>
           <a class="btn btn-primary delete" href="#"><i class="fa-solid fa-trash button-icon"></i>Удалить</a>
@@ -1254,7 +1251,7 @@
           </tbody>
         </table>
         <div class="row col-buttons">
-          <router-link className="btn btn-primary first-add" to="/addmedcrops"><i class="fa-solid fa-plus button-icon"></i>Добавить
+          <router-link className="btn btn-primary first-add" to="/appointment/table/crops"><i class="fa-solid fa-plus button-icon"></i>Добавить
           </router-link>
           <a class="btn btn-primary edit" href="#"><i class="fa-solid fa-pen button-icon"></i>Редактировать</a>
           <a class="btn btn-primary delete" href="#"><i class="fa-solid fa-trash button-icon"></i>Удалить</a>
@@ -1534,7 +1531,7 @@
           </tbody>
         </table>
         <div class="row col-buttons">
-          <router-link className="btn btn-primary first-add" to="/addchildbirth"><i class="fa-solid fa-plus button-icon"></i>Добавить
+          <router-link className="btn btn-primary first-add" to="/appointment/table/birth"><i class="fa-solid fa-plus button-icon"></i>Добавить
           </router-link>
           <a class="btn btn-primary edit" href="#"><i class="fa-solid fa-pen button-icon"></i>Редактировать</a>
           <a class="btn btn-primary delete" href="#"><i class="fa-solid fa-trash button-icon"></i>Удалить</a>

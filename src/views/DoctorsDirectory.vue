@@ -91,7 +91,7 @@
     </div>
     <div className="container buttons-container">
       <div className="col row-buttons">
-        <router-link className="btn btn-primary first-add" to="/new-doctor"><i
+        <router-link className="btn btn-primary first-add" to="/doctor"><i
             className="fa-solid fa-plus button-icon"></i>Новый
         </router-link>
         <button class="btn btn-primary edit" v-bind:disabled="this.selectedDoctor === -1" @click="editDoctor()"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>

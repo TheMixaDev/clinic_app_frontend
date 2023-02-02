@@ -2,7 +2,7 @@
   <div className="container-fluid animate__animated animate__fadeIn">
     <div className="row header">
       <div className="col">
-        <h1 className="heading"><router-link className="btn back btn-primary second-add" to="/new-appointment"><i class="fa-solid fa-arrow-left"></i>
+        <h1 className="heading"><router-link className="btn back btn-primary second-add" to="/appointment"><i class="fa-solid fa-arrow-left"></i>
         </router-link>Роды</h1>
       </div>
     </div>

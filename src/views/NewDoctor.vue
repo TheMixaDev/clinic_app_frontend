@@ -2,7 +2,7 @@
   <div className="container-fluid animate__animated animate__fadeIn">
     <div className="row header">
       <div className="col">
-        <h1 className="heading"><router-link className="btn back btn-primary second-add" to="/doctors-directory"><i class="fa-solid fa-arrow-left"></i>
+        <h1 className="heading"><router-link className="btn back btn-primary second-add" to="/admin"><i class="fa-solid fa-arrow-left"></i>
         </router-link>{{edit.enabled ? `Редактирование врача` : `Новый врач`}}</h1>
       </div>
     </div>
@@ -24,7 +24,7 @@
     </div>
     <div className="container buttons-container">
       <div className="col row-buttons">
-        <button className="btn btn-primary first-add" to="/doctors-directory" @click="createDoctor()">Сохранить</button>
+        <button className="btn btn-primary first-add" @click="createDoctor()">Сохранить</button>
       </div>
     </div>
   </div>

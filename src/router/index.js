@@ -5,42 +5,17 @@ import PatientsDirectory from "@/views/PatientsDirectory.vue";
 import NewPatient from "@/views/NewPatient.vue";
 import DoctorsDirectory from "@/views/DoctorsDirectory.vue";
 import NewDoctor from "@/views/NewDoctor.vue";
-import AddAnalizesFirstTable from "@/views/AddAnalizesFirstTable.vue";
-import AddAnalizesSecondTable from "@/views/AddAnalizesSecondTable.vue";
-import AddAnalizesThirdTable from "@/views/AddAnalizesThirdTable.vue";
-import AddMedcrops from "@/views/AddMedcrops.vue";
-import AddChildbirth from "@/views/AddChildbirth.vue";
+import AddAnalyzesFirst from "@/views/tables/AddAnalyzesFirst.vue";
+import AddAnalyzesSecond from "@/views/tables/AddAnalyzesSecond.vue";
+import AddAnalyzesThird from "@/views/tables/AddAnalyzesThird.vue";
+import AddMedcrops from "@/views/tables/AddMedcrops.vue";
+import AddChildbirth from "@/views/tables/AddChildbirth.vue";
 
 const routes = [
   {
     path: '/',
     name: 'login',
     component: LogInForm
-  },
-  {
-    path: '/analizesfirst',
-    name: 'analizesfirst',
-    component: AddAnalizesFirstTable
-  },
-  {
-    path: '/analizessecond',
-    name: 'analizessecond',
-    component: AddAnalizesSecondTable
-  },
-  {
-    path: '/analizesthird',
-    name: 'analizesthird',
-    component: AddAnalizesThirdTable
-  },
-  {
-    path: '/addmedcrops',
-    name: 'addmedcrops',
-    component: AddMedcrops
-  },
-  {
-    path: '/addchildbirth',
-    name: 'addchildbirth',
-    component: AddChildbirth
   },
   {
     path: '/appointments',
@@ -51,27 +26,52 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AppointmentsList.vue')
   },
   {
-    path: '/new-appointment',
+    path: '/appointment',
     name: 'new-appointment',
     component: NewAppointment
   },
   {
-    path: '/patients-directory',
+    path: '/appointment/table/analyzes/1',
+    name: 'table-analyzes-1',
+    component: AddAnalyzesFirst
+  },
+  {
+    path: '/appointment/table/analyzes/2',
+    name: 'table-analyzes-2',
+    component: AddAnalyzesSecond
+  },
+  {
+    path: '/appointment/table/analyzes/3',
+    name: 'table-analyzes-3',
+    component: AddAnalyzesThird
+  },
+  {
+    path: '/appointment/table/crops',
+    name: 'table-crops',
+    component: AddMedcrops
+  },
+  {
+    path: '/appointment/table/birth',
+    name: 'table-birth',
+    component: AddChildbirth
+  },
+  {
+    path: '/patients',
     name: 'patients-directory',
     component: PatientsDirectory
   },
   {
-    path: '/new-patient',
+    path: '/patient',
     name: 'new-patient',
     component: NewPatient
   },
   {
-    path: '/doctors-directory',
+    path: '/admin',
     name: 'doctors-directory',
     component: DoctorsDirectory
   },
   {
-    path: '/new-doctor',
+    path: '/doctor',
     name: 'new-doctor',
     component: NewDoctor
   }

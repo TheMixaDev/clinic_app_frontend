@@ -70,7 +70,7 @@
     </div>
     <div className="container buttons-container">
       <div className="col row-buttons">
-          <router-link className="btn btn-primary first-add" to="/new-patient" v-bind:disabled="this.selectedPatient !== -1"><i
+          <router-link className="btn btn-primary first-add" to="/patient" v-bind:disabled="this.selectedPatient !== -1"><i
               className="fa-solid fa-plus button-icon"></i>Новый
           </router-link>
           <button class="btn btn-primary edit" style="width: 30vw;" v-bind:disabled="this.selectedPatient === -1" @click="editPatient()"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>
