@@ -5,12 +5,42 @@ import PatientsDirectory from "@/views/PatientsDirectory.vue";
 import NewPatient from "@/views/NewPatient.vue";
 import DoctorsDirectory from "@/views/DoctorsDirectory.vue";
 import NewDoctor from "@/views/NewDoctor.vue";
+import AddAnalizesFirstTable from "@/views/AddAnalizesFirstTable.vue";
+import AddAnalizesSecondTable from "@/views/AddAnalizesSecondTable.vue";
+import AddAnalizesThirdTable from "@/views/AddAnalizesThirdTable.vue";
+import AddMedcrops from "@/views/AddMedcrops.vue";
+import AddChildbirth from "@/views/AddChildbirth.vue";
 
 const routes = [
   {
     path: '/',
     name: 'login',
     component: LogInForm
+  },
+  {
+    path: '/analizesfirst',
+    name: 'analizesfirst',
+    component: AddAnalizesFirstTable
+  },
+  {
+    path: '/analizessecond',
+    name: 'analizessecond',
+    component: AddAnalizesSecondTable
+  },
+  {
+    path: '/analizesthird',
+    name: 'analizesthird',
+    component: AddAnalizesThirdTable
+  },
+  {
+    path: '/addmedcrops',
+    name: 'addmedcrops',
+    component: AddMedcrops
+  },
+  {
+    path: '/addchildbirth',
+    name: 'addchildbirth',
+    component: AddChildbirth
   },
   {
     path: '/appointments',

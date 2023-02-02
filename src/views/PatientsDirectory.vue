@@ -6,7 +6,6 @@
         <h1 className="heading"><button className="btn back btn-primary second-add" @click="router().go(-1);"><i class="fa-solid fa-arrow-left"></i>
         </button>Справочник пациентов</h1>
       </div>
-      Или сюда
       <div className="col">
         <div className="container table-container">
           <div className="input-group">
@@ -18,11 +17,14 @@
               <label className="form-label" htmlFor="form1">Поиск</label>
             </div>
           </div>
-          Ян добавь сюда чекбокс - "Только пациенты без первого приема"
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="searchCheckBox" />
+          <label class="form-check-label searchCheckBox" for="searchCheckBox">Только пациенты без первого приема</label>
         </div>
       </div>
     </div>
-    <div className="container main-part">
+    <div className="container patients-directory-main-part">
       <table className="table align-middle mb-0 table-hover table-striped table-bordered bg-white">
         <thead className="bg-light">
         <tr class="table-first-row">
@@ -71,17 +73,21 @@
           <router-link className="btn btn-primary first-add" to="/new-patient" v-bind:disabled="this.selectedPatient !== -1"><i
               className="fa-solid fa-plus button-icon"></i>Новый
           </router-link>
-          <button class="btn btn-primary edit" v-bind:disabled="this.selectedPatient === -1" @click="editPatient()"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>
+          <button class="btn btn-primary edit" style="width: 30vw;" v-bind:disabled="this.selectedPatient === -1" @click="editPatient()"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>
           <button class="btn btn-primary delete" v-bind:disabled="this.selectedPatient === -1" @click="requestDelete()"><i class="fa-solid fa-trash button-icon"></i>Удалить</button>
       </div>
-      <div className="col row-buttons">
-      <button className="btn btn-primary second-add" v-bind:disabled="this.selectedPatient === -1" @click="proceed()">Выбрать</button>
-        и эту кнопку расположи под остальными, или тоже как-то красиво крч
+      <div className="col row-button">
+      <button className="btn btn-primary second-add select" v-bind:disabled="this.selectedPatient === -1" @click="proceed()">Выбрать</button>
       </div>
     </div>
   </div>
 </template>
-<style>
+<style scoped>
+.form-check-label.searchCheckBox {
+  display: flex;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
 .container-fluid.patients-container {
   overflow-y: hidden;
 }
@@ -103,6 +109,10 @@
 
 .heading {
   text-align: left;
+}
+.select {
+  max-width: 51vw!important;
+  width: auto!important;
 }
 .table-first-row {
   border-top: none;
@@ -196,10 +206,10 @@ th:last-child {
   border-radius: 0px 14px 0px 0px !important;
 }
 
-.main-part {
+.patients-directory-main-part {
   margin-top: 2rem;
   height: auto;
-  max-height: 60vh;
+  max-height: 50vh;
   width: 100vw;
   overflow-y: scroll;
 }
@@ -229,7 +239,10 @@ thead {
   flex-direction: row;
   align-items: flex-start;
 }
-
+.row-button {
+  display: flex;
+  justify-content: flex-end;
+}
 .col-buttons {
   display: flex;
   flex-direction: column;
@@ -255,10 +268,20 @@ thead {
 
 .edit {
   background: linear-gradient(94.83deg, #00A3FF 1.33%, #00C2FF 100%);
-  border: 1px solid rgba(0, 117, 255, 0.3);
+  border: 1px solid rgba(0, 117, 255, 0.99);
   border-radius: 9px;
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding-left: 2rem!important;
+  padding-right: 2rem!important;
+  width: auto!important;
+}
+.edit:disabled {
+  opacity: 100%!important;
+  background: linear-gradient(94.83deg, #00A3FF 1.33%, #00C2FF 100%);
+  border: 1px solid rgba(255, 0, 213, 0.3);
+  border-radius: 9px;
+  padding-left: 2rem!important;
+  padding-right: 2rem!important;
+  width: auto!important;
 }
 
 edit:hover {

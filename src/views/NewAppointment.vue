@@ -513,7 +513,8 @@
       </table>
 
         <div class="row col-buttons">
-          <a class="btn btn-primary first-add" href="#"><i class="fa-solid fa-plus button-icon"></i>Добавить</a>
+          <router-link className="btn btn-primary first-add" to="/analizesfirst"><i class="fa-solid fa-plus button-icon"></i>Добавить
+          </router-link>
           <a class="btn btn-primary edit" href="#"><i class="fa-solid fa-pen button-icon"></i>Редактировать</a>
           <a class="btn btn-primary delete" href="#"><i class="fa-solid fa-trash button-icon"></i>Удалить</a>
         </div>
@@ -901,7 +902,8 @@
           </tbody>
         </table>
         <div class="row col-buttons">
-          <a class="btn btn-primary first-add" href="#"><i class="fa-solid fa-plus button-icon"></i>Добавить</a>
+          <router-link className="btn btn-primary first-add" to="/analizessecond"><i class="fa-solid fa-plus button-icon"></i>Добавить
+          </router-link>
           <a class="btn btn-primary edit" href="#"><i class="fa-solid fa-pen button-icon"></i>Редактировать</a>
           <a class="btn btn-primary delete" href="#"><i class="fa-solid fa-trash button-icon"></i>Удалить</a>
         </div>
@@ -1141,7 +1143,8 @@
           </tbody>
         </table>
         <div class="row col-buttons">
-          <a class="btn btn-primary first-add" href="#"><i class="fa-solid fa-plus button-icon"></i>Добавить</a>
+          <router-link className="btn btn-primary first-add" to="/analizesthird"><i class="fa-solid fa-plus button-icon"></i>Добавить
+          </router-link>
           <a class="btn btn-primary edit" href="#"><i class="fa-solid fa-pen button-icon"></i>Редактировать</a>
           <a class="btn btn-primary delete" href="#"><i class="fa-solid fa-trash button-icon"></i>Удалить</a>
         </div>
@@ -1251,7 +1254,8 @@
           </tbody>
         </table>
         <div class="row col-buttons">
-          <a class="btn btn-primary first-add" href="#"><i class="fa-solid fa-plus button-icon"></i>Добавить</a>
+          <router-link className="btn btn-primary first-add" to="/addmedcrops"><i class="fa-solid fa-plus button-icon"></i>Добавить
+          </router-link>
           <a class="btn btn-primary edit" href="#"><i class="fa-solid fa-pen button-icon"></i>Редактировать</a>
           <a class="btn btn-primary delete" href="#"><i class="fa-solid fa-trash button-icon"></i>Удалить</a>
         </div>
@@ -1530,7 +1534,8 @@
           </tbody>
         </table>
         <div class="row col-buttons">
-          <a class="btn btn-primary first-add" href="#"><i class="fa-solid fa-plus button-icon"></i>Добавить</a>
+          <router-link className="btn btn-primary first-add" to="/addchildbirth"><i class="fa-solid fa-plus button-icon"></i>Добавить
+          </router-link>
           <a class="btn btn-primary edit" href="#"><i class="fa-solid fa-pen button-icon"></i>Редактировать</a>
           <a class="btn btn-primary delete" href="#"><i class="fa-solid fa-trash button-icon"></i>Удалить</a>
         </div>

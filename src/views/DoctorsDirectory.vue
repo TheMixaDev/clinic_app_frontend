@@ -96,13 +96,30 @@
         </router-link>
         <button class="btn btn-primary edit" v-bind:disabled="this.selectedDoctor === -1" @click="editDoctor()"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>
         <button class="btn btn-primary delete" v-bind:disabled="this.selectedDoctor === -1" @click="requestDelete()"><i class="fa-solid fa-trash button-icon"></i>Удалить</button>
-        <!--router-link className="btn btn-primary second-add" to="/new-appointment">Выбрать
-        </router-link-->
+      </div>
+      <div className="col row-button">
+        <button class="btn btn-primary download"><i class="fa-solid fa-cloud-arrow-down"></i> Выгрузить в StatTech
+        </button>
       </div>
     </div>
   </div>
 </template>
-<style>
+<style scoped>
+.row-button {
+  display: flex;
+  justify-content: flex-end;
+}
+.download {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+.download:hover{
+  background: transparent;
+  color: #525252;
+  border: none;
+  box-shadow: none;
+}
 .password {
   background: transparent;
   box-shadow: none;

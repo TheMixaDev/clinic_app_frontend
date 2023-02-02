@@ -2,25 +2,107 @@
   <div className="container-fluid animate__animated animate__fadeIn">
     <div className="row header">
       <div className="col">
-        <h1 className="heading"><router-link className="btn back btn-primary second-add" to="/doctors-directory"><i class="fa-solid fa-arrow-left"></i>
-        </router-link>{{edit.enabled ? `Редактирование врача` : `Новый врач`}}</h1>
+        <h1 className="heading"><router-link className="btn back btn-primary second-add" to="/new-appointment"><i class="fa-solid fa-arrow-left"></i>
+        </router-link>Новые посевы</h1>
       </div>
     </div>
     <div class="container main-part">
-      <h6>Фамилия</h6>
-      <input class="input-outline" type="text" ref="surname" v-model="edit.doctor.surname">
-      <h6>Имя</h6>
-      <input class="input-outline" type="text" ref="name" v-model="edit.doctor.name">
-      <h6>Отчество</h6>
-      <input class="input-outline" type="text" ref="patronymic" v-model="edit.doctor.lastname">
-      <h6>Должность</h6>
-      <input class="input-outline" type="text" ref="position" v-model="edit.doctor.position">
-      <!--router-link className="btn btn-primary first-add" to="/doctors-directory">Сбросить пароль
-      </router-link-->
-      <h6>Логин</h6>
-      <input class="input-outline" type="text" ref="login" v-model="edit.doctor.login">
-      <h6>Пароль</h6>
-      <input class="input-outline" type="text" ref="password" v-bind:disabled="edit.enabled" v-model="edit.doctor.password">
+      <h4>Заголовок</h4>
+      <div class="row analizes-row">
+        <div class="col analizes-col">
+          <h6>Дата посева</h6>
+          <input class="date" type="date">
+        </div>
+        <div class="col analizes-col">
+          <h6>Локализация</h6>
+          <input class="input-outline" type="text">
+        </div>
+        <div class="col analizes-col">
+          <h6>Микрофлора</h6>
+          <input class="input-outline" type="text">
+        </div>
+        <div class="col analizes-col">
+          <h6>Значение</h6>
+          <input class="input-outline" type="text">
+        </div>
+        <div className="col row-buttons-analizes">
+          <button className="btn btn-primary save"><i class="fa-regular fa-circle-check save-icon"></i>  Сохранить</button>
+          <button className="btn btn-primary save"><i class="fa-regular fa-circle-xmark delete-icon"></i>  Удалить</button>
+        </div>
+        <div class="row button-add"><button className="btn btn-primary first-add add"><i class="fa-solid fa-plus"></i> Добавить анализ</button></div>
+      </div>
+      <h4>Заголовок</h4>
+      <div class="row analizes-row">
+        <div class="col analizes-col">
+          <h6>Дата посева</h6>
+          <input class="date" type="date">
+        </div>
+        <div class="col analizes-col">
+          <h6>Локализация</h6>
+          <input class="input-outline" type="text">
+        </div>
+        <div class="col analizes-col">
+          <h6>Микрофлора</h6>
+          <input class="input-outline" type="text">
+        </div>
+        <div class="col analizes-col">
+          <h6>Значение</h6>
+          <input class="input-outline" type="text">
+        </div>
+        <div className="col row-buttons-analizes">
+          <button className="btn btn-primary save"><i class="fa-regular fa-circle-check save-icon"></i>  Сохранить</button>
+          <button className="btn btn-primary save"><i class="fa-regular fa-circle-xmark delete-icon"></i>  Удалить</button>
+        </div>
+        <div class="row button-add"><button className="btn btn-primary first-add add"><i class="fa-solid fa-plus"></i> Добавить анализ</button></div>
+      </div>
+      <h4>Заголовок</h4>
+      <div class="row analizes-row">
+        <div class="col analizes-col">
+          <h6>Дата посева</h6>
+          <input class="date" type="date">
+        </div>
+        <div class="col analizes-col">
+          <h6>Локализация</h6>
+          <input class="input-outline" type="text">
+        </div>
+        <div class="col analizes-col">
+          <h6>Микрофлора</h6>
+          <input class="input-outline" type="text">
+        </div>
+        <div class="col analizes-col">
+          <h6>Значение</h6>
+          <input class="input-outline" type="text">
+        </div>
+        <div className="col row-buttons-analizes">
+          <button className="btn btn-primary save"><i class="fa-regular fa-circle-check save-icon"></i>  Сохранить</button>
+          <button className="btn btn-primary save"><i class="fa-regular fa-circle-xmark delete-icon"></i>  Удалить</button>
+        </div>
+        <div class="row button-add"><button className="btn btn-primary first-add add"><i class="fa-solid fa-plus"></i> Добавить анализ</button></div>
+      </div>
+      <h4>Заголовок</h4>
+      <div class="row analizes-row">
+        <div class="col analizes-col">
+          <h6>Дата посева</h6>
+          <input class="date" type="date">
+        </div>
+        <div class="col analizes-col">
+          <h6>Локализация</h6>
+          <input class="input-outline" type="text">
+        </div>
+        <div class="col analizes-col">
+          <h6>Микрофлора</h6>
+          <input class="input-outline" type="text">
+        </div>
+        <div class="col analizes-col">
+          <h6>Значение</h6>
+          <input class="input-outline" type="text">
+        </div>
+        <div className="col row-buttons-analizes">
+          <button className="btn btn-primary save"><i class="fa-regular fa-circle-check save-icon"></i>  Сохранить</button>
+          <button className="btn btn-primary save"><i class="fa-regular fa-circle-xmark delete-icon"></i>  Удалить</button>
+        </div>
+        <div class="row button-add"><button className="btn btn-primary first-add add"><i class="fa-solid fa-plus"></i> Добавить анализ</button></div>
+      </div>
     </div>
     <div className="container buttons-container">
       <div className="col row-buttons">
@@ -30,6 +112,53 @@
   </div>
 </template>
 <style scoped>
+.button-add {
+  display: flex;
+  justify-content: center;
+}
+.save-icon {
+  color: #33ff33;
+}
+.delete-icon {
+  color: #ff0059;
+}
+.save {
+  background: transparent;
+  color: #323232;
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 2rem;
+  box-shadow: none;
+  border: none;
+  width: 10rem;
+}
+.save:hover {
+  background: transparent;
+  color: #0e0e0e;
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 2rem;
+  box-shadow: none;
+  border: none;
+}
+.row-buttons-analizes {
+  display: flex;
+  align-items: center;
+  height: 6rem;
+  align-content: center;
+  justify-content: center;
+}
+.analizes-row {
+  gap: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.22);
+}
+.analizes-col {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  align-items: flex-start;
+}
 .input-outline {
   padding: 0.3rem!important;
   background: #F5F9FF!important;
@@ -156,8 +285,7 @@ th:last-child {
   max-height: 70vh;
   gap: 1.5rem;
   width: 100vw;
-  align-items: center;
-  overflow: hidden;
+  align-items: flex-start;
 }
 
 thead {
