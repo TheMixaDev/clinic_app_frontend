@@ -19,8 +19,8 @@
           </div>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="searchCheckBox" />
-          <label class="form-check-label searchCheckBox" for="searchCheckBox">Только пациенты без первого приема</label>
+          <input class="form-check-input" type="checkbox" v-model="onlyNew" @change="applyFiltersSearch();"/>
+          <label class="form-check-label searchCheckBox" @click="onlyNew = !onlyNew; applyFiltersSearch();">Только пациенты без первого приема</label>
         </div>
       </div>
     </div>
@@ -317,7 +317,8 @@ export default {
   data() {
     return {
       patients: [],
-      selectedPatient: -1
+      selectedPatient: -1,
+      onlyNew: true
     }
   },
   name: 'PatientsDirectory',
@@ -336,6 +337,8 @@ export default {
           fullName: this.$refs.searchInput.value
         }
       };
+      if(this.onlyNew)
+        filters.filters.hasAppointment = false;
       methods.authorizedPOSTRequest(
           this.$cookies,
           `/user/all`,

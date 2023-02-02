@@ -1341,7 +1341,7 @@
           <div class="row">
             <div class="col checkbox-col" v-for="column in state.diagnosis.checkboxes" :key="column.id">
               <div class="form-check form-check-inline" v-for="box in column.boxes" :key="box.label">
-                <input class="form-check-input" type="checkbox" :checked="box.value" />
+                <input class="form-check-input" type="checkbox" v-model="box.value" />
                 <label class="form-check-label" @click="box.value = !box.value">{{ box.label }}</label>
               </div>
             </div>
