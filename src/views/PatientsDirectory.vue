@@ -34,37 +34,37 @@
           <th>Дата рождения</th>
         </tr>
         </thead>
-        <tbody v-for="patient in patients" :key="patient.id">
-        <tr @click="selectPatient(patient)" :style="patient.highlight ? `background-color: #cceffd` : ``">
-          <td>
-            <div className="d-flex align-items-center">
-              <div className="ms-3">
-                <p className="fw-bold mb-1">{{ patient.surname }}</p>
+        <tbody>
+          <tr v-for="patient in patients" :key="patient.id" @click="selectPatient(patient)" :style="patient.highlight ? `background-color: #cceffd` : ``">
+            <td>
+              <div className="d-flex align-items-center">
+                <div className="ms-3">
+                  <p className="fw-bold mb-1">{{ patient.surname }}</p>
+                </div>
               </div>
-            </div>
-          </td>
-          <td>
-            <div className="d-flex align-items-center">
-              <div className="ms-3">
-                <p className="fw-bold mb-1">{{ patient.name }}</p>
+            </td>
+            <td>
+              <div className="d-flex align-items-center">
+                <div className="ms-3">
+                  <p className="fw-bold mb-1">{{ patient.name }}</p>
+                </div>
               </div>
-            </div>
-          </td>
-          <td>
-            <div className="d-flex align-items-center">
-              <div className="ms-3">
-                <p className="fw-bold mb-1">{{ patient.patronymic }}</p>
+            </td>
+            <td>
+              <div className="d-flex align-items-center">
+                <div className="ms-3">
+                  <p className="fw-bold mb-1">{{ patient.patronymic }}</p>
+                </div>
               </div>
-            </div>
-          </td>
-          <td>
-            <div className="d-flex align-items-center">
-              <div className="ms-3">
-                <p className="fw-bold mb-1">{{ patient.birthdate }}</p>
+            </td>
+            <td>
+              <div className="d-flex align-items-center">
+                <div className="ms-3">
+                  <p className="fw-bold mb-1">{{ patient.birthdate }}</p>
+                </div>
               </div>
-            </div>
-          </td>
-        </tr>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
