@@ -1,4 +1,5 @@
 <template>
+  <div id="modal"></div>
   <div class="container-fluid animate__animated animate__fadeIn">
     <div class="row header">
       <div class="col">
@@ -89,1061 +90,44 @@
       </div>
       <div class="container-fluid analyzes">
         <h4>Анализы</h4>
-        <table class="table align-middle mb-0 table-hover table-striped table-bordered bg-white">
-        <thead class="bg-light">
-        <tr class="table-first-row">
-          <th></th>
-          <th>2018</th>
-          <th>07.03.22(I)</th>
-          <th>28.06.22(II)</th>
-          <th>06.08.22(III)</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1">Протромбиновый индекс</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1">МНО</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1">Фибриноген</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1">АПТВ</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1">Тромбиновое время</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1">Антитромбин III</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1">Тест на LA</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1">Д-димер</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1">Гомоцистеин</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1">Протеин C</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1">Протеин S</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1"></p>
-              </div>
-            </div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-        <div class="row col-buttons">
-          <router-link className="btn btn-primary first-add" to="/appointment/table/analyzes/1"><i class="fa-solid fa-plus button-icon"></i>Добавить
-          </router-link>
-          <a class="btn btn-primary edit" href="#"><i class="fa-solid fa-pen button-icon"></i>Редактировать</a>
-          <a class="btn btn-primary delete" href="#"><i class="fa-solid fa-trash button-icon"></i>Удалить</a>
-        </div>
-        <table class="table align-middle mb-0 table-hover table-striped table-bordered bg-white">
-          <thead class="bg-light">
-          <tr class="table-first-row">
-            <th></th>
-            <th>2018</th>
-            <th>07.03.22(I)</th>
-            <th>28.06.22(II)</th>
-            <th>06.08.22(III)</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">АТ к β2-гликопротеину</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">АТ к кардиолипину</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">АТ к аннексину V</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">АТ к ХГЧ</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">АТ к протромбину</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">АТ к фосфатидилсерину</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">АТ к фосфатидил к-те</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">АТ к фосфатидилинозитолу</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Антинуклеарный фактор</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">АТ к 2сп ДНК</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-        <div class="row col-buttons">
-          <router-link className="btn btn-primary first-add" to="/appointment/table/analyzes/2"><i class="fa-solid fa-plus button-icon"></i>Добавить
-          </router-link>
-          <a class="btn btn-primary edit" href="#"><i class="fa-solid fa-pen button-icon"></i>Редактировать</a>
-          <a class="btn btn-primary delete" href="#"><i class="fa-solid fa-trash button-icon"></i>Удалить</a>
-        </div>
-        <table class="table align-middle mb-0 table-hover table-striped table-bordered bg-white">
-          <thead class="bg-light">
-          <tr class="table-first-row">
-            <th></th>
-            <th>2018</th>
-            <th>07.03.22(I)</th>
-            <th>28.06.22(II)</th>
-            <th>06.08.22(III)</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Lei</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Hb</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ht</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Tr</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">Ферритин</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">ТТГ</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-        <div class="row col-buttons">
-          <router-link className="btn btn-primary first-add" to="/appointment/table/analyzes/3"><i class="fa-solid fa-plus button-icon"></i>Добавить
-          </router-link>
-          <a class="btn btn-primary edit" href="#"><i class="fa-solid fa-pen button-icon"></i>Редактировать</a>
-          <a class="btn btn-primary delete" href="#"><i class="fa-solid fa-trash button-icon"></i>Удалить</a>
+        <div v-for="(constants, key) in analyze_constants" :key="key">
+          <table class="table align-middle mb-0 table-hover table-striped table-bordered bg-white" v-if="state[`analyzes_${key+1}`].length > 0">
+            <thead class="bg-light">
+              <tr class="table-first-row">
+                <th></th>
+                <th v-for="analyze in state[`analyzes_${key+1}`]" :key="analyze.id" @click="selectTableElement(analyze, `analyzes_${key+1}`)">
+                  {{ analyze.date }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(type, index) in constants" :key="index">
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ type }}</p>
+                  </div>
+                </div>
+              </td>
+              <td v-for="analyze in state[`analyzes_${key+1}`]" :key="analyze.id" @click="selectTableElement(analyze, `analyzes_${key+1}`)" :style="selections[`analyzes_${key+1}`] !== -1 && selections[`analyzes_${key+1}`].id === analyze.id ? `background-color: #cceffd` : ``">
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ analyze.values[index] }}</p>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <div v-else>
+            В данной таблице на данный момент нет данных!
+          </div>
+          <br>
+          <div class="row col-buttons">
+            <button class="btn btn-primary first-add" @click="saveState(()=>router().push({'name':`table-analyzes-${key+1}`}))"><i class="fa-solid fa-plus button-icon"></i>Добавить</button>
+            <button class="btn btn-primary edit" v-if="state[`analyzes_${key+1}`].length > 0" v-bind:disabled="selections[`analyzes_${key+1}`] === -1" @click="editTableElement(`analyzes_${key+1}`, `table-analyzes-${key+1}`)"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>
+            <button class="btn btn-primary delete" v-if="state[`analyzes_${key+1}`].length > 0" v-bind:disabled="selections[`analyzes_${key+1}`] === -1" @click="requestDeleteElement(`analyzes_${key+1}`, 'анализов')"><i class="fa-solid fa-trash button-icon"></i>Удалить</button>
+          </div>
         </div>
       </div>
       <div class="container-fluid medcrops">
@@ -1158,92 +142,32 @@
           </tr>
           </thead>
           <tbody>
-          <tr>
+          <tr v-for="crop in state.crops" :key="crop.id" @click="selectTableElement(crop, 'crops')" :style="selections.crops !== -1 && selections.crops.id === crop.id ? `background-color: #cceffd` : ``">
             <td>
               <div class="d-flex align-items-center">
                 <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
+                  <p class="fw-bold mb-1">{{ crop.date }}</p>
                 </div>
               </div>
             </td>
             <td>
               <div class="d-flex align-items-center">
                 <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
+                  <p class="fw-bold mb-1">{{ crop.localization }}</p>
                 </div>
               </div>
             </td>
             <td>
               <div class="d-flex align-items-center">
                 <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
+                  <p class="fw-bold mb-1">{{ crop.flora }}</p>
                 </div>
               </div>
             </td>
             <td>
               <div class="d-flex align-items-center">
                 <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
+                  <p class="fw-bold mb-1">{{ crop.value }}</p>
                 </div>
               </div>
             </td>
@@ -1251,10 +175,9 @@
           </tbody>
         </table>
         <div class="row col-buttons">
-          <router-link className="btn btn-primary first-add" to="/appointment/table/crops"><i class="fa-solid fa-plus button-icon"></i>Добавить
-          </router-link>
-          <a class="btn btn-primary edit" href="#"><i class="fa-solid fa-pen button-icon"></i>Редактировать</a>
-          <a class="btn btn-primary delete" href="#"><i class="fa-solid fa-trash button-icon"></i>Удалить</a>
+          <button class="btn btn-primary first-add" @click="saveState(()=>router().push({'name':'table-crops'}))"><i class="fa-solid fa-plus button-icon"></i>Добавить</button>
+          <button class="btn btn-primary edit" v-bind:disabled="selections.crops === -1" @click="editTableElement('crops', 'table-crops')"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>
+          <button class="btn btn-primary delete" v-bind:disabled="selections.crops === -1" @click="requestDeleteElement('crops', 'посевов')"><i class="fa-solid fa-trash button-icon"></i>Удалить</button>
         </div>
       </div>
       <div class="container-fluid uzi">
@@ -1354,7 +277,7 @@
           <textarea class="form-control recomendations-text" id="textAreaExample1" rows="4" v-model="state.recommended.text"></textarea>
           <div class="container-fluid recomendations-list">
             <div class="form-check form-check-inline" v-for="box in state.recommended.checkboxes" :key="box.label">
-              <input class="form-check-input" type="checkbox" :checked="box.value" />
+              <input class="form-check-input" type="checkbox" v-model="box.value" />
               <label class="form-check-label" @click="box.value = !box.value"> {{box.label}} </label>
             </div>
           </div>
@@ -1375,166 +298,63 @@
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
+            <tr v-for="birth in state.birth" :key="birth.id" @click="selectTableElement(birth, 'births')" :style="selections.births !== -1 && selections.births.id === birth.id ? `background-color: #cceffd` : ``">
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ birth.birth }}</p>
+                  </div>
                 </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ birth.character }}</p>
+                  </div>
                 </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ birth.weight }}</p>
+                  </div>
                 </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ birth.apgar }}</p>
+                  </div>
                 </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ birth.bloodloss }}</p>
+                  </div>
                 </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ birth.timeperiod }}</p>
+                  </div>
                 </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ birth.complications }}</p>
+                  </div>
                 </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <p class="fw-bold mb-1"></p>
-                </div>
-              </div>
-            </td>
-          </tr>
+              </td>
+            </tr>
           </tbody>
         </table>
         <div class="row col-buttons">
-          <router-link className="btn btn-primary first-add" to="/appointment/table/birth"><i class="fa-solid fa-plus button-icon"></i>Добавить
-          </router-link>
-          <a class="btn btn-primary edit" href="#"><i class="fa-solid fa-pen button-icon"></i>Редактировать</a>
-          <a class="btn btn-primary delete" href="#"><i class="fa-solid fa-trash button-icon"></i>Удалить</a>
+          <button class="btn btn-primary first-add" @click="saveState(()=>router().push({'name':'table-birth'}))"><i class="fa-solid fa-plus button-icon"></i>Добавить</button>
+          <button class="btn btn-primary edit" v-bind:disabled="selections.births === -1" @click="editTableElement('births', 'table-birth')"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>
+          <button class="btn btn-primary delete" v-bind:disabled="selections.births === -1" @click="requestDeleteElement('births', 'родов')"><i class="fa-solid fa-trash button-icon"></i>Удалить</button>
         </div>
       </div>
     </div>
@@ -2075,6 +895,8 @@ import router from "@/router";
 import {settings} from "@/utils/settings";
 import {methods} from "@/utils/methods";
 import {constants} from "@/utils/constants";
+import {createApp} from "vue";
+import DeleteModal from "@/components/DeleteModal.vue";
 
 export default {
   name: "NewAppointment",
@@ -2142,11 +964,40 @@ export default {
         }
       }
       //else router.go(-1);
-    }
+    },
+    selectTableElement(data, element) {
+      if(this.selections[element].id === data.id)
+        return this.selections[element] = -1;
+      this.selections[element] = data;
+    },
+    deleteElement() { // (element, label)
+      // TODO
+    },
+    requestDeleteElement(element, label) {
+      const div = document.getElementById("modal");
+      const app = createApp(DeleteModal, {
+        info: {
+          name: label,
+          type: element,
+          object: this.selections[element]
+        },
+        callback: this.deleteElement
+      });
+      app.mount(div);
+    },
+    editTableElement(element, route) {
+      //methods.setMeta(this.selections[element]);
+      this.saveState(()=>router.push({name: route}));
+    },
   },
   components: {MultiSelect},
   data() {
     return {
+      analyze_constants: [
+          ["Протромбиновый индекс", "МНО", "Фибриноген", "АПТВ", "Тромбиновое время", "Антитромбин III", "Тест на LA", "Д-димер", "Гомоцистеин", "Протеин C", "Протеин S"],
+          ["АТ к β2-гликопротеину", "АТ к кардиолипину", "АТ к аннексину V", "АТ к ХГЧ", "АТ к протромбину", "АТ к фосфатидилсерину", "АТ к фосфатидил к-те", "АТ к фосфатидилинозитолу", "Антинуклеарный фактор", "АТ к 2сп ДНК"],
+          ["Lei", "Hb", "Ht", "Tr", "Ферритин", "ТТГ"]
+      ],
       state: {
         detailed: {
           options1: [
@@ -2258,8 +1109,51 @@ export default {
         height: "",
         mensesDate: "",
         anameses: "",
-        analyzes: {}, //TODO
-        crops: [], //TODO
+        analyzes_1: [ // TODO
+          /*{
+            id: 0,
+            date: "",
+            values: ["","","","","","","","","","",""]
+          }*/
+        ],
+        analyzes_2: [ // TODO
+          /*{
+            id: 0,
+            date: "",
+            values: ["","","","","","","","","",""]
+          }*/
+        ],
+        analyzes_3:  [ // TODO
+          {
+            id: 0,
+            date: "2022",
+            values: ["234","54","34","65","32","65"]
+          },
+          {
+            id: 1,
+            date: "2023",
+            values: ["234","54","34","65","32","65"]
+          },
+          {
+            id: 2,
+            date: "2023",
+            values: ["234","54","34","65","32","65"]
+          },
+          {
+            id: 3,
+            date: "2023",
+            values: ["234","54","34","65","32","65"]
+          },
+        ],
+        crops: [ //TODO
+          {
+            id: 0,
+            date: "",
+            localization: "",
+            flora: "",
+            value: ""
+          }
+        ],
         uzi: {
           text: constants.uziTexts[0],
           files: [] // TODO
@@ -2421,7 +1315,35 @@ export default {
             {label: "Посев из носа, посев из зева", value: false}
           ]
         },
-        birth: {} // TODO
+        birth: [
+          {
+            id: 0,
+            birth: "",
+            character: "",
+            weight: "",
+            apgar: "",
+            bloodloss: "",
+            timeperiod: "",
+            complications: ""
+          },
+          {
+            id: 1,
+            birth: "",
+            character: "",
+            weight: "",
+            apgar: "",
+            bloodloss: "",
+            timeperiod: "",
+            complications: ""
+          }
+        ], // TODO
+      },
+      selections: {
+        analyzes_1: -1,
+        analyzes_2: -1,
+        analyzes_3: -1,
+        crops: -1,
+        births: -1
       },
       doctorName: methods.getDoctorName()
     }

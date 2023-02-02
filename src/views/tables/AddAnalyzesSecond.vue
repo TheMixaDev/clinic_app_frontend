@@ -436,85 +436,11 @@ edit:hover {
 <script>
 import {methods} from "@/utils/methods";
 import {constants} from "@/utils/constants";
-import router from "@/router";
-import {settings} from "@/utils/settings";
 
 
 export default {
-  data() {
-    return {
-      edit: {
-        enabled: false,
-        doctor: {
-          role: constants.Role.DOCTOR,
-          surname: '',
-          name: '',
-          lastname: '',
-          position: '',
-          rank: "Доктор",
-          login: '',
-          password: ''
-        }
-      }
-    }
-  },
-  name: 'NewDoctor',
-  methods: {
-    preload() {
-      let meta = methods.getMeta();
-      if(meta) {
-        this.edit.enabled = true;
-        this.edit.doctor = meta;
-        this.edit.doctor.role = constants.Role.DOCTOR;
-        this.edit.doctor.password = "Редактируется на главной странице";
-        this.edit.doctor.lastname = this.edit.doctor.patronymic;
-      }
-    },
-    createDoctor() {
-      if(settings.designMode)
-        return router.go(-1);
-      if(this.edit.enabled)
-        return this.editDoctor();
-      methods.authorizedPOSTRequest(
-          this.$cookies,
-          `/user`,
-          this.edit.doctor,
-          () => {
-            router.go(-1);
-            methods.runNotification("Пользователь создан");
-          },
-          error => {
-            if(error.code === "ERR_NETWORK") {
-              methods.runNotification("Не удалось подключиться к серверу");
-              return;
-            }
-            methods.runNotification("Не все поля корректно заполнены");
-          }
-      );
-    },
-    editDoctor() {
-      delete this.edit.doctor.password;
-      methods.authorizedPATCHRequest(
-          this.$cookies,
-          `/user`,
-          this.edit.doctor,
-          () => {
-            methods.runNotification("Данные сохранены");
-            router.go(-1);
-          },
-          error => {
-            this.edit.doctor.password = "Редактируется на главной странице";
-            if(error.code === "ERR_NETWORK") {
-              methods.runNotification("Не удалось подключиться к серверу");
-              return;
-            }
-            methods.runNotification("Не все поля корректно заполнены");
-          }
-      )
-    }
-  },
   beforeMount() {
-    methods.checkCookies(this.$cookies, constants.Role.ADMIN, this.preload)
+    methods.checkCookies(this.$cookies, constants.Role.DOCTOR)
   }
 }
 </script>

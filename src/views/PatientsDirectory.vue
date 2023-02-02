@@ -329,7 +329,6 @@ export default {
     applyFiltersSearch() {
       if(settings.designMode)
         return;
-      // TODO filter of patients with appointment or not
       let filters = {
         filters: {
           role: constants.Role.PATIENT,
