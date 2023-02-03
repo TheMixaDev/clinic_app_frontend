@@ -20,6 +20,10 @@
           </div>
         </div>
       </div>
+      <div class="col profile">
+        <p class="doctor-name">{{ doctorName }}</p>
+        <button class="btn btn-primary exit-button"><i class="fa-solid fa-arrow-right-from-bracket"></i> Выход</button>
+      </div>
     </div>
     <div className="container main-part">
       <table className="table align-middle mb-0 table-hover table-striped table-bordered bg-white">
@@ -94,10 +98,10 @@
         <router-link className="btn btn-primary first-add" to="/doctor"><i
             className="fa-solid fa-plus button-icon"></i>Новый
         </router-link>
-        <button class="btn btn-primary edit" v-bind:disabled="this.selectedDoctor === -1" @click="editDoctor()"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>
-        <button class="btn btn-primary delete" v-bind:disabled="this.selectedDoctor === -1" @click="requestDelete()"><i class="fa-solid fa-trash button-icon"></i>Удалить</button>
       </div>
       <div className="col row-button">
+        <button class="btn btn-primary edit" v-bind:disabled="this.selectedDoctor === -1" @click="editDoctor()"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>
+        <button class="btn btn-primary delete" v-bind:disabled="this.selectedDoctor === -1" @click="requestDelete()"><i class="fa-solid fa-trash button-icon"></i>Удалить</button>
         <button class="btn btn-primary download"><i class="fa-solid fa-cloud-arrow-down"></i> Выгрузить в StatTech
         </button>
       </div>
@@ -105,6 +109,26 @@
   </div>
 </template>
 <style scoped>
+.profile {
+  display: flex;
+  gap: 2rem;
+
+  justify-content: flex-end;
+}
+.exit-button {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: #323232;
+  padding: 0;
+}
+.exit-button:hover {
+  background: transparent;
+  border: none;
+  box-shadow: none!important;
+  padding: 0;
+  color: rgba(50, 50, 50, 0.46);
+}
 .row-button {
   display: flex;
   justify-content: flex-end;

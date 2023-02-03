@@ -6,7 +6,7 @@
         <h1 className="heading"><button className="btn back btn-primary second-add" @click="router().go(-1);"><i class="fa-solid fa-arrow-left"></i>
         </button>Справочник пациентов</h1>
       </div>
-      <div className="col">
+      <div className="col search-col">
         <div className="container table-container">
           <div className="input-group">
             <button type="button" className="btn btn-primary search-button" @click="applyFiltersSearch()">
@@ -18,10 +18,15 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="col">
         <div class="form-check">
           <input class="form-check-input" type="checkbox" v-model="onlyNew" @change="applyFiltersSearch();"/>
           <label class="form-check-label searchCheckBox" @click="onlyNew = !onlyNew; applyFiltersSearch();">Только пациенты без первого приема</label>
         </div>
+      </div>
+      <div class="col-md-auto profile">
+        <button class="btn btn-primary exit-button"><i class="fa-solid fa-arrow-right-from-bracket"></i> Выход</button>
       </div>
     </div>
     <div className="container patients-directory-main-part">
@@ -70,21 +75,44 @@
     </div>
     <div className="container buttons-container">
       <div className="col row-buttons">
+        <button className="btn btn-primary second-add select" v-bind:disabled="this.selectedPatient === -1" @click="proceed()">Выбрать</button>
           <router-link className="btn btn-primary first-add" to="/patient" v-bind:disabled="this.selectedPatient !== -1"><i
               className="fa-solid fa-plus button-icon"></i>Новый
-          </router-link>
-          <button class="btn btn-primary edit" style="width: 30vw;" v-bind:disabled="this.selectedPatient === -1" @click="editPatient()"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>
-          <button class="btn btn-primary delete" v-bind:disabled="this.selectedPatient === -1" @click="requestDelete()"><i class="fa-solid fa-trash button-icon"></i>Удалить</button>
-      </div>
+          </router-link></div>
       <div className="col row-button">
-      <button className="btn btn-primary second-add select" v-bind:disabled="this.selectedPatient === -1" @click="proceed()">Выбрать</button>
+        <button class="btn btn-primary edit" style="width: 30vw;" v-bind:disabled="this.selectedPatient === -1" @click="editPatient()"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>
+        <button class="btn btn-primary delete" v-bind:disabled="this.selectedPatient === -1" @click="requestDelete()"><i class="fa-solid fa-trash button-icon"></i>Удалить</button>
       </div>
     </div>
   </div>
 </template>
 <style scoped>
+.col.search-col {
+  display: flex;
+  width: 100%;
+}
+.profile {
+  display: flex;
+  gap: 2rem;
+  justify-content: flex-end;
+}
+.exit-button {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: #323232;
+  padding: 0;
+}
+.exit-button:hover {
+  background: transparent;
+  border: none;
+  box-shadow: none!important;
+  padding: 0;
+  color: rgba(50, 50, 50, 0.46);
+}
 .form-check-label.searchCheckBox {
   display: flex;
+  width: 20vw;
   margin-top: 0.5rem;
   margin-bottom: 1rem;
 }
@@ -112,7 +140,7 @@
 }
 .select {
   max-width: 51vw!important;
-  width: auto!important;
+  width: 15vw!important;
 }
 .table-first-row {
   border-top: none;

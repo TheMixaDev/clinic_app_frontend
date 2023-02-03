@@ -21,7 +21,12 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <input class="input-outline" type="text">
+                <select class="form-select" aria-label="Default select example">
+                  <option hidden >Выберите</option>
+                  <option value="1">1 — Посев мочи</option>
+                  <option value="2">2 — Посев из ц/канала</option>
+                  <option value="3">3 — Посев из носа</option>
+                </select>
               </div>
             </div>
           </td>
@@ -37,7 +42,30 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <input class="input-outline" type="text">
+                <select class="form-select" aria-label="Default select example">
+                  <option hidden >Выберите</option>
+                  <option value="1">E. coli</option>
+                  <option value="2">Enterococcus sp.</option>
+                  <option value="2">Enterococcus faecalis</option>
+                  <option value="3">Klebsiella sp.</option>
+                  <option value="3">Staphyloc. ep.</option>
+                  <option value="3">Streptococcus anginosus</option>
+                  <option value="3">Streptococcus agalact.</option>
+                  <option value="3">Streptococcus or.</option>
+                  <option value="3">Streptococcus spp</option>
+                  <option value="3">Streptococcus pneumoniae</option>
+                  <option value="3">Candida albicans</option>
+                  <option value="3">Lactobacillus sp.</option>
+                  <option value="3">Proteus mirabilis</option>
+                  <option value="3">Citrobacter</option>
+                  <option value="3">Enterobacteriaceae</option>
+                  <option value="3">Pseudomonas aeruginosa</option>
+                  <option value="3">Haemophilus influenzae</option>
+                  <option value="3">Moraxella catarrhalis</option>
+                  <option value="3">Neisseria sicca</option>
+                  <option value="3">Neisseria spp.</option>
+                  <option value="3">Corynebacterium spp</option>
+                </select>
               </div>
             </div>
           </td>
@@ -53,7 +81,15 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <input class="input-outline" type="text">
+                <select class="form-select" aria-label="Default select example">
+                  <option hidden >Выберите</option>
+                  <option value="1">10³ КОЕ/мл</option>
+                  <option value="2">10⁴ КОЕ/мл</option>
+                  <option value="3">10⁵ КОЕ/мл</option>
+                  <option value="3">10⁶ КОЕ/мл</option>
+                  <option value="3">10⁷ КОЕ/мл</option>
+                  <option value="3">10⁸ КОЕ/мл</option>
+                </select>
               </div>
             </div>
           </td>
@@ -74,6 +110,12 @@ export default {
 </script>
 
 <style scoped>
+.form-select {
+  width: 246px;
+}
+.dropdown-icon {
+  color: #323232;
+}
 .heading-pass {
   margin-bottom: 1rem;
 }

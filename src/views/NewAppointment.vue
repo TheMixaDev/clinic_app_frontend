@@ -84,6 +84,11 @@
       </div>
       <div class="container-fluid anamnesis">
         <h4>Гинекологический анамнез</h4>
+        <select class="form-select" aria-label="Default select example">
+          <option hidden >Выберите</option>
+          <option value="1">Значение</option>
+          <option value="2">Значение</option>
+        </select>
         <div class="form-outline">
           <textarea class="form-control anamnesis-text" id="textAreaExample1" rows="4" v-model="state.anameses"></textarea>
           <label class="form-label" for="textAreaExample"></label>
@@ -120,8 +125,11 @@
             </tr>
             </tbody>
           </table>
-          <div v-else>
-            В данной таблице на данный момент нет данных!
+          <div class="alert alert-primary d-flex align-items-center" role="alert" v-else>
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
+            <div>
+              <i class="fa-solid fa-circle-info"></i> В данной таблице на данный момент нет данных!
+            </div>
           </div>
           <br>
           <div class="row col-buttons">
@@ -359,9 +367,46 @@
         </div>
       </div>
     </div>
+    <div class="row save-buttons">
+      <button class="btn btn-primary save-first"><i class="fa-solid fa-plus button-icon"></i>Сохранить</button>
+      <button class="btn btn-primary save-second"><i class="fa-solid fa-download button-icon"></i>Сохранить и вывести консультативное заключение</button>
+
+    </div>
   </div>
 </template>
 <style>
+.save-first {
+  width: 15vw;
+  background: linear-gradient(94.83deg, #00A3FF 1.33%, #00C2FF 100%);
+  border: 1px solid rgba(0, 117, 255, 0.3);
+  border-radius: 9px;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+.save-second {
+  width: 25vw;
+  background: transparent;
+  color: #323232;
+  border: none;
+  border-radius: 9px;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  box-shadow: none;
+}
+.save-second:hover {
+  width: 25vw;
+  background: transparent!important;
+  color: #000000;
+  border: none;
+  border-radius: 9px;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  box-shadow: none!important;
+}
+.save-buttons {
+  justify-content: center;
+  margin-bottom: 2rem;
+}
 .btn.back {
   background: transparent!important;
   color: black;

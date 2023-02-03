@@ -32,9 +32,13 @@
               <th>Отчество</th>
               <th>Дата рождения</th>
               <th>Врач</th>
-              <th class="date"><i class="fa-regular fa-calendar-days date-icon"></i> Дата приёма <button type="button" class="btn btn-primary sort-button" @click="sortDesc = !sortDesc; applyFiltersSearch()">
-                <i class="fa-solid" :class="sortDesc ? 'fa-arrow-up-wide-short' : 'fa-arrow-down-wide-short'"></i>
-              </button> </th>
+              <th>
+                <i class="fa-regular fa-calendar-days date-icon"></i>
+                Дата приёма
+                <button type="button" class="btn btn-primary sort-button" @click="sortDesc = !sortDesc; applyFiltersSearch()">
+                  <i class="fa-solid" :class="sortDesc ? 'fa-arrow-up-wide-short' : 'fa-arrow-down-wide-short'"></i>
+                </button>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -97,9 +101,31 @@
           </div>
         </div>
       </div>
+    <div class="container download-btn-row">
+      <button class="btn btn-primary download-btn"><i class="fa-solid fa-download"></i> Выгрузить консультативное заключение</button>
+    </div>
   </div>
 </template>
 <style>
+.download-btn {
+  background: transparent;
+  color: #888888;
+  box-shadow: none;
+  border: none;
+  margin-top: 2rem;
+  text-align: left;
+}
+.download-btn:hover {
+  background: transparent!important;
+  color: #000000;
+  box-shadow: none!important;
+  border: none!important;
+  margin-top: 2rem;
+  text-align: left;
+}
+.row.download-btn-row {
+  width: 80vw;
+}
 .profile {
   display: flex;
   gap: 2rem;
@@ -138,20 +164,14 @@
   display: flex;
   align-items: center;
  }
-.table-first-row {
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  margin-top: 1rem;
-  padding-top: 1rem;
-}
+
 .heading {
   text-align: left;
 }
 thead {
   color: white;
   background: linear-gradient(94.83deg, #00A3FF 1.33%, #00C2FF 100%);
-  border-radius: 10px 10px 0px 0px;
+  border-radius: 10px 10px 0px 0px!important;
 }
 th {
   text-align: left;
@@ -209,12 +229,16 @@ tr {}
 .date {
   display: flex;
   align-items: center;
+  background: transparent!important;
+  border-radius: 0px 14px 0px 0px!important;
+
 }
 th:first-child {
   border-radius: 14px 0px 0px 0px;
 }
 th:last-child {
   border-radius: 0px 14px 0px 0px!important;
+  background: transparent!important;
 }
 .main-part {
   margin-top: 2rem;

@@ -1,35 +1,23 @@
 <template>
   <div class="container-fluid delete-modal-body animate__animated animate__fadeIn">
     <div class="container modal-box animate__animated animate__backInUp">
-      <h2 class="delete-heading">Новый посев</h2>
+      <h2 class="delete-heading">Добавление родов</h2>
       <table class="table align-middle mb-0 table-hover table-striped table-bordered bg-white">
-        <thead class="bg-light">
-        <tr class="table-first-row">
-          <th>Дата анализа</th>
-          <th><input type="date" class="date"></th>
-        </tr>
-        </thead>
         <tbody>
         <tr>
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <p class="fw-bold mb-1">Локализация посева</p>
+                <p class="fw-bold mb-1">Роды через ЕРП</p>
               </div>
             </div>
           </td>
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <div class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    Dropdown button
-                  </button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                  </ul>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox"/>
+                  <label class="form-check-label"></label>
                 </div>
               </div>
             </div>
@@ -39,7 +27,27 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <p class="fw-bold mb-1">Микрофлора</p>
+                <p class="fw-bold mb-1">Характер КС</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <select class="form-select" aria-label="Default select example">
+                  <option hidden >Выберите</option>
+                  <option value="1">Плановое</option>
+                  <option value="2">Экстренное</option>
+                </select>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class="fw-bold mb-1">Вес плода</p>
               </div>
             </div>
           </td>
@@ -55,7 +63,7 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <p class="fw-bold mb-1">Значение</p>
+                <p class="fw-bold mb-1">Рост</p>
               </div>
             </div>
           </td>
@@ -63,6 +71,76 @@
             <div class="d-flex align-items-center">
               <div class="ms-3">
                 <input class="input-outline" type="text">
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class="fw-bold mb-1">Апгар</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <input class="input-outline" type="text">
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class="fw-bold mb-1">Кровопотеря</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <input class="input-outline" type="text">
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class="fw-bold mb-1">Роды в срок</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox"/>
+                  <label class="form-check-label"></label>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class="fw-bold mb-1">Осложнения послеродового периода</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox"/>
+                  <label class="form-check-label"></label>
+                </div>
               </div>
             </div>
           </td>
@@ -83,6 +161,15 @@ export default {
 </script>
 
 <style scoped>
+.form-select {
+  width: 10vw;
+}
+.form-check {
+  margin-left: 0;
+  width: 10vw;
+  display: flex;
+  justify-content: center;
+}
 .heading-pass {
   margin-bottom: 1rem;
 }
