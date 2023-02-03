@@ -23,8 +23,6 @@
         </div>
         <div class="row button-add"><button className="btn btn-primary first-add add"><i class="fa-solid fa-plus"></i> Добавить анализ</button></div>
       </div>
-
-
       <h4>МНО</h4>
       <div class="row analizes-row">
         <div class="col analizes-col">

@@ -1,7 +1,9 @@
 <template>
   <div class="container-fluid delete-modal-body animate__animated animate__fadeIn">
     <div class="container modal-box animate__animated animate__backInUp">
-      <img src="../assets/delete.svg">
+      <img class="delete-icon" src="../assets/delete.svg">
+      <img class="question" src="../assets/question.svg">
+      <img class="exit" src="../assets/exit.svg">
       <h2 class="delete-heading">Удаление {{ info.name }}</h2>
       <p class="delete-text">Подтвердите удаление {{ info.name }} <span class="delete-name">{{ info.object.surname + " " + info.object.name + " " + info.object.patronymic }}</span> - <span class="delete-date">{{ info.object.date || info.object.rank }}</span></p>
       <a class="btn btn-primary delete" @click="proceed()"><i class="fa-solid fa-trash button-icon"></i>Удалить</a>
@@ -28,6 +30,15 @@ export default {
 </script>
 
 <style scoped>
+.delete-icon {
+  width: 10rem;
+}
+.question {
+  width: 10rem;
+}
+.exit {
+  width: 10rem;
+}
 .delete {
   background: linear-gradient(92.84deg, #EF5DA8 0.31%, #FF003D 152.41%);
   box-shadow: 0 4px 9px -4px #FF003D;

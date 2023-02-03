@@ -1,43 +1,31 @@
 <template>
   <div class="container-fluid delete-modal-body animate__animated animate__fadeIn">
     <div class="container modal-box animate__animated animate__backInUp">
-      <img class="delete-icon" src="../assets/delete.svg">
-      <img class="question" src="../assets/question.svg">
-      <img class="exit" src="../assets/exit.svg">
-      <h2 class="delete-heading">Удаление {{ info.name }}</h2>
-      <p class="delete-text">Подтвердите удаление {{ info.name }} <span class="delete-name">{{ info.object.surname + " " + info.object.name + " " + info.object.patronymic }}</span> - <span class="delete-date">{{ info.object.date || info.object.rank }}</span></p>
-      <a class="btn btn-primary delete" @click="proceed()"><i class="fa-solid fa-trash button-icon"></i>Удалить</a>
-      <a class="btn btn-primary back-btn" @click="this.$.appContext.app.unmount();"><i class="fa-solid fa-arrow-left"></i> Вернуться к списку</a>
+      <h2 class="delete-heading">Изменение пароля</h2>
+      <h6 class="heading-pass">Введите новый пароль</h6>
+      <input class="form-control pass" type="text">
+      <h6 class="heading-pass">Подтвердите новый пароль</h6>
+      <input class="form-control pass" type="text">
+      <a class="btn btn-primary edit"><i class="fa-solid fa-save button-icon"></i>Сохранить</a>
+      <a class="btn btn-primary back-btn"><i class="fa-solid fa-arrow-left"></i> Вернуться</a>
     </div>
   </div>
 </template>
 
 <script>
-import {settings} from "@/utils/settings";
 
 export default {
-  name: "DeleteModal",
-  props: ['info', 'callback'],
-  methods: {
-    proceed() {
-      if(settings.designMode)
-        return;
-      this.callback();
-      this.$.appContext.app.unmount();
-    }
-  }
+  name: "PasswordChange",
 }
 </script>
 
 <style scoped>
-.delete-icon {
-  width: 10rem;
+.heading-pass {
+  margin-bottom: 1rem;
 }
-.question {
-  width: 10rem;
-}
-.exit {
-  width: 10rem;
+.pass {
+  width: 15vw;
+  margin-bottom: 1rem;
 }
 .delete {
   background: linear-gradient(92.84deg, #EF5DA8 0.31%, #FF003D 152.41%);
@@ -74,6 +62,8 @@ export default {
   font-size: 1.5rem;
   margin-top: 1rem;
   font-weight: 600;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 .container.modal-box {
   padding-top: 7rem;

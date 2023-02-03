@@ -35,57 +35,57 @@
         </tr>
         </thead>
         <tbody>
-          <tr v-for="doctor in doctors" :key="doctor.id" @click="selectDoctor(doctor)" :style="doctor.highlight ? `background-color: #cceffd` : ``">
-            <td>
-              <div className="d-flex align-items-center">
-                <div className="ms-3">
-                  <p className="fw-bold mb-1">{{ doctor.surname }}</p>
-                </div>
+        <tr v-for="doctor in doctors" :key="doctor.id" @click="selectDoctor(doctor)" :style="doctor.highlight ? `background-color: #cceffd` : ``">
+          <td>
+            <div className="d-flex align-items-center">
+              <div className="ms-3">
+                <p className="fw-bold mb-1">{{ doctor.surname }}</p>
               </div>
-            </td>
-            <td>
-              <div className="d-flex align-items-center">
-                <div className="ms-3">
-                  <p className="fw-bold mb-1">{{ doctor.name }}</p>
-                </div>
+            </div>
+          </td>
+          <td>
+            <div className="d-flex align-items-center">
+              <div className="ms-3">
+                <p className="fw-bold mb-1">{{ doctor.name }}</p>
               </div>
-            </td>
-            <td>
-              <div className="d-flex align-items-center">
-                <div className="ms-3">
-                  <p className="fw-bold mb-1">{{ doctor.patronymic }}</p>
-                </div>
+            </div>
+          </td>
+          <td>
+            <div className="d-flex align-items-center">
+              <div className="ms-3">
+                <p className="fw-bold mb-1">{{ doctor.patronymic }}</p>
               </div>
-            </td>
-            <td>
-              <div className="d-flex align-items-center">
-                <div className="ms-3">
-                  <p className="fw-bold mb-1">{{ doctor.position }}</p>
-                </div>
+            </div>
+          </td>
+          <td>
+            <div className="d-flex align-items-center">
+              <div className="ms-3">
+                <p className="fw-bold mb-1">{{ doctor.position }}</p>
               </div>
-            </td>
-            <td>
-              <div className="d-flex align-items-center">
-                <div className="ms-3">
-                  <p className="fw-bold mb-1">{{ doctor.rank }}</p>
-                </div>
+            </div>
+          </td>
+          <td>
+            <div className="d-flex align-items-center">
+              <div className="ms-3">
+                <p className="fw-bold mb-1">{{ doctor.rank }}</p>
               </div>
-            </td>
-            <td>
-              <div className="d-flex align-items-center">
-                <div className="ms-3">
-                  <p className="fw-bold mb-1">{{ doctor.login }}</p>
-                </div>
+            </div>
+          </td>
+          <td>
+            <div className="d-flex align-items-center">
+              <div className="ms-3">
+                <p className="fw-bold mb-1">{{ doctor.login }}</p>
               </div>
-            </td>
-            <td>
-              <div className="d-flex align-items-center">
-                <div className="ms-3">
-                  <button class="btn btn-primary password"><i class="fa-solid fa-key"></i> Изменить</button>
-                </div>
+            </div>
+          </td>
+          <td>
+            <div className="d-flex align-items-center">
+              <div className="ms-3">
+                <button class="btn btn-primary password"><i class="fa-solid fa-key"></i> Изменить</button>
               </div>
-            </td>
-          </tr>
+            </div>
+          </td>
+        </tr>
         </tbody>
       </table>
     </div>
@@ -409,7 +409,7 @@ export default {
             name: "Ивана",
             patronymic: "Ивановна",
             rank: "Врач",
-            position: "Звание",
+            position: "Генерал-майор",
             login: "login",
 
             highlight: false

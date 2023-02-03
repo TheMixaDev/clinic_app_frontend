@@ -275,7 +275,7 @@ thead {
   width: auto!important;
 }
 .edit:disabled {
-  opacity: 100%!important;
+  opacity: 0.3;
   background: linear-gradient(94.83deg, #00A3FF 1.33%, #00C2FF 100%);
   border: 1px solid rgba(255, 0, 213, 0.3);
   border-radius: 9px;

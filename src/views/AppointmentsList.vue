@@ -18,8 +18,9 @@
           </div>
         </div>
       </div>
-        <div class="col">
+        <div class="col profile">
           <p class="doctor-name">{{ doctorName }}</p>
+          <button class="btn btn-primary exit-button"><i class="fa-solid fa-arrow-right-from-bracket"></i> Выход</button>
         </div>
       </div>
       <div class="container main-part">
@@ -99,6 +100,24 @@
   </div>
 </template>
 <style>
+.profile {
+  display: flex;
+  gap: 2rem;
+}
+.exit-button {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: #323232;
+  padding: 0;
+}
+.exit-button:hover {
+  background: transparent;
+  border: none;
+  box-shadow: none!important;
+  padding: 0;
+  color: rgba(50, 50, 50, 0.46);
+}
 .form-search {
   border-radius: 0px 9px 9px 0px!important;
 }
@@ -284,6 +303,7 @@ import {settings} from "@/utils/settings";
 import router from "@/router";
 import {createApp} from "vue";
 import DeleteModal from "@/components/DeleteModal.vue";
+
 
 export default {
   data() {

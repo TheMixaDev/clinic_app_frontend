@@ -1,11 +1,193 @@
 <template>
   <div class="container-fluid delete-modal-body animate__animated animate__fadeIn">
     <div class="container modal-box animate__animated animate__backInUp">
-      <h2 class="delete-heading">Изменение пароля</h2>
-      <h6 class="heading-pass">Введите новый пароль</h6>
-      <input class="form-control pass" type="text">
-      <h6 class="heading-pass">Подтвердите новый пароль</h6>
-      <input class="form-control pass" type="text">
+      <h2 class="delete-heading">Добавление анализов</h2>
+      <table class="table align-middle mb-0 table-hover table-striped table-bordered bg-white">
+        <thead class="bg-light">
+        <tr class="table-first-row">
+          <th>Дата анализа</th>
+          <th><input type="date" class="date"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class="fw-bold mb-1">Протромбиновый индекс</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <input class="input-outline" type="text">
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class="fw-bold mb-1">МНО</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <input class="input-outline" type="text">
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class="fw-bold mb-1">Фибриноген</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <input class="input-outline" type="text">
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class="fw-bold mb-1">АПТВ</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <input class="input-outline" type="text">
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class="fw-bold mb-1">Тромбиновое время</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <input class="input-outline" type="text">
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class="fw-bold mb-1">Антитромбин III</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <input class="input-outline" type="text">
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class="fw-bold mb-1">Тест на LA</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <input class="input-outline" type="text">
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class="fw-bold mb-1">Д-димер</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <input class="input-outline" type="text">
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class="fw-bold mb-1">Гомоцистеин</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <input class="input-outline" type="text">
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class="fw-bold mb-1">Протеин С</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <input class="input-outline" type="text">
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <p class="fw-bold mb-1">Протеин S</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-3">
+                <input class="input-outline" type="text">
+              </div>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
       <a class="btn btn-primary edit"><i class="fa-solid fa-save button-icon"></i>Сохранить</a>
       <a class="btn btn-primary back-btn"><i class="fa-solid fa-arrow-left"></i> Вернуться</a>
     </div>
@@ -66,9 +248,11 @@ export default {
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 .container.modal-box {
-  padding-top: 7rem;
-  padding-bottom: 7rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   display: flex;
+  padding-left: 2rem;
+  padding-right: 2rem;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -94,5 +278,15 @@ export default {
   left: 0;
   backdrop-filter: blur(10px);
   background-color: rgba(38, 38, 38, 0.46);
+}
+.edit {
+  margin-top: 1rem;
+}
+.input-outline {
+  background: #F5F9FF!important;
+  border: 1px solid rgba(0, 163, 255, 0.3)!important;
+  border-radius: 9px!important;
+  color: #7e7e7e;
+  width: 10vw;
 }
 </style>

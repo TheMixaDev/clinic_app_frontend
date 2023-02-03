@@ -14,7 +14,7 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <p class="fw-bold mb-1">АТ к β2-гликопротеину</p>
+                <p class="fw-bold mb-1">Lei</p>
               </div>
             </div>
           </td>
@@ -30,7 +30,7 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <p class="fw-bold mb-1">АТ к кардиолипину</p>
+                <p class="fw-bold mb-1">Hb</p>
               </div>
             </div>
           </td>
@@ -46,7 +46,7 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <p class="fw-bold mb-1">АТ к аннексину V</p>
+                <p class="fw-bold mb-1">Ht</p>
               </div>
             </div>
           </td>
@@ -62,7 +62,7 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <p class="fw-bold mb-1">АТ к ХГЧ</p>
+                <p class="fw-bold mb-1">Tr</p>
               </div>
             </div>
           </td>
@@ -78,7 +78,7 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <p class="fw-bold mb-1">АТ к протромбину</p>
+                <p class="fw-bold mb-1">Ферритин</p>
               </div>
             </div>
           </td>
@@ -94,71 +94,7 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <p class="fw-bold mb-1">АТ к фосфатидилсерину</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <input class="input-outline" type="text">
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1">АТ к фосфатидил к-те</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <input class="input-outline" type="text">
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1">АТ к фосфатидилинозитолу</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <input class="input-outline" type="text">
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1">Антинуклеарный фактор</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <input class="input-outline" type="text">
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1">АТ к 2сп ДНК</p>
+                <p class="fw-bold mb-1">ТТГ</p>
               </div>
             </div>
           </td>

@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid delete-modal-body animate__animated animate__fadeIn">
     <div class="container modal-box animate__animated animate__backInUp">
-      <h2 class="delete-heading">Добавление анализов</h2>
+      <h2 class="delete-heading">Новый посев</h2>
       <table class="table align-middle mb-0 table-hover table-striped table-bordered bg-white">
         <thead class="bg-light">
         <tr class="table-first-row">
@@ -14,7 +14,7 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <p class="fw-bold mb-1">Lei</p>
+                <p class="fw-bold mb-1">Локализация посева</p>
               </div>
             </div>
           </td>
@@ -30,7 +30,7 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <p class="fw-bold mb-1">Hb</p>
+                <p class="fw-bold mb-1">Микрофлора</p>
               </div>
             </div>
           </td>
@@ -46,55 +46,7 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <p class="fw-bold mb-1">Ht</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <input class="input-outline" type="text">
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1">Tr</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <input class="input-outline" type="text">
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1">Ферритин</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <input class="input-outline" type="text">
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1">ТТГ</p>
+                <p class="fw-bold mb-1">Значение</p>
               </div>
             </div>
           </td>

@@ -14,7 +14,7 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <p class="fw-bold mb-1">Протромбиновый индекс</p>
+                <p class="fw-bold mb-1">АТ к β2-гликопротеину</p>
               </div>
             </div>
           </td>
@@ -30,7 +30,7 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <p class="fw-bold mb-1">МНО</p>
+                <p class="fw-bold mb-1">АТ к кардиолипину</p>
               </div>
             </div>
           </td>
@@ -46,7 +46,7 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <p class="fw-bold mb-1">Фибриноген</p>
+                <p class="fw-bold mb-1">АТ к аннексину V</p>
               </div>
             </div>
           </td>
@@ -62,7 +62,7 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <p class="fw-bold mb-1">АПТВ</p>
+                <p class="fw-bold mb-1">АТ к ХГЧ</p>
               </div>
             </div>
           </td>
@@ -78,7 +78,7 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <p class="fw-bold mb-1">Тромбиновое время</p>
+                <p class="fw-bold mb-1">АТ к протромбину</p>
               </div>
             </div>
           </td>
@@ -94,7 +94,7 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <p class="fw-bold mb-1">Антитромбин III</p>
+                <p class="fw-bold mb-1">АТ к фосфатидилсерину</p>
               </div>
             </div>
           </td>
@@ -110,7 +110,7 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <p class="fw-bold mb-1">Тест на LA</p>
+                <p class="fw-bold mb-1">АТ к фосфатидил к-те</p>
               </div>
             </div>
           </td>
@@ -126,7 +126,7 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <p class="fw-bold mb-1">Д-димер</p>
+                <p class="fw-bold mb-1">АТ к фосфатидилинозитолу</p>
               </div>
             </div>
           </td>
@@ -142,7 +142,7 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <p class="fw-bold mb-1">Гомоцистеин</p>
+                <p class="fw-bold mb-1">Антинуклеарный фактор</p>
               </div>
             </div>
           </td>
@@ -158,23 +158,7 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <p class="fw-bold mb-1">Протеин С</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <input class="input-outline" type="text">
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="ms-3">
-                <p class="fw-bold mb-1">Протеин S</p>
+                <p class="fw-bold mb-1">АТ к 2сп ДНК</p>
               </div>
             </div>
           </td>
