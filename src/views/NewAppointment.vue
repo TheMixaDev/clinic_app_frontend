@@ -19,10 +19,11 @@
         <div class="col date-wrapper">
           <h6 class="patient-name">Дата рождения</h6>
           <input class="date" type="date" v-model="state.patient.birthdate" disabled>
+          Возраст: 0
         </div>
         <div class="col doc-wrapper">
           <h6 class="patient-name">Врач</h6>
-          <input type="text" id="name" class="form-control" placeholder="Выберите врача из Справочника" disabled v-bind:value="doctorName">
+          <input type="text" id="name" class="form-control" placeholder="Выберите врача из Справочника" disabled v-bind:value="doctorName"> TODO make editable
         </div>
         <div class="col date-wrapper">
           <h6 class="patient-name">Дата приёма</h6>
@@ -1318,23 +1319,25 @@ export default {
         birth: [
           {
             id: 0,
-            birth: "",
-            character: "",
-            weight: "",
-            apgar: "",
-            bloodloss: "",
-            timeperiod: "",
-            complications: ""
+            birth: 0,
+            character: 1,
+            weight: 0,
+            height: 0,
+            apgar: 0,
+            bloodloss: 0,
+            timeperiod: true,
+            complications: true
           },
           {
             id: 1,
-            birth: "",
-            character: "",
-            weight: "",
-            apgar: "",
-            bloodloss: "",
-            timeperiod: "",
-            complications: ""
+            birth: 1,
+            character: 2,
+            weight: 0,
+            height: 0,
+            apgar: 0,
+            bloodloss: 0,
+            timeperiod: false,
+            complications: false
           }
         ], // TODO
       },
