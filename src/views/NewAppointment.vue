@@ -1304,42 +1304,9 @@ export default {
         height: "",
         mensesDate: "",
         anameses: "",
-        analyzes_1: [ // TODO
-          /*{
-            id: 0,
-            date: "",
-            values: ["","","","","","","","","","",""]
-          }*/
-        ],
-        analyzes_2: [ // TODO
-          /*{
-            id: 0,
-            date: "",
-            values: ["","","","","","","","","",""]
-          }*/
-        ],
-        analyzes_3:  [ // TODO
-          /*{
-            id: 0,
-            date: "2022",
-            values: ["234","54","34","65","32","65"]
-          },
-          {
-            id: 1,
-            date: "2023",
-            values: ["234","54","34","65","32","65"]
-          },
-          {
-            id: 2,
-            date: "2023",
-            values: ["234","54","34","65","32","65"]
-          },
-          {
-            id: 3,
-            date: "2023",
-            values: ["234","54","34","65","32","65"]
-          },*/
-        ],
+        analyzes_1: [],
+        analyzes_2: [],
+        analyzes_3: [],
         crops: [],
         uzi: {
           text: constants.uziTexts[0],
