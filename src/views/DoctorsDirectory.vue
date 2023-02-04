@@ -3,7 +3,7 @@
   <div className="container-fluid doctors-container animate__animated animate__fadeIn">
     <div className="row header">
       <div className="col">
-        <h1 className="heading">
+        <h1 className="heading"><button className="btn back btn-primary second-add" @click="router().go(-1);" v-if="doctorMode"><i class="fa-solid fa-arrow-left"></i></button>
           {{ doctorMode ? "Выбор врача" : "Панель администратора"}}
         </h1>
       </div>
@@ -383,6 +383,9 @@ export default {
     }
   },
   methods: {
+    router() {
+      return router
+    },
     requestLogout() {
       const div = document.getElementById("modal");
       const app = createApp(ActionModal, {

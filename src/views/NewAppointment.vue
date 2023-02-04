@@ -82,11 +82,8 @@
       </div>
       <div class="container-fluid anamnesis">
         <h4>Гинекологический анамнез</h4>
-        <select class="form-select" aria-label="Default select example">
-          <option hidden >Выберите</option>
-          <option value="1">Значение</option>
-          <option value="2">Значение</option>
-        </select>
+        Гинекологические заболевания:
+        <MultiSelect :input="state.anameses_desiases" :pid=101 ref="anameses_desiases"></MultiSelect>
         <div class="form-outline">
           <textarea class="form-control anamnesis-text" id="textAreaExample1" rows="4" v-model="state.anameses"></textarea>
           <label class="form-label" for="textAreaExample"></label>
@@ -94,6 +91,8 @@
       </div>
       <div class="container-fluid analyzes">
         <h4>Анализы</h4>
+        Гены наследственной тромбофилии:
+        <MultiSelect :input="state.analyzes_genes" :pid=201 ref="analyzes_genes"></MultiSelect>
         <div v-for="(constants, key) in analyze_constants" :key="key">
           <table class="table align-middle mb-0 table-hover table-striped table-bordered bg-white" v-if="state[`analyzes_${key+1}`].length > 0">
             <thead class="bg-light">
@@ -1309,6 +1308,33 @@ export default {
         height: "",
         mensesDate: "",
         anameses: "",
+        anameses_desiases: [
+          {name: "Миома матки", selected: false},
+          {name: "Хронический эндометрит", selected: false},
+          {name: "Хронический аднексит", selected: false},
+          {name: "Привычное невынашивание", selected: false}
+        ],
+        analyzes_genes: [
+          {name: "FGB G/A", selected: false},
+          {name: "FGB A/A", selected: false},
+          {name: "GPIIIa T/C", selected: false},
+          {name: "GPIIIa C/C", selected: false},
+          {name: "PAI-1 5G/4G", selected: false},
+          {name: "PAI-1 4G/4G", selected: false},
+          {name: "PLAT I/D", selected: false},
+          {name: "PLAT I/I", selected: false},
+          {name: "GPIa T/C", selected: false},
+          {name: "GPIa C/C", selected: false},
+          {name: "F7 A/G", selected: false},
+          {name: "MTHFR C/T", selected: false},
+          {name: "MTHFR T/T", selected: false},
+          {name: "MTHFR A/G", selected: false},
+          {name: "MTHFR G/G", selected: false},
+          {name: "MTRR A/G", selected: false},
+          {name: "MTRR G/G", selected: false},
+          {name: "MTR A/G", selected: false},
+          {name: "MTR G/G", selected: false}
+        ],
         analyzes_1: [],
         analyzes_2: [],
         analyzes_3: [],
