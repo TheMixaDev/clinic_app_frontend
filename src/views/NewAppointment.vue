@@ -4,9 +4,7 @@
     <div class="row header">
       <div class="col">
         <h1 class="heading">
-          <router-link className="btn back btn-primary second-add" to="/appointments"><i
-              className="fa-solid fa-arrow-left"></i>
-          </router-link>
+          <button className="btn back btn-primary second-add" @click="requestCancel()"><i className="fa-solid fa-arrow-left"></i></button>
           Создание приёма</h1>
       </div>
     </div>
@@ -14,20 +12,20 @@
       <div class="row main-info">
         <div class="col name-wrapper">
           <h6 class="patient-name">ФИО Пациента</h6>
-          <input type="text" id="name" class="form-control name-tag" placeholder="Выберите пациента из Справочника" @click="saveState(()=>{router().push({name: 'patients-directory'})})" readonly v-bind:value="state.patient.id !== -1 ? state.patient.surname + ' ' + state.patient.name + ' ' + state.patient.patronymic : ''">
+          <input type="text" id="name" class="form-control name-tag" placeholder="Выберите пациента из Справочника" disabled @click="saveState(()=>{router().push({name: 'patients-directory'})})" readonly v-bind:value="state.patient.id !== -1 ? state.patient.surname + ' ' + state.patient.name + ' ' + state.patient.patronymic : ''">
         </div>
         <div class="col date-wrapper">
           <h6 class="patient-name">Дата рождения</h6>
           <input class="date" type="date" v-model="state.patient.birthdate" disabled>
-          Возраст: 0
+          Возраст: {{ state.patient.birthdate.length > 0 ? methods.getAge(state.patient.birthdate) : '-'}}
         </div>
         <div class="col doc-wrapper">
           <h6 class="patient-name">Врач</h6>
-          <input type="text" id="name" class="form-control" placeholder="Выберите врача из Справочника" disabled v-bind:value="doctorName"> TODO make editable
+          <input type="text" id="name" class="form-control name-tag" placeholder="Выберите врача из Справочника" @click="saveState(()=>{methods.setMeta({doctorMode: true}); router().push({name: 'doctors-directory'})})" readonly v-bind:value="state.doctor.fullName">
         </div>
         <div class="col date-wrapper">
           <h6 class="patient-name">Дата приёма</h6>
-          <input class="date" type="date" v-model="state.date">
+          <input class="date" type="date" v-model="state.date" disabled>
         </div>
       </div>
       <div class="container-fluid detailed-info">
@@ -942,10 +940,15 @@ import {settings} from "@/utils/settings";
 import {methods} from "@/utils/methods";
 import {constants} from "@/utils/constants";
 import {createApp} from "vue";
-import DeleteModal from "@/components/DeleteModal.vue";
+import ActionModal from "@/components/ActionModal.vue";
 
 export default {
   name: "NewAppointment",
+  computed: {
+    methods() {
+      return methods
+    }
+  },
   methods: {
     router() {
       return router
@@ -953,10 +956,25 @@ export default {
     constants() {
       return constants
     },
+    requestCancel() {
+      const div = document.getElementById("modal");
+      const app = createApp(ActionModal, {
+        info: {
+          heading: 'Отмена внесенных изменений',
+          icon: 'question',
+          text: 'Вы точно хотите выйти из режима редактирования',
+          highlighted: 'без сохранения изменений?',
+          proceedButton: 'Продолжить'
+        },
+        callback: ()=> router.push({name: 'appointments'})
+      });
+      app.mount(div);
+    },
     loadState() {
       if(sessionStorage.getItem("appointmentLastState")) {
         this.state = JSON.parse(sessionStorage.getItem("appointmentLastState"));
         sessionStorage.removeItem("appointmentLastState");
+        console.log(this.state);
         return true;
       }
       return false;
@@ -985,6 +1003,11 @@ export default {
       let meta = methods.getMeta();
       if(meta) {
         console.log(meta);
+        if(meta.setDoctor) {
+          this.state.doctor.id = meta.doctor.id;
+          this.state.doctor.fullName = meta.doctor.surname + ' ' + meta.doctor.name + ' ' + meta.doctor.patronymic + ' ';
+          return;
+        }
         if(meta.isNew) {
           if(meta.copyFromLast) {
             methods.authorizedGETRequest(
@@ -1021,11 +1044,13 @@ export default {
     },
     requestDeleteElement(element, label) {
       const div = document.getElementById("modal");
-      const app = createApp(DeleteModal, {
+      const app = createApp(ActionModal, {
         info: {
-          name: label,
-          type: element,
-          object: this.selections[element]
+          heading: 'Удаление '+label,
+          icon: 'delete',
+          text: 'Подтвердите удаление ',
+          highlighted: label,
+          proceedButton: 'Удалить'
         },
         callback: this.deleteElement
       });
@@ -1035,6 +1060,12 @@ export default {
       //methods.setMeta(this.selections[element]);
       this.saveState(()=>router.push({name: route}));
     },
+  },
+  beforeMount() {
+    methods.checkCookies(this.$cookies, constants.Role.DOCTOR)
+  },
+  mounted() {
+    this.preload();
   },
   components: {MultiSelect},
   data() {
@@ -1150,7 +1181,11 @@ export default {
           patronymic: "",
           birthdate: ""
         },
-        date: "",
+        doctor: {
+          id: methods.getDoctorID(),
+          fullName: methods.getDoctorName()
+        },
+        date: new Date().toJSON().slice(0, 10),
         weight: "",
         height: "",
         mensesDate: "",
@@ -1392,15 +1427,8 @@ export default {
         analyzes_3: -1,
         crops: -1,
         births: -1
-      },
-      doctorName: methods.getDoctorName()
+      }
     }
-  },
-  beforeMount() {
-    methods.checkCookies(this.$cookies, constants.Role.DOCTOR)
-  },
-  mounted() {
-    this.preload();
   }
 }
 </script>

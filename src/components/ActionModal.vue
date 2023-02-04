@@ -1,13 +1,13 @@
 <template>
   <div class="container-fluid delete-modal-body animate__animated animate__fadeIn">
     <div class="container modal-box animate__animated animate__backInUp">
-      <img class="delete-icon" src="../assets/delete.svg">
-      <img class="question" src="../assets/question.svg">
-      <img class="exit" src="../assets/exit.svg">
-      <h2 class="delete-heading">Удаление {{ info.name }}</h2>
-      <p class="delete-text">Подтвердите удаление {{ info.name }} <span class="delete-name">{{ info.object.surname + " " + info.object.name + " " + info.object.patronymic }}</span> - <span class="delete-date">{{ info.object.date || info.object.rank }}</span></p>
-      <a class="btn btn-primary delete" @click="proceed()"><i class="fa-solid fa-trash button-icon"></i>Удалить</a>
-      <a class="btn btn-primary back-btn" @click="this.$.appContext.app.unmount();"><i class="fa-solid fa-arrow-left"></i> Вернуться к списку</a>
+      <img class="icon" src="../assets/delete.svg" v-if="info.icon === 'delete'">
+      <img class="icon" src="../assets/question.svg" v-if="info.icon === 'question'">
+      <img class="icon" src="../assets/exit.svg" v-if="info.icon === 'exit'">
+      <h2 class="delete-heading">{{ info.heading }}</h2>
+      <p class="delete-text">{{ info.text }} <span class="delete-name">{{ info.highlighted }}</span></p>
+      <a class="btn btn-primary delete-button" @click="proceed()">{{ info.proceedButton }}</a>
+      <a class="btn btn-primary back-btn" @click="this.$.appContext.app.unmount();"><i class="fa-solid fa-arrow-left"></i> Вернуться</a>
     </div>
   </div>
 </template>
@@ -16,7 +16,7 @@
 import {settings} from "@/utils/settings";
 
 export default {
-  name: "DeleteModal",
+  name: "ActionModal",
   props: ['info', 'callback'],
   methods: {
     proceed() {
@@ -30,16 +30,10 @@ export default {
 </script>
 
 <style scoped>
-.delete-icon {
+.icon {
   width: 10rem;
 }
-.question {
-  width: 10rem;
-}
-.exit {
-  width: 10rem;
-}
-.delete {
+.delete-button {
   background: linear-gradient(92.84deg, #EF5DA8 0.31%, #FF003D 152.41%);
   box-shadow: 0 4px 9px -4px #FF003D;
   border-radius: 9px;

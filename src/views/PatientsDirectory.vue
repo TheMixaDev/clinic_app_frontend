@@ -25,9 +25,9 @@
           <label class="form-check-label searchCheckBox" @click="onlyNew = !onlyNew; applyFiltersSearch();">Только пациенты без первого приема</label>
         </div>
       </div>
-      <div class="col-md-auto profile">
+      <!--div class="col-md-auto profile">
         <button class="btn btn-primary exit-button"><i class="fa-solid fa-arrow-right-from-bracket"></i> Выход</button>
-      </div>
+      </div-->
     </div>
     <div className="container patients-directory-main-part">
       <table className="table align-middle mb-0 table-hover table-striped table-bordered bg-white">
@@ -340,7 +340,7 @@ import {constants} from "@/utils/constants";
 import {methods} from "@/utils/methods";
 import {settings} from "@/utils/settings";
 import {createApp} from "vue";
-import DeleteModal from "@/components/DeleteModal.vue";
+import ActionModal from "@/components/ActionModal.vue";
 export default {
   data() {
     return {
@@ -444,10 +444,13 @@ export default {
     },
     requestDelete() {
       const div = document.getElementById("modal");
-      const app = createApp(DeleteModal, {
+      const app = createApp(ActionModal, {
         info: {
-          name: 'пользователя',
-          object: this.selectedPatient,
+          heading: 'Удаление пациента',
+          icon: 'delete',
+          text: 'Подтвердите удаление пациента',
+          highlighted: this.selectedDoctor.surname + ' ' + this.selectedDoctor.name + ' ' + this.selectedDoctor.patronymic,
+          proceedButton: 'Удалить'
         },
         callback: this.deletePatient
       });

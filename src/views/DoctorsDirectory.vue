@@ -4,7 +4,7 @@
     <div className="row header">
       <div className="col">
         <h1 className="heading">
-          Панель администратора
+          {{ doctorMode ? "Выбор врача" : "Панель администратора"}}
         </h1>
       </div>
       <div className="col">
@@ -20,9 +20,8 @@
           </div>
         </div>
       </div>
-      <div class="col profile">
-        <p class="doctor-name">{{ doctorName }}</p>
-        <button class="btn btn-primary exit-button"><i class="fa-solid fa-arrow-right-from-bracket"></i> Выход</button>
+      <div class="col profile" v-if="!doctorMode">
+        <button class="btn btn-primary exit-button" @click="requestLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Выход</button>
       </div>
     </div>
     <div className="container main-part">
@@ -33,9 +32,9 @@
           <th>Имя</th>
           <th>Отчество</th>
           <th>Должность</th>
-          <th>Звание</th>
-          <th>Логин</th>
-          <th>Пароль</th>
+          <th v-if="!doctorMode">Звание</th>
+          <th v-if="!doctorMode">Логин</th>
+          <th v-if="!doctorMode">Пароль</th>
         </tr>
         </thead>
         <tbody>
@@ -68,24 +67,24 @@
               </div>
             </div>
           </td>
-          <td>
+          <td v-if="!doctorMode">
             <div className="d-flex align-items-center">
               <div className="ms-3">
                 <p className="fw-bold mb-1">{{ doctor.rank }}</p>
               </div>
             </div>
           </td>
-          <td>
+          <td v-if="!doctorMode">
             <div className="d-flex align-items-center">
               <div className="ms-3">
                 <p className="fw-bold mb-1">{{ doctor.login }}</p>
               </div>
             </div>
           </td>
-          <td>
+          <td v-if="!doctorMode">
             <div className="d-flex align-items-center">
               <div className="ms-3">
-                <button class="btn btn-primary password"><i class="fa-solid fa-key"></i> Изменить</button>
+                <button class="btn btn-primary password" @click="requestChangepassword(doctor)"><i class="fa-solid fa-key"></i> Изменить</button>
               </div>
             </div>
           </td>
@@ -95,11 +94,11 @@
     </div>
     <div className="container buttons-container">
       <div className="col row-buttons">
-        <router-link className="btn btn-primary first-add" to="/doctor"><i
-            className="fa-solid fa-plus button-icon"></i>Новый
-        </router-link>
+        <button className="btn btn-primary first-add" @click="listAction()" v-bind:disabled="doctorMode && this.selectedDoctor === -1">
+          <i className="fa-solid fa-plus button-icon" v-if="!doctorMode"></i>{{ doctorMode ? "Выбрать" : "Новый"}}
+        </button>
       </div>
-      <div className="col row-button">
+      <div className="col row-button" v-if="!doctorMode">
         <button class="btn btn-primary edit" v-bind:disabled="this.selectedDoctor === -1" @click="editDoctor()"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>
         <button class="btn btn-primary delete" v-bind:disabled="this.selectedDoctor === -1" @click="requestDelete()"><i class="fa-solid fa-trash button-icon"></i>Удалить</button>
         <button class="btn btn-primary download"><i class="fa-solid fa-cloud-arrow-down"></i> Выгрузить в StatTech
@@ -370,18 +369,71 @@ import {methods} from "@/utils/methods";
 import {constants} from "@/utils/constants";
 import {settings} from "@/utils/settings";
 import {createApp} from "vue";
-import DeleteModal from "@/components/DeleteModal.vue";
+import ActionModal from "@/components/ActionModal.vue";
 import router from "@/router";
+import PasswordChange from "@/components/PasswordChange.vue";
 
 export default {
   name: 'DoctorsDirectory',
   data() {
     return {
       doctors: [],
-      selectedDoctor: -1
+      selectedDoctor: -1,
+      doctorMode: false
     }
   },
   methods: {
+    requestLogout() {
+      const div = document.getElementById("modal");
+      const app = createApp(ActionModal, {
+        info: {
+          heading: 'Выход из аккаунта',
+          icon: 'exit',
+          text: 'Вы точно хотите',
+          highlighted: 'выйти?',
+          proceedButton: 'Выйти'
+        },
+        callback: ()=>{
+          this.$cookies.remove("token");
+          methods.checkCookies(this.$cookies, constants.Role.ANY);
+        }
+      });
+      app.mount(div);
+    },
+    requestChangepassword(doctor) {
+      const div = document.getElementById("modal");
+      const app = createApp(PasswordChange, {
+        callback: password=>{
+          methods.authorizedPATCHRequest(
+              this.$cookies,
+              `/user`,
+              {
+                id: doctor.id,
+                password: password
+              },
+              ()=>methods.runNotification("Пароль изменен"),
+              error=>{
+                if(error.code === "ERR_NETWORK") {
+                  methods.runNotification("Не удалось подключиться к серверу");
+                  return;
+                }
+                methods.runNotification("Не удалось изменить пароль");
+              }
+          )
+        }
+      });
+      app.mount(div);
+    },
+    listAction() {
+      if(this.doctorMode) {
+        methods.setMeta({
+          setDoctor: true,
+          doctor: this.selectedDoctor
+        });
+        return router.push({name: 'new-appointment'});
+      }
+      router.push({name: 'new-doctor'});
+    },
     applyFiltersSearch() {
       if(settings.designMode)
         return;
@@ -424,7 +476,9 @@ export default {
           }
       );
     },
-    loadData() {
+    loadData(role) {
+      if(role === constants.Role.DOCTOR)
+        this.doctorMode = true;
       if(settings.designMode) {
         for(let i = 0; i < 13; i++)
           this.doctors.push({
@@ -477,10 +531,13 @@ export default {
     },
     requestDelete() {
       const div = document.getElementById("modal");
-      const app = createApp(DeleteModal, {
+      const app = createApp(ActionModal, {
         info: {
-          name: 'пользователя',
-          object: this.selectedDoctor,
+          heading: 'Удаление врача',
+          icon: 'delete',
+          text: 'Подтвердите удаление врача',
+          highlighted: this.selectedDoctor.surname + ' ' + this.selectedDoctor.name + ' ' + this.selectedDoctor.patronymic,
+          proceedButton: 'Удалить'
         },
         callback: this.deleteDoctor
       });
@@ -492,7 +549,10 @@ export default {
     }
   },
   beforeMount() {
-    methods.checkCookies(this.$cookies, constants.Role.ADMIN, this.loadData)
+    let meta = methods.getMeta();
+    if(meta && meta.doctorMode)
+      this.doctorMode = true;
+    methods.checkCookies(this.$cookies, constants.Role.ANY, this.loadData)
   }
 }
 </script>

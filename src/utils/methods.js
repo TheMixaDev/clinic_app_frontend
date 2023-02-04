@@ -18,14 +18,14 @@ export const methods = {
         if(cookies.get("token") != null) {
             this.authorizedGETRequest(cookies, "/user/current", response => {
                 localStorage.setItem("model", JSON.stringify(response.data.body))
-                if(response.data.body.role !== access) {
+                if(response.data.body.role !== access && access !== constants.Role.ANY) {
                     if(response.data.body.role === constants.Role.DOCTOR)
                         router.push({name: "appointments"});
                     else if(response.data.body.role === constants.Role.ADMIN)
                         router.push({name: "doctors-directory"});
                 } else {
                     if(callback)
-                        callback();
+                        callback(response.data.body.role);
                 }
             }, error => {
                 console.log(error);
@@ -78,5 +78,22 @@ export const methods = {
             return model.surname + " " + model.name + " " + model.lastname;
         }
         return "Иванов Иван Иванович";
+    },
+    getDoctorID() {
+        if(localStorage.getItem("model")) {
+            let model = JSON.parse(localStorage.getItem("model"));
+            return model.id;
+        }
+        return -1;
+    },
+    getAge(dateString) {
+        let today = new Date();
+        let birthDate = new Date(dateString);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        let m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age;
     }
 }

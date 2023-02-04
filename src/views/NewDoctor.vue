@@ -2,7 +2,7 @@
   <div className="container-fluid animate__animated animate__fadeIn">
     <div className="row header">
       <div className="col">
-        <h1 className="heading"><router-link className="btn back btn-primary second-add" to="/admin"><i class="fa-solid fa-arrow-left"></i>
+        <h1 className="heading"><router-link className="btn back btn-primary second-add" to="/doctors"><i class="fa-solid fa-arrow-left"></i>
         </router-link>{{edit.enabled ? `Редактирование врача` : `Новый врач`}}</h1>
       </div>
     </div>
@@ -19,8 +19,8 @@
       </router-link-->
       <h6>Логин</h6>
       <input class="input-outline" type="text" ref="login" v-model="edit.doctor.login">
-      <h6>Пароль</h6>
-      <input class="input-outline" type="text" ref="password" v-bind:disabled="edit.enabled" v-model="edit.doctor.password">
+      <h6 v-if="!edit.enabled">Пароль</h6>
+      <input class="input-outline" type="text" ref="password" v-if="!edit.enabled" v-model="edit.doctor.password">
     </div>
     <div className="container buttons-container">
       <div className="col row-buttons">
@@ -273,7 +273,6 @@ export default {
         this.edit.enabled = true;
         this.edit.doctor = meta;
         this.edit.doctor.role = constants.Role.DOCTOR;
-        this.edit.doctor.password = "Редактируется на главной странице";
         this.edit.doctor.lastname = this.edit.doctor.patronymic;
       }
     },
@@ -310,7 +309,7 @@ export default {
             router.go(-1);
           },
           error => {
-            this.edit.doctor.password = "Редактируется на главной странице";
+            this.edit.doctor.password = "";
             if(error.code === "ERR_NETWORK") {
               methods.runNotification("Не удалось подключиться к серверу");
               return;
@@ -321,7 +320,8 @@ export default {
     }
   },
   beforeMount() {
-    methods.checkCookies(this.$cookies, constants.Role.ADMIN, this.preload)
+    this.preload();
+    methods.checkCookies(this.$cookies, constants.Role.ADMIN)
   }
 }
 </script>

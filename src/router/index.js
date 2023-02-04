@@ -66,7 +66,7 @@ const routes = [
     component: NewPatient
   },
   {
-    path: '/admin',
+    path: '/doctors',
     name: 'doctors-directory',
     component: DoctorsDirectory
   },

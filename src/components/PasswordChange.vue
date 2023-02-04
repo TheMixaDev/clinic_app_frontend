@@ -3,19 +3,38 @@
     <div class="container modal-box animate__animated animate__backInUp">
       <h2 class="delete-heading">Изменение пароля</h2>
       <h6 class="heading-pass">Введите новый пароль</h6>
-      <input class="form-control pass" type="text">
+      <input class="form-control pass" type="text" v-model="password">
       <h6 class="heading-pass">Подтвердите новый пароль</h6>
-      <input class="form-control pass" type="text">
-      <a class="btn btn-primary edit"><i class="fa-solid fa-save button-icon"></i>Сохранить</a>
-      <a class="btn btn-primary back-btn"><i class="fa-solid fa-arrow-left"></i> Вернуться</a>
+      <input class="form-control pass" type="text" v-model="passwordRepeat">
+      <a class="btn btn-primary edit" @click="proceed()"><i class="fa-solid fa-save button-icon"></i>Сохранить</a>
+      <a class="btn btn-primary back-btn" @click="this.$.appContext.app.unmount();"><i class="fa-solid fa-arrow-left"></i> Вернуться</a>
     </div>
   </div>
 </template>
 
 <script>
 
+import {methods} from "@/utils/methods";
+
 export default {
   name: "PasswordChange",
+  props: ['callback'],
+  data() {
+    return {
+      password: '',
+      passwordRepeat: ''
+    }
+  },
+  methods: {
+    proceed() {
+      if(this.password.length < 3)
+        return methods.runNotification("Пароль слишком короткий");
+      if(this.password !== this.passwordRepeat)
+        return methods.runNotification("Пароли не совпадают");
+      this.callback(this.password);
+      this.$.appContext.app.unmount();
+    }
+  }
 }
 </script>
 

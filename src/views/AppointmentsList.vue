@@ -20,7 +20,7 @@
       </div>
         <div class="col profile">
           <p class="doctor-name">{{ doctorName }}</p>
-          <button class="btn btn-primary exit-button"><i class="fa-solid fa-arrow-right-from-bracket"></i> Выход</button>
+          <button class="btn btn-primary exit-button" @click="requestLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Выход</button>
         </div>
       </div>
       <div class="container main-part">
@@ -326,7 +326,7 @@ import {constants} from "@/utils/constants";
 import {settings} from "@/utils/settings";
 import router from "@/router";
 import {createApp} from "vue";
-import DeleteModal from "@/components/DeleteModal.vue";
+import ActionModal from "@/components/ActionModal.vue";
 
 
 export default {
@@ -343,6 +343,23 @@ export default {
   methods: {
     router() {
       return router
+    },
+    requestLogout() {
+      const div = document.getElementById("modal");
+      const app = createApp(ActionModal, {
+        info: {
+          heading: 'Выход из аккаунта',
+          icon: 'exit',
+          text: 'Вы точно хотите',
+          highlighted: 'выйти?',
+          proceedButton: 'Выйти'
+        },
+        callback: ()=>{
+          this.$cookies.remove("token");
+          methods.checkCookies(this.$cookies, constants.Role.ANY);
+        }
+      });
+      app.mount(div);
     },
     applyFiltersSearch() {
       if(settings.designMode)
@@ -437,10 +454,13 @@ export default {
     },
     requestDelete() {
       const div = document.getElementById("modal");
-      const app = createApp(DeleteModal, {
+      const app = createApp(ActionModal, {
         info: {
-          name: 'приема',
-          object: this.selectedAppointment
+          heading: 'Удаление приема',
+          icon: 'delete',
+          text: 'Подтвердите удаление приема',
+          highlighted: this.selectedAppointment.surname + ' ' + this.selectedAppointment.name + ' ' + this.selectedAppointment.patronymic + ' на ' + this.selectedAppointment.date,
+          proceedButton: 'Удалить'
         },
         callback: this.deleteAppointment
       });
