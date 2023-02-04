@@ -1207,8 +1207,8 @@ export default {
             id: -1,
             date: "",
             localization: "1",
-            flora: "1",
-            value: "1"
+            flora: "0",
+            value: "0"
           }
         },
         callback: this.proceedTable

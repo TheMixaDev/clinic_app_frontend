@@ -102,7 +102,7 @@
         </div>
       </div>
     <div class="container download-btn-row">
-      <button class="btn btn-primary download-btn"><i class="fa-solid fa-download"></i> Выгрузить консультативное заключение</button>
+      <button class="btn btn-primary download-btn" v-bind:disabled="selectedAppointment === -1"><i class="fa-solid fa-download"></i> Выгрузить консультативное заключение</button>
     </div>
   </div>
 </template>
@@ -386,9 +386,9 @@ export default {
                   surname: appointment.patient.surname,
                   name: appointment.patient.name,
                   patronymic: appointment.patient.lastname,
-                  birthdate: appointment.patient.birthday,
+                  birthdate: new Date(appointment.patient.birthday).toLocaleDateString('ru-RU'),
                   doctor: appointment.doctor.surname + " " + appointment.doctor.name.substring(0,1) + "." + appointment.doctor.lastname.substring(0,1)+".",
-                  date: appointment.patient.birthday,
+                  date: new Date(appointment.createdAt).toLocaleDateString('ru-RU'),
 
                   highlight: false
                 });

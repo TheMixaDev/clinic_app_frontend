@@ -43,7 +43,7 @@
             <div class="d-flex align-items-center">
               <div class="ms-3">
                 <select class="form-select" aria-label="Default select example" v-model="edit.model.flora">
-                  <option hidden >Выберите</option>
+                  <option value="0">Не выделена</option>
                   <option value="1">E. coli</option>
                   <option value="2">Enterococcus sp.</option>
                   <option value="3">Enterococcus faecalis</option>
@@ -82,7 +82,7 @@
             <div class="d-flex align-items-center">
               <div class="ms-3">
                 <select class="form-select" aria-label="Default select example" v-model="edit.model.value">
-                  <option hidden >Выберите</option>
+                  <option value="0">Не выделена</option>
                   <option value="1">10³ КОЕ/мл</option>
                   <option value="2">10⁴ КОЕ/мл</option>
                   <option value="3">10⁵ КОЕ/мл</option>
@@ -128,8 +128,8 @@ export default {
           id: -1,
           date: "",
           localization: "1",
-          flora: "1",
-          value: "1"
+          flora: "0",
+          value: "0"
         }
       }
     }

@@ -65,7 +65,7 @@
             <td>
               <div className="d-flex align-items-center">
                 <div className="ms-3">
-                  <p className="fw-bold mb-1">{{ patient.birthdate }}</p>
+                  <p className="fw-bold mb-1">{{ new Date(patient.birthdate).toLocaleDateString('ru-RU') }}</p>
                 </div>
               </div>
             </td>
