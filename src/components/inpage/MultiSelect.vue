@@ -1,11 +1,21 @@
 <template>
-  <button @click="showSelect = !showSelect" class="placeholder" :style="selected.length > 0 && !showSelect ? `color: black; opacity: 1` : ``">
-    {{ !showSelect ? (selected.length > 0 ? selected.map(el => el.name).join(", ") : 'Выбрать') : 'Выберите' }}
+  <button @click="showSelect = !showSelect" class="placeholder" :style="(selected.length > 0 || customInput.length > 0) && !showSelect ? `color: black; opacity: 1` : ``">
+    {{
+      !showSelect ?
+      (
+          selected.length > 0 || customInput.length > 0 ?
+              (selected.length > 0 ? selected.map(el => el.name).join(", ") : '')+
+              (selected.length > 0 && customInput.length > 0 ? ", " : '')+
+              customInput
+              : 'Выбрать'
+      )
+      : 'Выберите'
+    }}
   </button>
   <template v-if="showSelect">
-    <input class="search animate__animated animate__fadeInDownBig" type="text" placeholder="Поиск" v-model="search">
+    <input class="search animate__animated animate__fadeInDownBig" type="text" placeholder="Ручной ввод" v-model="customInput" v-if="custom" @change="saveCustom();">
     <div class="select">
-      <div class="option" :class="{'selected': option.selected}" @click="select(option)" v-for="option in options" :key="pid*1000+option.value">
+      <div class="option" :class="{'selected': option.selected}" @click="select(option)" v-for="(option, index) in input" :key="pid*1000+index">
         {{ option.name }}
       </div>
     </div>
@@ -17,11 +27,16 @@ export default {
   name: "MultiSelect",
   props: {
     input: Array,
-    pid: Number
+    pid: Number,
+    custom: {
+      default: false,
+      type: Boolean
+    }
   },
+  emits: ['customUpdate'],
   data() {
     return {
-      search: "",
+      customInput: "",
       selected: [],
       showSelect: false,
     }
@@ -32,23 +47,19 @@ export default {
       if(option.selected)
         this.selected.push(option);
       this.selected = this.selected.filter(el => el.selected && el.name !== option.selected.name);
-      for(let el of this.input)
-        if(el.name === option.name)
-          el.selected = option.selected;
     },
-    updateSelected(data) {
-      for(let i of data) {
-        if(i.selected) {
+    updateSelected(data, custom) {
+      console.log(data);
+      for(let i of data)
+        if(i.selected)
           this.selected.push(i);
-        }
-      }
+      if(custom)
+        this.customInput = custom;
+    },
+    saveCustom() {
+      this.$emit('customUpdate', this.customInput, this.pid);
     }
-  },
-  computed: {
-    options() {
-      return this.input.filter(el => el.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1)
-    }
-  },
+  }
 }
 </script>
 
@@ -80,7 +91,7 @@ export default {
 }
 .search {
   padding: 0.3rem;
-  max-width: 21rem;
+  width: 21rem;
   border: none;
   background: transparent;
 }

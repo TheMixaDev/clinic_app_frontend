@@ -48,7 +48,7 @@
           </div>
           <div class="col select-wrapper">
             <h6 class="patient-name">Операции, травмы</h6>
-            <MultiSelect :input="state.detailed.options1" :pid=1 ref="options1"></MultiSelect>
+            <MultiSelect :input="state.detailed.options1" :pid=1 :custom=true ref="options1" @custom-update="updateCustomOption"></MultiSelect>
           </div>
         </div>
         <div class="row row-wrapper">
@@ -58,21 +58,21 @@
         </div>
           <div class="col select-wrapper">
             <h6 class="patient-name">Туберкулез, венерические заболевания, гепатиты</h6>
-            <MultiSelect :input="state.detailed.options3" :pid=3 ref="options3"></MultiSelect>
+            <MultiSelect :input="state.detailed.options3" :pid=3 :custom=true ref="options3" @custom-update="updateCustomOption"></MultiSelect>
           </div>
           <div class="col select-wrapper">
             <h6 class="patient-name">Аллергические реакции</h6>
-            <MultiSelect :input="state.detailed.options4" :pid=4 ref="options4"></MultiSelect>
+            <MultiSelect :input="state.detailed.options4" :pid=4 :custom=true ref="options4" @custom-update="updateCustomOption"></MultiSelect>
           </div>
         </div>
         <div class="row row-wrapper">
           <div class="col select-wrapper">
             <h6 class="patient-name">Гемотрансфузии</h6>
-            <MultiSelect :input="state.detailed.options5" :pid=5 ref="options5"></MultiSelect>
+            <MultiSelect :input="state.detailed.options5" :pid=5 :custom=true ref="options5" @custom-update="updateCustomOption"></MultiSelect>
           </div>
           <div class="col select-wrapper">
             <h6 class="patient-name">Наследственность</h6>
-            <MultiSelect :input="state.detailed.options6" :pid=6 ref="options6"></MultiSelect>
+            <MultiSelect :input="state.detailed.options6" :pid=6 :custom=true ref="options6" @custom-update="updateCustomOption"></MultiSelect>
           </div>
           <div class="col select-wrapper">
             <h6 class="patient-name">Обследование на наследственную тромбофилию</h6>
@@ -965,6 +965,9 @@ export default {
     constants() {
       return constants
     },
+    updateCustomOption(value, pid) {
+      this.state.detailed[`option${pid}`] = value;
+    },
     requestCancel() {
       const div = document.getElementById("modal");
       const app = createApp(ActionModal, {
@@ -1005,7 +1008,7 @@ export default {
     preload() {
       this.loadState();
       for(let pid = 1; pid < 8; pid++) {
-        this.$refs[`options${pid}`].updateSelected(this.state.detailed[`options${pid}`]);
+        this.$refs[`options${pid}`].updateSelected(this.state.detailed[`options${pid}`], this.state.detailed[`option${pid}`]);
       }
       if(settings.designMode)
         return;
@@ -1191,101 +1194,103 @@ export default {
       ],
       state: {
         detailed: {
+          option1: "",
+          option3: "",
+          option4: "",
+          option5: "",
+          option6: "",
           options1: [
-            {name: "Флебэктомия в анамнезе", value: 1, selected: false},
-            {name: "Гемиструмэктомия в анамнезе", value: 1, selected: false},
-            {name: "Лазерная коррекция зрения в анамнезе", value: 1, selected: false},
-            {name: "Спленэктомия в анамнезе", value: 1, selected: false},
-            {name: "Оперативное лечение хронического геморроя", value: 1, selected: false},
-            {name: "Секторальная резекция молочной железы", value: 1, selected: false},
+            {name: "Флебэктомия в анамнезе", selected: false},
+            {name: "Гемиструмэктомия в анамнезе", selected: false},
+            {name: "Лазерная коррекция зрения в анамнезе", selected: false},
+            {name: "Спленэктомия в анамнезе", selected: false},
+            {name: "Оперативное лечение хронического геморроя", selected: false},
+            {name: "Секторальная резекция молочной железы", selected: false},
           ],
           options2: [
-            {name: "Хронический тонзиллит", value: 1, selected: false},
-            {name: "Хронический пиелонефрит", value: 1, selected: false},
-            {name: "Хронический цистит", value: 1, selected: false},
-            {name: "МКБ", value: 1, selected: false},
-            {name: "Единственная почка", value: 1, selected: false},
-            {name: "Хроническая АГ", value: 1, selected: false},
-            {name: "Варикозная болезнь", value: 1, selected: false},
-            {name: "Тромбоз в анамнезе", value: 1, selected: false},
-            {name: "Флебэктомия в анамнезе", value: 1, selected: false},
-            {name: "АИТ. Эутиреоз", value: 1, selected: false},
-            {name: "Субклинический гипотиреоз (ЗГТ)", value: 1, selected: false},
-            {name: "Узловой зоб", value: 1, selected: false},
-            {name: "Тиреотоксикоз", value: 1, selected: false},
-            {name: "ФАМ молочных желёз", value: 1, selected: false},
-            {name: "Секторальная резекция молочной железы", value: 1, selected: false},
-            {name: "Заболевания глаз", value: 1, selected: false},
-            {name: "Лазерная коррекция зрения в анамнезе", value: 1, selected: false},
-            {name: "Микропролактинома гипофиза", value: 1, selected: false},
-            {name: "Образование надпочечников", value: 1, selected: false},
-            {name: "Ожирение", value: 1, selected: false},
-            {name: "Сахарный диабет", value: 1, selected: false},
-            {name: "Хроническая никотиновая интоксикация", value: 1, selected: false},
-            {name: "АИТ. Эутиреоз", value: 1, selected: false},
-            {name: "Субклинический гипотиреоз (ЗГТ)", value: 1, selected: false},
-            {name: "Узловой зоб", value: 1, selected: false},
-            {name: "Тиреотоксикоз", value: 1, selected: false},
-            {name: "ФАМ молочных желёз", value: 1, selected: false},
-            {name: "Секторальная резекция молочной железы", value: 1, selected: false},
-            {name: "Заболевания глаз", value: 1, selected: false},
-            {name: "Лазерная коррекция зрения в анамнезе", value: 1, selected: false},
-            {name: "Микропролактинома гипофиза", value: 1, selected: false},
-            {name: "Образование надпочечников", value: 1, selected: false},
-            {name: "Ожирение", value: 1, selected: false},
-            {name: "Сахарный диабет", value: 1, selected: false},
-            {name: "Хроническая никотиновая интоксикация", value: 1, selected: false},
-
-            {name: "ДЖВП", value: 1, selected: false},
-            {name: "ЖКБ", value: 1, selected: false},
-            {name: "Холецистэктомия в анамнезе", value: 1, selected: false},
-            {name: "Нейросенсорная тугоухость", value: 1, selected: false},
-            {name: "Лекарственная аллергия", value: 1, selected: false},
-            {name: "Бронхиальная астма", value: 1, selected: false},
-            {name: "ТИА в анамнезе", value: 1, selected: false},
-            {name: "ТЭЛА в анамнезе", value: 1, selected: false},
-            {name: "Мигрень", value: 1, selected: false},
-            {name: "Спленэктомия в анамнезе", value: 1, selected: false},
-            {name: "Хронический гепатит", value: 1, selected: false},
-            {name: "Tbc в анамнезе", value: 1, selected: false},
-            {name: "Lues в анамнезе", value: 1, selected: false},
-
-            {name: "Узловая эритема", value: 1, selected: false},
-            {name: "Атопический дерматит", value: 1, selected: false},
-            {name: "Болезнь Виллебранда", value: 1, selected: false},
-            {name: "Пролапс МК", value: 1, selected: false},
-            {name: "Аномалия сосудов ГМ", value: 1, selected: false},
-            {name: "Очаг.образ.печени", value: 1, selected: false},
-            {name: "Хронический гастрит", value: 1, selected: false},
-            {name: "НЯК", value: 1, selected: false},
-            {name: "Хронический геморрой", value: 1, selected: false},
-            {name: "Оперативное лечение хронического геморроя", value: 1, selected: false},
-
+            {name: "Хронический тонзиллит", selected: false},
+            {name: "Хронический пиелонефрит", selected: false},
+            {name: "Хронический цистит", selected: false},
+            {name: "МКБ", selected: false},
+            {name: "Единственная почка", selected: false},
+            {name: "Хроническая АГ", selected: false},
+            {name: "Варикозная болезнь", selected: false},
+            {name: "Тромбоз в анамнезе", selected: false},
+            {name: "Флебэктомия в анамнезе", selected: false},
+            {name: "АИТ. Эутиреоз", selected: false},
+            {name: "Субклинический гипотиреоз (ЗГТ)", selected: false},
+            {name: "Узловой зоб", selected: false},
+            {name: "Тиреотоксикоз", selected: false},
+            {name: "ФАМ молочных желёз", selected: false},
+            {name: "Секторальная резекция молочной железы", selected: false},
+            {name: "Заболевания глаз", selected: false},
+            {name: "Лазерная коррекция зрения в анамнезе", selected: false},
+            {name: "Микропролактинома гипофиза", selected: false},
+            {name: "Образование надпочечников", selected: false},
+            {name: "Ожирение", selected: false},
+            {name: "Сахарный диабет", selected: false},
+            {name: "Хроническая никотиновая интоксикация", selected: false},
+            {name: "АИТ. Эутиреоз", selected: false},
+            {name: "Субклинический гипотиреоз (ЗГТ)", selected: false},
+            {name: "Узловой зоб", selected: false},
+            {name: "Тиреотоксикоз", selected: false},
+            {name: "ФАМ молочных желёз", selected: false},
+            {name: "Секторальная резекция молочной железы", selected: false},
+            {name: "Заболевания глаз", selected: false},
+            {name: "Лазерная коррекция зрения в анамнезе", selected: false},
+            {name: "Микропролактинома гипофиза", selected: false},
+            {name: "Образование надпочечников", selected: false},
+            {name: "Ожирение", selected: false},
+            {name: "Сахарный диабет", selected: false},
+            {name: "Хроническая никотиновая интоксикация", selected: false},
+            {name: "ДЖВП", selected: false},
+            {name: "ЖКБ", selected: false},
+            {name: "Холецистэктомия в анамнезе", selected: false},
+            {name: "Нейросенсорная тугоухость", selected: false},
+            {name: "Лекарственная аллергия", selected: false},
+            {name: "Бронхиальная астма", selected: false},
+            {name: "ТИА в анамнезе", selected: false},
+            {name: "ТЭЛА в анамнезе", selected: false},
+            {name: "Мигрень", selected: false},
+            {name: "Спленэктомия в анамнезе", selected: false},
+            {name: "Хронический гепатит", selected: false},
+            {name: "Tbc в анамнезе", selected: false},
+            {name: "Lues в анамнезе", selected: false},
+            {name: "Узловая эритема", selected: false},
+            {name: "Атопический дерматит", selected: false},
+            {name: "Болезнь Виллебранда", selected: false},
+            {name: "Пролапс МК", selected: false},
+            {name: "Аномалия сосудов ГМ", selected: false},
+            {name: "Очаг.образ.печени", selected: false},
+            {name: "Хронический гастрит", selected: false},
+            {name: "НЯК", selected: false},
+            {name: "Хронический геморрой", selected: false},
+            {name: "Оперативное лечение хронического геморроя", selected: false},
           ],
           options3: [
-            {name: "Отрицает", value: 1, selected: false},
+            {name: "Отрицает", selected: false},
           ],
           options4: [
-            {name: "Отрицает", value: 1, selected: false},
+            {name: "Отрицает", selected: false},
           ],
           options5: [
-            {name: "Отрицает", value: 1, selected: false},
-            {name: "Гемотрансфузии в анамнезе", value: 1, selected: false},
+            {name: "Отрицает", selected: false},
+            {name: "Гемотрансфузии в анамнезе", selected: false},
           ],
           options6: [
-            {name: "ТЭЛА у близких род", value: 1, selected: false},
-            {name: "ИМ до 45 лет у близких родственников", value: 1, selected: false},
-            {name: "ОНМК до 45 лет у близких родственников", value: 1, selected: false},
-            {name: "Тромбозы у близких родственников", value: 1, selected: false},
-            {name: "ГБ у близких", value: 1, selected: false},
-            {name: "СД у близких", value: 1, selected: false},
+            {name: "ТЭЛА у близких род", selected: false},
+            {name: "ИМ до 45 лет у близких родственников", selected: false},
+            {name: "ОНМК до 45 лет у близких родственников", selected: false},
+            {name: "Тромбозы у близких родственников", selected: false},
+            {name: "ГБ у близких", selected: false},
+            {name: "СД у близких", selected: false},
           ],
           options7: [
-            {name: "АФС", value: 1, selected: false},
-            {name: "Носительство LA", value: 1, selected: false},
-            {name: "Наследственная тромбофилия", value: 1, selected: false},
-            {name: "FV", value: 1, selected: false},
-            {name: "FII", value: 1, selected: false},
+            {name: "АФС", selected: false},
+            {name: "Носительство LA", selected: false},
+            {name: "Наследственная тромбофилия", selected: false},
+            {name: "FV", selected: false},
+            {name: "FII", selected: false},
           ]
         },
         patient: {
