@@ -334,7 +334,7 @@
           </div>
           <div>
             ОАГА:
-            <select class="form-select" v-model="state.diagnosis.dropdowns.diabetes">
+            <select class="form-select" v-model="state.diagnosis.dropdowns.oaga">
               <option value="0">Отсутствует</option>
               <option value="1">ST I</option>
               <option value="2">ST II</option>
