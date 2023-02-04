@@ -95,5 +95,16 @@ export const methods = {
             age--;
         }
         return age;
+    },
+    getTrimester(startDateString, dateString) {
+        if(startDateString.length !== 10) return "";
+        if(dateString.length !== 10) return "";
+        let startDate = new Date(startDateString);
+        let date = new Date(dateString);
+        let week = (date-startDate) / (1000*60*60*24*7) + 1;
+        if(week < 1) return "";
+        if(week < 14) return "(I)";
+        if(week < 28) return "(II)"
+        return "(III)";
     }
 }

@@ -99,7 +99,7 @@
               <tr class="table-first-row">
                 <th></th>
                 <th v-for="analyze in state[`analyzes_${key+1}`]" :key="analyze.id" @click="selectTableElement(analyze, `analyzes_${key+1}`)">
-                  {{ analyze.date }}
+                  {{ analyze.date.length > 1 ? new Date(analyze.date).toLocaleDateString('ru-RU') : "" }} {{ methods.getTrimester(state.mensesDate, analyze.date) }}
                 </th>
               </tr>
             </thead>
@@ -272,6 +272,81 @@
             </div>
           </div>
         </div>
+        <div class="container-fluid diagnosis-checks">
+          <div>
+            Рубец на матке:
+            <select class="form-select" v-model="state.diagnosis.dropdowns.rubec">
+              <option value="0">Отсутствует</option>
+              <option value="1">Рубец на матке после  кесарева сечения</option>
+              <option value="2">Рубец на матке после 2-х операций кесарева сечения</option>
+              <option value="3">Рубец на матке после малого кесарева сечения</option>
+              <option value="4">Рубец на матке после перфорации матки</option>
+              <option value="5">Рубец на матке после консервативной миомэктомии</option>
+            </select>
+          </div>
+          <div>
+            Нарушения гемодинамики:
+            <select class="form-select" v-model="state.diagnosis.dropdowns.hemodynamics">
+              <option value="0">Отсутствуют</option>
+              <option value="1">I степени</option>
+              <option value="2">II степени</option>
+              <option value="3">III степени</option>
+            </select>
+          </div>
+          <div>
+            ГСД:
+            <select class="form-select" v-model="state.diagnosis.dropdowns.gsd">
+              <option value="0">Отсутствует</option>
+              <option value="1">Диета</option>
+              <option value="2">Инсулинотерапия</option>
+            </select>
+          </div>
+          <div>
+            Заболевания глаз:
+            <select class="form-select" v-model="state.diagnosis.dropdowns.eye_disease">
+              <option value="0">Отсутствуют</option>
+              <option value="1">Миопия слабой степени</option>
+              <option value="2">Миопия средней степени</option>
+              <option value="3">Миопия высокой степени</option>
+              <option value="4">Миопический астигматизм</option>
+              <option value="5">Врожденная катаракта</option>
+              <option value="6">ПХРД</option>
+            </select>
+          </div>
+          <div>
+            Ожирение:
+            <select class="form-select" disabled>
+              <option value="0">Отсутствует</option>
+              <option value="1">I степени</option>
+              <option value="2">II степени</option>
+              <option value="3">III степени</option>
+              <option value="4">IV степени</option>
+            </select>
+          </div>
+          <div>
+            Сахарный диабет:
+            <select class="form-select" v-model="state.diagnosis.dropdowns.diabetes">
+              <option value="0">Отсутствует</option>
+              <option value="1">1 типа</option>
+              <option value="2">2 типа на диете</option>
+              <option value="3">2 типа на инсулине</option>
+            </select>
+          </div>
+          <div>
+            ОАГА:
+            <select class="form-select" v-model="state.diagnosis.dropdowns.diabetes">
+              <option value="0">Отсутствует</option>
+              <option value="1">ST I</option>
+              <option value="2">ST II</option>
+              <option value="3">CIN III</option>
+              <option value="4">Ca incitu</option>
+              <option value="5">Рубцовая деформация ш/м</option>
+              <option value="6">Дермоидные кисты яичников</option>
+              <option value="7">НГЭ III, комбинированное лечение</option>
+              <option value="8">НГЭ II</option>
+            </select>
+          </div>
+        </div>
       </div>
       <div class="container-fluid recomendations">
         <h4>Рекомендации</h4>
@@ -434,7 +509,7 @@ input.name-tag {
 }
 .pregnacy-text {
   height: 1rem;
-  width: 4.4rem;
+  width: 5rem;
   border: 1px solid rgba(0, 117, 255, 0.3);
   border-radius: 9px 9px 9px 9px;
   background: #F5F9FF;
@@ -1354,6 +1429,15 @@ export default {
         additional: "",
         diagnosis: {
           weeks: "",
+          dropdowns: {
+            rubec: "0",
+            hemodynamics: "0",
+            gsd: "0",
+            eye_disease: "0",
+            // fatness
+            diabetes: "0",
+            oaga: "0"
+          },
           checkboxes: [
             {
               id: 0,
@@ -1367,21 +1451,19 @@ export default {
                 {label: "Низкая плацентация", value: false},
                 {label: "Предлежание плаценты", value: false},
                 {label: "Децидуальный полип", value: false},
-                {label: "Рубец на матке", value: false},
-                {label: "Гипергомоцистеинемия / Анемия беременных", value: false},
+                {label: "Гипергомоцистеинемия", value: false}, //DV / EB ?
+                {label: "Анемия беременных", value: false},
                 {label: "Крупный плод", value: false},
-                {label: "ИЦН", value: false},
+                {label: "ИЦН", value: false}, // DL. DN ? start
                 {label: "Установка РАП", value: false},
-                {label: "Шов на шейке матки", value: false},
+                {label: "Шов на шейке матки", value: false}, // DL. DN ? end
                 {label: "Гестационный пиелонефрит", value: false},
                 {label: "ИМВП при беременности", value: false},
                 {label: "ХПН", value: false},
-                {label: "Нарушения гемодинамики", value: false},
                 {label: "Гипотрофия плода", value: false},
                 {label: "Ангидрамнион", value: false},
                 {label: "Маловодие", value: false},
                 {label: "Многоводие", value: false},
-                {label: "ГСД", value: false},
                 {label: "Холестаз при беременности", value: false},
                 {label: "Гепатоз беременных", value: false},
                 {label: "Тазовое предлежание", value: false},
@@ -1419,10 +1501,7 @@ export default {
                 {label: "Гемиструмэктомия в анамнезе", value: false},
                 {label: "ФАМ молочных желёз", value: false},
                 {label: "Секторальная резекция молочной железы", value: false},
-                {label: "Заболевания глаз", value: false},
                 {label: "Лазерная коррекция зрения в анамнезее", value: false},
-                {label: "Ожирение", value: false},
-                {label: "Сахарный диабет", value: false},
                 {label: "Хроническая никотиновая интоксикация", value: false},
                 {label: "ДЖВП", value: false},
                 {label: "ЖКБ", value: false},
@@ -1456,19 +1535,10 @@ export default {
                 {label: "ОГА", value: false},
                 {label: "Привычное невынашивание", value: false},
                 {label: "Кольпит", value: false},
-                {label: "ОАГА ST I", value: false},
-                {label: "ОАГА ST II", value: false},
-                {label: "ОАГА ST III", value: false},
-                {label: "ОАГА IV — Ca incitu", value: false},
-                {label: "ОАГА V — рубцовая деформация ш/м", value: false},
-                {label: "ОАГА VI — дермоидные кисты яичников", value: false},
-                {label: "ОАГА VII — НГЭ III, комбинированное лечение", value: false},
-                {label: "ОАГА VIII — НГЭ II", value: false},
                 {label: "Антенатальная гибель плода при сроке 30 недель", value: false},
                 {label: "Неразвивающаяся беременность 7 недель", value: false},
                 {label: "Преждевременные роды – эстренное кесарево сечение", value: false},
                 {label: "ХПН", value: false},
-                {label: "ГСД на инсулинотерапии", value: false}
               ]
             }
           ]
