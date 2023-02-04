@@ -6,7 +6,7 @@
         <thead class="bg-light">
         <tr class="table-first-row">
           <th>Дата анализа</th>
-          <th><input type="date" class="date"></th>
+          <th><input type="date" class="date" v-model="edit.model.date"></th>
         </tr>
         </thead>
         <tbody>
@@ -21,11 +21,11 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <select class="form-select" aria-label="Default select example">
+                <select class="form-select" aria-label="Default select example" v-model="edit.model.localization">
                   <option hidden >Выберите</option>
-                  <option value="1">1 — Посев мочи</option>
-                  <option value="2">2 — Посев из ц/канала</option>
-                  <option value="3">3 — Посев из носа</option>
+                  <option value="1">Посев мочи</option>
+                  <option value="2">Посев из ц/канала</option>
+                  <option value="3">Посев из носа</option>
                 </select>
               </div>
             </div>
@@ -42,29 +42,29 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <select class="form-select" aria-label="Default select example">
+                <select class="form-select" aria-label="Default select example" v-model="edit.model.flora">
                   <option hidden >Выберите</option>
                   <option value="1">E. coli</option>
                   <option value="2">Enterococcus sp.</option>
-                  <option value="2">Enterococcus faecalis</option>
-                  <option value="3">Klebsiella sp.</option>
-                  <option value="3">Staphyloc. ep.</option>
-                  <option value="3">Streptococcus anginosus</option>
-                  <option value="3">Streptococcus agalact.</option>
-                  <option value="3">Streptococcus or.</option>
-                  <option value="3">Streptococcus spp</option>
-                  <option value="3">Streptococcus pneumoniae</option>
-                  <option value="3">Candida albicans</option>
-                  <option value="3">Lactobacillus sp.</option>
-                  <option value="3">Proteus mirabilis</option>
-                  <option value="3">Citrobacter</option>
-                  <option value="3">Enterobacteriaceae</option>
-                  <option value="3">Pseudomonas aeruginosa</option>
-                  <option value="3">Haemophilus influenzae</option>
-                  <option value="3">Moraxella catarrhalis</option>
-                  <option value="3">Neisseria sicca</option>
-                  <option value="3">Neisseria spp.</option>
-                  <option value="3">Corynebacterium spp</option>
+                  <option value="3">Enterococcus faecalis</option>
+                  <option value="4">Klebsiella sp.</option>
+                  <option value="5">Staphyloc. ep.</option>
+                  <option value="6">Streptococcus anginosus</option>
+                  <option value="7">Streptococcus agalact.</option>
+                  <option value="8">Streptococcus or.</option>
+                  <option value="9">Streptococcus spp</option>
+                  <option value="10">Streptococcus pneumoniae</option>
+                  <option value="11">Candida albicans</option>
+                  <option value="12">Lactobacillus sp.</option>
+                  <option value="13">Proteus mirabilis</option>
+                  <option value="14">Citrobacter</option>
+                  <option value="15">Enterobacteriaceae</option>
+                  <option value="16">Pseudomonas aeruginosa</option>
+                  <option value="17">Haemophilus influenzae</option>
+                  <option value="18">Moraxella catarrhalis</option>
+                  <option value="19">Neisseria sicca</option>
+                  <option value="20">Neisseria spp.</option>
+                  <option value="21">Corynebacterium spp</option>
                 </select>
               </div>
             </div>
@@ -81,14 +81,14 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <select class="form-select" aria-label="Default select example">
+                <select class="form-select" aria-label="Default select example" v-model="edit.model.value">
                   <option hidden >Выберите</option>
                   <option value="1">10³ КОЕ/мл</option>
                   <option value="2">10⁴ КОЕ/мл</option>
                   <option value="3">10⁵ КОЕ/мл</option>
-                  <option value="3">10⁶ КОЕ/мл</option>
-                  <option value="3">10⁷ КОЕ/мл</option>
-                  <option value="3">10⁸ КОЕ/мл</option>
+                  <option value="4">10⁶ КОЕ/мл</option>
+                  <option value="5">10⁷ КОЕ/мл</option>
+                  <option value="6">10⁸ КОЕ/мл</option>
                 </select>
               </div>
             </div>
@@ -96,16 +96,44 @@
         </tr>
         </tbody>
       </table>
-      <a class="btn btn-primary edit"><i class="fa-solid fa-save button-icon"></i>Сохранить</a>
-      <a class="btn btn-primary back-btn"><i class="fa-solid fa-arrow-left"></i> Вернуться</a>
+      <a class="btn btn-primary edit" @click="proceed();"><i class="fa-solid fa-save button-icon"></i>Сохранить</a>
+      <a class="btn btn-primary back-btn" @click="this.$.appContext.app.unmount();"><i class="fa-solid fa-arrow-left"></i> Вернуться</a>
     </div>
   </div>
 </template>
 
 <script>
 
+import {settings} from "@/utils/settings";
+
 export default {
-  name: "PasswordChange",
+  name: "AddMedcropsComponent",
+  props: ['info', 'callback'],
+  methods: {
+    proceed() {
+      if(settings.designMode)
+        return;
+      this.callback(this.edit, "crops", "Посевы");
+      this.$.appContext.app.unmount();
+    }
+  },
+  beforeMount() {
+    this.edit = this.info;
+  },
+  data() {
+    return {
+      edit: {
+        enabled: false,
+        model: {
+          id: -1,
+          date: "",
+          localization: "1",
+          flora: "1",
+          value: "1"
+        }
+      }
+    }
+  }
 }
 </script>
 

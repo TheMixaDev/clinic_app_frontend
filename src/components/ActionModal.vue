@@ -22,7 +22,7 @@ export default {
     proceed() {
       if(settings.designMode)
         return;
-      this.callback();
+      this.callback(this.info.callbackInfo ? this.info.callbackInfo : null);
       this.$.appContext.app.unmount();
     }
   }

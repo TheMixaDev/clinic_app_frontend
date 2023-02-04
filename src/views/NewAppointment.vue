@@ -123,23 +123,18 @@
             </tr>
             </tbody>
           </table>
-          <div class="alert alert-primary d-flex align-items-center" role="alert" v-else>
-            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
-            <div>
-              <i class="fa-solid fa-circle-info"></i> В данной таблице на данный момент нет данных!
-            </div>
-          </div>
+          <EmptyTableDisplay v-else/>
           <br>
           <div class="row col-buttons">
-            <button class="btn btn-primary first-add" @click="saveState(()=>router().push({'name':`table-analyzes-${key+1}`}))"><i class="fa-solid fa-plus button-icon"></i>Добавить</button>
-            <button class="btn btn-primary edit" v-if="state[`analyzes_${key+1}`].length > 0" v-bind:disabled="selections[`analyzes_${key+1}`] === -1" @click="editTableElement(`analyzes_${key+1}`, `table-analyzes-${key+1}`)"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>
-            <button class="btn btn-primary delete" v-if="state[`analyzes_${key+1}`].length > 0" v-bind:disabled="selections[`analyzes_${key+1}`] === -1" @click="requestDeleteElement(`analyzes_${key+1}`, 'анализов')"><i class="fa-solid fa-trash button-icon"></i>Удалить</button>
+            <button class="btn btn-primary first-add" @click="requestAddAnalyzes(`analyzes_${key+1}`, analyze_constants[key])"><i class="fa-solid fa-plus button-icon"></i>Добавить</button>
+            <button class="btn btn-primary edit" v-if="state[`analyzes_${key+1}`].length > 0" v-bind:disabled="selections[`analyzes_${key+1}`] === -1" @click="requestEdit(AddAnalyzesComponent, `analyzes_${key+1}`, analyze_constants[key])"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>
+            <button class="btn btn-primary delete" v-if="state[`analyzes_${key+1}`].length > 0" v-bind:disabled="selections[`analyzes_${key+1}`] === -1" @click="requestDeleteElement('анализов',`analyzes_${key+1}`)"><i class="fa-solid fa-trash button-icon"></i>Удалить</button>
           </div>
         </div>
       </div>
       <div class="container-fluid medcrops">
         <h4>Посевы</h4>
-        <table class="table align-middle mb-0 table-hover table-striped table-bordered bg-white">
+        <table class="table align-middle mb-0 table-hover table-striped table-bordered bg-white" v-if="state.crops.length > 0">
           <thead class="bg-light">
           <tr class="table-first-row">
             <th>Дата анализа</th>
@@ -160,31 +155,32 @@
             <td>
               <div class="d-flex align-items-center">
                 <div class="ms-3">
-                  <p class="fw-bold mb-1">{{ crop.localization }}</p>
+                  <p class="fw-bold mb-1">{{ crops_constants[0][crop.localization-1] }}</p>
                 </div>
               </div>
             </td>
             <td>
               <div class="d-flex align-items-center">
                 <div class="ms-3">
-                  <p class="fw-bold mb-1">{{ crop.flora }}</p>
+                  <p class="fw-bold mb-1">{{ crops_constants[1][crop.flora-1] }}</p>
                 </div>
               </div>
             </td>
             <td>
               <div class="d-flex align-items-center">
                 <div class="ms-3">
-                  <p class="fw-bold mb-1">{{ crop.value }}</p>
+                  <p class="fw-bold mb-1">{{ crops_constants[2][crop.value-1] }}</p>
                 </div>
               </div>
             </td>
           </tr>
           </tbody>
         </table>
+        <EmptyTableDisplay v-else/>
         <div class="row col-buttons">
-          <button class="btn btn-primary first-add" @click="saveState(()=>router().push({'name':'table-crops'}))"><i class="fa-solid fa-plus button-icon"></i>Добавить</button>
-          <button class="btn btn-primary edit" v-bind:disabled="selections.crops === -1" @click="editTableElement('crops', 'table-crops')"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>
-          <button class="btn btn-primary delete" v-bind:disabled="selections.crops === -1" @click="requestDeleteElement('crops', 'посевов')"><i class="fa-solid fa-trash button-icon"></i>Удалить</button>
+          <button class="btn btn-primary first-add" @click="requestAddCrops()"><i class="fa-solid fa-plus button-icon"></i>Добавить</button>
+          <button class="btn btn-primary edit" v-if="state.crops.length > 0" v-bind:disabled="selections.crops === -1" @click="requestEdit(AddMedcropsComponent, 'crops')"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>
+          <button class="btn btn-primary delete" v-if="state.crops.length > 0" v-bind:disabled="selections.crops === -1" @click="requestDeleteElement('посевов', 'crops')"><i class="fa-solid fa-trash button-icon"></i>Удалить</button>
         </div>
       </div>
       <div class="container-fluid uzi">
@@ -292,7 +288,7 @@
       </div>
       <div class="container-fluid childbirth">
         <h4>Роды</h4>
-        <table class="table align-middle mb-0 table-hover table-striped table-bordered bg-white">
+        <table class="table align-middle mb-0 table-hover table-striped table-bordered bg-white" v-if="state.birth.length > 0">
           <thead class="bg-light">
           <tr class="table-first-row">
             <th>Роды ч/з ЕРП</th>
@@ -305,18 +301,18 @@
           </tr>
           </thead>
           <tbody>
-            <tr v-for="birth in state.birth" :key="birth.id" @click="selectTableElement(birth, 'births')" :style="selections.births !== -1 && selections.births.id === birth.id ? `background-color: #cceffd` : ``">
+            <tr v-for="birth in state.birth" :key="birth.id" @click="selectTableElement(birth, 'birth')" :style="selections.birth !== -1 && selections.birth.id === birth.id ? `background-color: #cceffd` : ``">
               <td>
                 <div class="d-flex align-items-center">
                   <div class="ms-3">
-                    <p class="fw-bold mb-1">{{ birth.birth }}</p>
+                    <p class="fw-bold mb-1">{{ birth.birth ? "Да" : "Нет" }}</p>
                   </div>
                 </div>
               </td>
               <td>
                 <div class="d-flex align-items-center">
                   <div class="ms-3">
-                    <p class="fw-bold mb-1">{{ birth.character }}</p>
+                    <p class="fw-bold mb-1">{{ birth.character === "1" ? "Плановое" : "Экстренное"}}</p>
                   </div>
                 </div>
               </td>
@@ -344,31 +340,31 @@
               <td>
                 <div class="d-flex align-items-center">
                   <div class="ms-3">
-                    <p class="fw-bold mb-1">{{ birth.timeperiod }}</p>
+                    <p class="fw-bold mb-1">{{ birth.timeperiod ? "Да" : "Нет" }}</p>
                   </div>
                 </div>
               </td>
               <td>
                 <div class="d-flex align-items-center">
                   <div class="ms-3">
-                    <p class="fw-bold mb-1">{{ birth.complications }}</p>
+                    <p class="fw-bold mb-1">{{ birth.complications ? "Да" : "Нет" }}</p>
                   </div>
                 </div>
               </td>
             </tr>
           </tbody>
         </table>
+        <EmptyTableDisplay v-else/>
         <div class="row col-buttons">
-          <button class="btn btn-primary first-add" @click="saveState(()=>router().push({'name':'table-birth'}))"><i class="fa-solid fa-plus button-icon"></i>Добавить</button>
-          <button class="btn btn-primary edit" v-bind:disabled="selections.births === -1" @click="editTableElement('births', 'table-birth')"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>
-          <button class="btn btn-primary delete" v-bind:disabled="selections.births === -1" @click="requestDeleteElement('births', 'родов')"><i class="fa-solid fa-trash button-icon"></i>Удалить</button>
+          <button class="btn btn-primary first-add" @click="requestAddBirth();"><i class="fa-solid fa-plus button-icon"></i>Добавить</button>
+          <button class="btn btn-primary edit" v-if="state.birth.length > 0" v-bind:disabled="selections.birth === -1" @click="requestEdit(AddChildbirthComponent, 'birth')"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>
+          <button class="btn btn-primary delete" v-if="state.birth.length > 0" v-bind:disabled="selections.birth === -1" @click="requestDeleteElement('родов', 'birth')"><i class="fa-solid fa-trash button-icon"></i>Удалить</button>
         </div>
       </div>
     </div>
     <div class="row save-buttons">
       <button class="btn btn-primary save-first"><i class="fa-solid fa-plus button-icon"></i>Сохранить</button>
       <button class="btn btn-primary save-second"><i class="fa-solid fa-download button-icon"></i>Сохранить и вывести консультативное заключение</button>
-
     </div>
   </div>
 </template>
@@ -941,10 +937,23 @@ import {methods} from "@/utils/methods";
 import {constants} from "@/utils/constants";
 import {createApp} from "vue";
 import ActionModal from "@/components/ActionModal.vue";
+import EmptyTableDisplay from "@/components/inpage/EmptyTableDisplay.vue";
+import AddChildbirthComponent from "@/components/tables/AddChildbirthComponent.vue";
+import AddMedcropsComponent from "@/components/tables/AddMedcropsComponent.vue";
+import AddAnalyzesComponent from "@/components/tables/AddAnalyzesComponent.vue";
 
 export default {
   name: "NewAppointment",
   computed: {
+    AddAnalyzesComponent() {
+      return AddAnalyzesComponent
+    },
+    AddMedcropsComponent() {
+      return AddMedcropsComponent
+    },
+    AddChildbirthComponent() {
+      return AddChildbirthComponent
+    },
     methods() {
       return methods
     }
@@ -1039,10 +1048,7 @@ export default {
         return this.selections[element] = -1;
       this.selections[element] = data;
     },
-    deleteElement() { // (element, label)
-      // TODO
-    },
-    requestDeleteElement(element, label) {
+    requestDeleteElement(label, table) {
       const div = document.getElementById("modal");
       const app = createApp(ActionModal, {
         info: {
@@ -1050,7 +1056,8 @@ export default {
           icon: 'delete',
           text: 'Подтвердите удаление ',
           highlighted: label,
-          proceedButton: 'Удалить'
+          proceedButton: 'Удалить',
+          callbackInfo: table
         },
         callback: this.deleteElement
       });
@@ -1060,6 +1067,108 @@ export default {
       //methods.setMeta(this.selections[element]);
       this.saveState(()=>router.push({name: route}));
     },
+    deleteElement(table) {
+      let index = -1;
+      for(let i in this.state[table])
+        if(this.state[table][i].id === this.selections[table].id) {
+          this.selections[table] = -1;
+          index = i;
+          break;
+        }
+      this.state[table].splice(index, 1);
+      return methods.runNotification("Данные удалены");
+    },
+    proceedTable(data, table, label) {
+      if(data.model.id === -1) {
+        data.model.id = this.findNextId(this.state[table]);
+        this.state[table].push(data.model);
+        methods.runNotification(label+" добавлены");
+      } else {
+        for(let i of this.state[table])
+          if(i.id === data.model.id)
+            i = data.model;
+        methods.runNotification("Данные обновлены");
+      }
+    },
+    requestEdit(component, data, constants) {
+      let info = {
+        enabled: true,
+        table: data,
+        model: this.selections[data]
+      };
+      if(constants)
+        info.labels = constants;
+      this.requestModalGeneral(component, {
+        info: info,
+        callback: this.proceedTable
+      });
+    },
+    requestAddBirth() {
+      this.requestModalGeneral(AddChildbirthComponent,{
+        info: {
+          enabled: false,
+          model: {
+            id: -1,
+            birth: false,
+            character: "1",
+            weight: "",
+            height: "",
+            apgar: "",
+            bloodloss: "",
+            timeperiod: false,
+            complications: false
+          }
+        },
+        callback: this.proceedTable
+      });
+    },
+    requestAddCrops() {
+      this.requestModalGeneral(AddMedcropsComponent,{
+        info: {
+          enabled: false,
+          model: {
+            id: -1,
+            date: "",
+            localization: "1",
+            flora: "1",
+            value: "1"
+          }
+        },
+        callback: this.proceedTable
+      });
+    },
+    requestAddAnalyzes(table, constants) {
+      this.requestModalGeneral(AddAnalyzesComponent,{
+        info: {
+          enabled: false,
+          table: table,
+          labels: constants,
+          model: {
+            id: -1,
+            date: "",
+            values: this.generateEmptyArray(constants.length)
+          }
+        },
+        callback: this.proceedTable
+      });
+    },
+    requestModalGeneral(component, props) {
+      const div = document.getElementById("modal");
+      const app = createApp(component, props);
+      app.mount(div);
+    },
+    findNextId(elements) {
+      let maxId = -1;
+      for(let i of elements)
+        if(i.id > maxId) maxId = i.id;
+      return maxId+1;
+    },
+    generateEmptyArray(length) {
+      let result = [];
+      for(let i = 0; i < length; i++)
+        result.push("");
+      return result;
+    }
   },
   beforeMount() {
     methods.checkCookies(this.$cookies, constants.Role.DOCTOR)
@@ -1067,13 +1176,18 @@ export default {
   mounted() {
     this.preload();
   },
-  components: {MultiSelect},
+  components: {EmptyTableDisplay, MultiSelect},
   data() {
     return {
       analyze_constants: [
           ["Протромбиновый индекс", "МНО", "Фибриноген", "АПТВ", "Тромбиновое время", "Антитромбин III", "Тест на LA", "Д-димер", "Гомоцистеин", "Протеин C", "Протеин S"],
           ["АТ к β2-гликопротеину", "АТ к кардиолипину", "АТ к аннексину V", "АТ к ХГЧ", "АТ к протромбину", "АТ к фосфатидилсерину", "АТ к фосфатидил к-те", "АТ к фосфатидилинозитолу", "Антинуклеарный фактор", "АТ к 2сп ДНК"],
           ["Lei", "Hb", "Ht", "Tr", "Ферритин", "ТТГ"]
+      ],
+      crops_constants: [
+          ["Посев мочи", "Посев из ц/канала", "Посев из носа", "Посев из зева"],
+          ["E. coli", "Enterococcus sp.", "Enterococcus faecalis", "Klebsiella sp.", "Staphyloc. ep.", "Streptococcus anginosus", "Streptococcus agalact.", "Streptococcus or.", "Streptococcus spp", "Streptococcus pneumoniae", "Candida albicans", "Lactobacillus sp.", "Proteus mirabilis", "Citrobacter", "Enterobacteriaceae", "Pseudomonas aeruginosa", "Haemophilus influenzae", "Moraxella catarrhalis", "Neisseria sicca", "Neisseria spp.", "Corynebacterium spp"],
+          ["10³ КОЕ/мл", "10⁴ КОЕ/мл", "10⁵ КОЕ/мл", "10⁶ КОЕ/мл", "10⁷ КОЕ/мл", "10⁸ КОЕ/мл"]
       ],
       state: {
         detailed: {
@@ -1205,7 +1319,7 @@ export default {
           }*/
         ],
         analyzes_3:  [ // TODO
-          {
+          /*{
             id: 0,
             date: "2022",
             values: ["234","54","34","65","32","65"]
@@ -1224,17 +1338,9 @@ export default {
             id: 3,
             date: "2023",
             values: ["234","54","34","65","32","65"]
-          },
+          },*/
         ],
-        crops: [ //TODO
-          {
-            id: 0,
-            date: "",
-            localization: "",
-            flora: "",
-            value: ""
-          }
-        ],
+        crops: [],
         uzi: {
           text: constants.uziTexts[0],
           files: [] // TODO
@@ -1396,37 +1502,14 @@ export default {
             {label: "Посев из носа, посев из зева", value: false}
           ]
         },
-        birth: [
-          {
-            id: 0,
-            birth: 0,
-            character: 1,
-            weight: 0,
-            height: 0,
-            apgar: 0,
-            bloodloss: 0,
-            timeperiod: true,
-            complications: true
-          },
-          {
-            id: 1,
-            birth: 1,
-            character: 2,
-            weight: 0,
-            height: 0,
-            apgar: 0,
-            bloodloss: 0,
-            timeperiod: false,
-            complications: false
-          }
-        ], // TODO
+        birth: []
       },
       selections: {
         analyzes_1: -1,
         analyzes_2: -1,
         analyzes_3: -1,
         crops: -1,
-        births: -1
+        birth: -1
       }
     }
   }

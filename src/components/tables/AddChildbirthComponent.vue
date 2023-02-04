@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid delete-modal-body animate__animated animate__fadeIn">
     <div class="container modal-box animate__animated animate__backInUp">
-      <h2 class="delete-heading">Добавление родов</h2>
+      <h2 class="delete-heading">{{ edit.enabled ? "Изменение" : "Добавление"}} родов</h2>
       <table class="table align-middle mb-0 table-hover table-striped table-bordered bg-white">
         <tbody>
         <tr>
@@ -12,11 +12,11 @@
               </div>
             </div>
           </td>
-          <td>
+          <td @click="edit.model.birth = !edit.model.birth">
             <div class="d-flex align-items-center">
               <div class="ms-3">
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox"/>
+                  <input class="form-check-input" type="checkbox" v-model="edit.model.birth"/>
                   <label class="form-check-label"></label>
                 </div>
               </div>
@@ -34,8 +34,7 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <select class="form-select" aria-label="Default select example">
-                  <option hidden >Выберите</option>
+                <select class="form-select" aria-label="Default select example" v-model="edit.model.character">
                   <option value="1">Плановое</option>
                   <option value="2">Экстренное</option>
                 </select>
@@ -54,7 +53,7 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <input class="input-outline" type="text">
+                <input class="input-outline" type="text" v-model="edit.model.weight">
               </div>
             </div>
           </td>
@@ -70,7 +69,7 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <input class="input-outline" type="text">
+                <input class="input-outline" type="text" v-model="edit.model.height">
               </div>
             </div>
           </td>
@@ -86,7 +85,7 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <input class="input-outline" type="text">
+                <input class="input-outline" type="text" v-model="edit.model.apgar">
               </div>
             </div>
           </td>
@@ -102,7 +101,7 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <input class="input-outline" type="text">
+                <input class="input-outline" type="text" v-model="edit.model.bloodloss">
               </div>
             </div>
           </td>
@@ -115,11 +114,11 @@
               </div>
             </div>
           </td>
-          <td>
+          <td @click="edit.model.timeperiod = !edit.model.timeperiod">
             <div class="d-flex align-items-center">
               <div class="ms-3">
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox"/>
+                  <input class="form-check-input" type="checkbox" v-model="edit.model.timeperiod"/>
                   <label class="form-check-label"></label>
                 </div>
               </div>
@@ -134,11 +133,11 @@
               </div>
             </div>
           </td>
-          <td>
+          <td @click="edit.model.complications = !edit.model.complications">
             <div class="d-flex align-items-center">
               <div class="ms-3">
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox"/>
+                  <input class="form-check-input" type="checkbox" v-model="edit.model.complications"/>
                   <label class="form-check-label"></label>
                 </div>
               </div>
@@ -147,16 +146,48 @@
         </tr>
         </tbody>
       </table>
-      <a class="btn btn-primary edit"><i class="fa-solid fa-save button-icon"></i>Сохранить</a>
-      <a class="btn btn-primary back-btn"><i class="fa-solid fa-arrow-left"></i> Вернуться</a>
+      <a class="btn btn-primary edit" @click="proceed();"><i class="fa-solid fa-save button-icon"></i>Сохранить</a>
+      <a class="btn btn-primary back-btn" @click="this.$.appContext.app.unmount();"><i class="fa-solid fa-arrow-left"></i> Вернуться</a>
     </div>
   </div>
 </template>
 
 <script>
 
+import {settings} from "@/utils/settings";
+
 export default {
-  name: "PasswordChange",
+  name: "AddChildbirthComponent",
+  props: ['info', 'callback'],
+  methods: {
+    proceed() {
+      if(settings.designMode)
+        return;
+      this.callback(this.edit, "birth", "Роды");
+      this.$.appContext.app.unmount();
+    }
+  },
+  beforeMount() {
+    this.edit = this.info;
+  },
+  data() {
+    return {
+      edit: {
+        enabled: false,
+        model: {
+          id: -1,
+          birth: false,
+          character: 1,
+          weight: 0,
+          height: 0,
+          apgar: 0,
+          bloodloss: 0,
+          timeperiod: true,
+          complications: true
+        }
+      }
+    }
+  }
 }
 </script>
 
