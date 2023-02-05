@@ -65,11 +65,12 @@ export default {
 
 <style scoped>
 .select {
-  position: fixed;
+  position: relative;
   background: white;
   border-radius: 9px;
   overflow-y: scroll;
   max-height: 30vh;
+  max-width: 25vw;
   opacity: 100%;
   z-index: 9999;
   padding: 1rem;

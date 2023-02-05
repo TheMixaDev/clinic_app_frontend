@@ -271,7 +271,7 @@
           </div>
         </div>
         <div class="container-fluid diagnosis-checks">
-          <div>
+          <div class="col">
             Рубец на матке:
             <select class="form-select" v-model="state.diagnosis.dropdowns.rubec">
               <option value="0">Отсутствует</option>
@@ -282,7 +282,7 @@
               <option value="5">Рубец на матке после консервативной миомэктомии</option>
             </select>
           </div>
-          <div>
+          <div class="">
             Нарушения гемодинамики:
             <select class="form-select" v-model="state.diagnosis.dropdowns.hemodynamics">
               <option value="0">Отсутствуют</option>
@@ -291,7 +291,7 @@
               <option value="3">III степени</option>
             </select>
           </div>
-          <div>
+          <div class="col">
             ГСД:
             <select class="form-select" v-model="state.diagnosis.dropdowns.gsd">
               <option value="0">Отсутствует</option>
@@ -299,7 +299,7 @@
               <option value="2">Инсулинотерапия</option>
             </select>
           </div>
-          <div>
+          <div class="col">
             Заболевания глаз:
             <select class="form-select" v-model="state.diagnosis.dropdowns.eye_disease">
               <option value="0">Отсутствуют</option>
@@ -311,7 +311,7 @@
               <option value="6">ПХРД</option>
             </select>
           </div>
-          <div>
+          <div class="col">
             Ожирение:
             <select class="form-select" disabled>
               <option value="0">Отсутствует</option>
@@ -321,7 +321,7 @@
               <option value="4">IV степени</option>
             </select>
           </div>
-          <div>
+          <div class="col">
             Сахарный диабет:
             <select class="form-select" v-model="state.diagnosis.dropdowns.diabetes">
               <option value="0">Отсутствует</option>
@@ -330,7 +330,7 @@
               <option value="3">2 типа на инсулине</option>
             </select>
           </div>
-          <div>
+          <div class="col">
             ОАГА:
             <select class="form-select" v-model="state.diagnosis.dropdowns.oaga">
               <option value="0">Отсутствует</option>
@@ -472,6 +472,7 @@
 .save-buttons {
   justify-content: center;
   margin-bottom: 2rem;
+  margin-top: 2rem;
 }
 .btn.back {
   background: transparent!important;
@@ -696,12 +697,15 @@ h6 {
   padding-bottom: 2rem;
   padding-left: 2rem;
   text-align: left;
+  -webkit-box-shadow: 0px 9px 8px -8px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 0px 9px 8px -8px rgba(34, 60, 80, 0.2);
+  box-shadow: 0px 9px 8px -8px rgba(34, 60, 80, 0.2);
   margin-top: 2rem;
   background: transparent;
   width: auto;
   height: auto;
-  border-radius: 0;
-  box-shadow: none;
+  border-radius-bottomleft: 0.5rem;
+  -moz-border-radius-bottomright: 0.5rem;
 }
 .container-fluid.anamnesis {
   overflow-y: auto;

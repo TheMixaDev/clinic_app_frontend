@@ -108,12 +108,16 @@
 </template>
 <style>
 .download-btn {
-  background: transparent;
-  color: #888888;
-  box-shadow: none;
-  border: none;
-  margin-top: 2rem;
-  text-align: left;
+  background: linear-gradient(94.83deg, #00A3FF 1.33%, #00C2FF 100%);
+  border: 1px solid rgba(0, 117, 255, 0.3);
+  border-radius: 9px;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  margin-top: 1rem;
+  width: 20vw;
+}
+.download-btn:hover {
+  border: none!important;
 }
 .download-btn:hover {
   background: transparent!important;
@@ -123,8 +127,10 @@
   margin-top: 2rem;
   text-align: left;
 }
-.row.download-btn-row {
-  width: 80vw;
+.container.download-btn-row {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 1rem;
 }
 .profile {
   display: flex;

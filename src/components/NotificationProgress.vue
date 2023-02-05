@@ -59,7 +59,9 @@ export default {
 }
 .container.notification-box {
   background: white;
-  box-shadow: 0px 6px 20px 6px rgb(61 61 61 / 10%);
+  -webkit-box-shadow: 0px 9px 8px -8px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 0px 9px 8px -8px rgba(34, 60, 80, 0.2);
+  box-shadow: 0px 9px 8px -8px rgba(34, 60, 80, 0.2);
   min-height: 6rem;
   max-height: 6rem;
   max-width: 30vw;
