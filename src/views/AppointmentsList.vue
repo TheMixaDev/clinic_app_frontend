@@ -383,6 +383,7 @@ export default {
               for(let appointment of response.data.body) {
                 this.appointments.push({
                   id: appointment.id,
+                  patientId: appointment.patient.id,
                   surname: appointment.patient.surname,
                   name: appointment.patient.name,
                   patronymic: appointment.patient.lastname,

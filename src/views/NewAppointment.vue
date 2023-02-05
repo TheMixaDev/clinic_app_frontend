@@ -199,14 +199,12 @@
               <div class="col">
                 <div class="row attachment-row">
                   <div class="col files-col">
-                    <a class="btn"><i class="fa-solid fa-file"> File.doc</i></a>
-                    <a class="btn"><i class="fa-solid fa-file"> File.doc</i></a>
-                    <a class="btn"><i class="fa-solid fa-file"> File.doc</i></a>
-                    <a class="btn"><i class="fa-solid fa-file"> File.doc</i></a>
-                    <a class="btn"><i class="fa-solid fa-file"> File.doc</i></a>
+                    <a class="btn" v-for="file in state.uzi.files" :key="file.id" @click="downloadFile(file);"><i class="fa-solid fa-file"> {{ file.name }}</i></a>
                   </div>
                   <div class="col attachment-buttons-col">
-                    <a class="btn btn-primary attach"><i class="fa-solid fa-plus button-icon"></i>Прикрепить</a>
+                    <input type="file" style="display: none;" ref="fileInput" @change="uploadFile()">
+                    <a class="btn btn-primary attach" @click="$refs.fileInput.click();"><i class="fa-solid fa-plus button-icon"></i>Прикрепить</a>
+                    {{ ongoingFileLoading ? 'Загрузка данных...' : ''}}
                     <!--a class="download"><i class="fa-solid fa-download"></i> Скачать</a-->
                   </div>
                 </div>
@@ -1113,6 +1111,7 @@ export default {
             {
               is_first: isFirst,
               patient_id: patientId,
+              doctor_id: doctorId,
               // TODO add doctor ID
               value: JSON.stringify(stateCopy)
             },
@@ -1136,6 +1135,7 @@ export default {
             {
               id: id,
               patient_id: patientId,
+              doctor_id: doctorId,
               // TODO add doctor ID
               value: JSON.stringify(stateCopy)
             },
@@ -1210,22 +1210,23 @@ export default {
         }
         if(meta.isNew) {
           if(meta.copyFromLast) {
-            this.loadByID(meta.appointment.id, ()=>{
+            // TODO switch to patientId
+            this.loadByID(meta.appointment.id, false,()=>{
               this.state.isFirst = false;
               this.state.id = -1;
             });
           } else {
-            this.state.patient = meta.patient;
+            //this.state.patient = meta.patient;
           }
         } else {
           this.loadByID(meta.appointment.id);
         }
       } else router.go(-1);
     },
-    loadByID(id, callback) {
+    loadByID(id, isLast, callback) {
       methods.authorizedGETRequest(
           this.$cookies,
-          `/appointment/${id}`,
+          `/appointment/${isLast ? 'last/' : ''}${id}`,
           response => {
             this.loadFromResponse(response.data.body);
             for(let pid = 1; pid < 8; pid++) {
@@ -1262,10 +1263,6 @@ export default {
         callback: this.deleteElement
       });
       app.mount(div);
-    },
-    editTableElement(element, route) {
-      //methods.setMeta(this.selections[element]);
-      this.saveState(()=>router.push({name: route}));
     },
     deleteElement(table) {
       let index = -1;
@@ -1368,6 +1365,60 @@ export default {
       for(let i = 0; i < length; i++)
         result.push("");
       return result;
+    },
+    downloadFile(file) {
+      this.ongoingFileLoading = true;
+      methods.authorizedGETDownload(
+          this.$cookies,
+          `/appointment/file/${file.id}/read`,
+          response => {
+            console.log(response);
+            const href = URL.createObjectURL(response.data);
+            const link = document.createElement('a');
+            link.href = href;
+            link.setAttribute('download', file.name); //or any other extension
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(href);
+            this.ongoingFileLoading = false;
+          },
+          error => {
+            if(error.code === "ERR_NETWORK") {
+              methods.runNotification("Не удалось подключиться к серверу");
+              return;
+            }
+            methods.runNotification("Не удалось скачать файл");
+            console.log(error);
+          }
+      );
+    },
+    uploadFile() {
+      if(this.state.patient.id < 0)
+        return methods.runNotification("Для загрузки файла необходимо указать пациента!");
+      if(this.$refs.fileInput.files.length > 0) {
+        this.ongoingFileLoading = true;
+        let formData = new FormData();
+        formData.append("file", this.$refs.fileInput.files[0]);
+        methods.authorizedPOSTRequest(
+            this.$cookies,
+            `/appointment/${this.state.patient.id}/file/upload`,
+            formData,
+            response => {
+              this.state.uzi.files.push(response.data.body);
+              methods.runNotification("Файл прикреплен");
+              this.ongoingFileLoading = false;
+            },
+            error => {
+              if(error.code === "ERR_NETWORK") {
+                methods.runNotification("Не удалось подключиться к серверу");
+                return;
+              }
+              methods.runNotification("Не удалось прикрепить файл");
+              console.log(error);
+            }
+        )
+      }
     }
   },
   beforeMount() {
@@ -1379,6 +1430,8 @@ export default {
   components: {EmptyTableDisplay, MultiSelect},
   data() {
     return {
+      uploadedFile: '',
+      ongoingFileLoading: false,
       analyze_constants: [
           ["Протромбиновый индекс", "МНО", "Фибриноген", "АПТВ", "Тромбиновое время", "Антитромбин III", "Тест на LA", "Д-димер", "Гомоцистеин", "Протеин C", "Протеин S"],
           ["АТ к β2-гликопротеину", "АТ к кардиолипину", "АТ к аннексину V", "АТ к ХГЧ", "АТ к протромбину", "АТ к фосфатидилсерину", "АТ к фосфатидил к-те", "АТ к фосфатидилинозитолу", "Антинуклеарный фактор", "АТ к 2сп ДНК"],
@@ -1528,7 +1581,7 @@ export default {
         crops: [],
         uzi: {
           text: constants.uziTexts[0],
-          files: [] // TODO
+          files: []
         },
         doppler: {
           date: "",

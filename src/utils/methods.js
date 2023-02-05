@@ -53,12 +53,25 @@ export const methods = {
                 success(response);
         })();
     },
-    authorizedPOSTRequest(cookies, route, data, success, fail) {
+    authorizedGETDownload(cookies, route, success, fail) {
         (async () => {
-            let response = await axios.post(`${settings.serverUrl}${route}`, data,
-                {
-                    headers: {'Authorization': `Bearer ${cookies.get("token")}`}
-                }).catch(fail);
+            let response = await axios({
+                url: `${settings.serverUrl}${route}`,
+                method: 'GET',
+                responseType: 'blob',
+                headers: {'Authorization': `Bearer ${cookies.get("token")}`}
+            }).catch(fail);
+            if(response)
+                success(response);
+        })();
+    },
+    authorizedPOSTRequest(cookies, route, data, success, fail, isForm) {
+        let config = {
+            headers: {'Authorization': `Bearer ${cookies.get("token")}`}
+        };
+        if(isForm)  config.headers['Content-Type'] = 'multipart/form-data';
+        (async () => {
+            let response = await axios.post(`${settings.serverUrl}${route}`, data, config).catch(fail);
             if(response)
                 success(response);
         })();
