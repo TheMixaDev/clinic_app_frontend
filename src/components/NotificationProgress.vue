@@ -10,10 +10,13 @@
 </template>
 
 <script>
+import {methods} from "@/utils/methods";
+
 export default {
   data() {
     return {
-      value: 100
+      value: 100,
+      timeout: null,
     }
   },
   name: "NotificationProgress",
@@ -22,10 +25,18 @@ export default {
     run() {
       this.value -= 5;
       if(this.value <= 0) {
-        setTimeout(this.$.appContext.app.unmount,400);
+        this.timeout = setTimeout(()=>{
+          this.$.appContext.app.unmount();
+          methods.clearNotification();
+        },400);
       } else {
-        setTimeout(this.run, 100);
+        this.timeout = setTimeout(this.run, 100);
       }
+    },
+    forceQuit() {
+      clearTimeout(this.timeout);
+      this.$.appContext.app.unmount();
+      methods.clearNotification();
     }
   },
   mounted() {
@@ -66,12 +77,12 @@ export default {
 }
 .container-fluid.notification-body {
   display: flex;
-  width: 100%;
+  width: 30vw;
   padding: 0;
   margin: 0;
   height: auto;
   top: 0;
-  left: 0;
+  left: calc(50% - 15vw);
   border-radius: 0;
   border: 0;
   box-shadow: none;

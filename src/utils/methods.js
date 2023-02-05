@@ -7,10 +7,16 @@ import {constants} from "@/utils/constants";
 import axios from "axios";
 
 export const methods = {
+    currentNotification: null,
+    clearNotification() {
+        this.currentNotification = null;
+    },
     runNotification(text) {
+        if(this.currentNotification)
+            this.currentNotification.forceQuit();
         const div = document.getElementById("notification");
         const app = createApp(NotificationProgress, {text: text});
-        app.mount(div);
+        this.currentNotification = app.mount(div);
     },
     checkCookies(cookies, access, callback) {
         if(settings.designMode)
@@ -43,7 +49,8 @@ export const methods = {
             let response = await axios.get(`${settings.serverUrl}${route}`, {
                 headers: {'Authorization': `Bearer ${cookies.get("token")}`}
             }).catch(fail);
-            success(response);
+            if(response)
+                success(response);
         })();
     },
     authorizedPOSTRequest(cookies, route, data, success, fail) {
@@ -52,7 +59,8 @@ export const methods = {
                 {
                     headers: {'Authorization': `Bearer ${cookies.get("token")}`}
                 }).catch(fail);
-            success(response);
+            if(response)
+                success(response);
         })();
     },
     authorizedDELRequest(cookies, route, success, fail) {
@@ -61,7 +69,8 @@ export const methods = {
                 {
                     headers: {'Authorization': `Bearer ${cookies.get("token")}`}
                 }).catch(fail);
-            success(response);
+            if(response)
+                success(response);
         })();
     },
     authorizedPATCHRequest(cookies, route, data, success, fail) {
@@ -70,7 +79,8 @@ export const methods = {
                 {
                     headers: {'Authorization': `Bearer ${cookies.get("token")}`}
                 }).catch(fail);
-            success(response);
+            if(response)
+                success(response);
         })();
     },
     setMeta(data) {

@@ -82,7 +82,7 @@ export default {
           }
           methods.runNotification("Неверный логин или пароль");
         });
-        if(response.status === 200) {
+        if(response && response.status === 200) {
           this.$cookies.set("token",response.data.body.token,"1y");
           methods.checkCookies(this.$cookies, constants.Role.UNAUTHORIZED)
         }
