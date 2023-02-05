@@ -106,5 +106,24 @@ export const methods = {
         if(week < 14) return "(I)";
         if(week < 28) return "(II)"
         return "(III)";
+    },
+    recursiveJSONAssignment(starter, current) { // may be useful in future
+        if(Array.isArray(starter) || starter.constructor == Object) {
+            if(Array.isArray(starter) !== Array.isArray(current))
+                return starter;
+            for(let i in starter) {
+                try {
+                    if ((starter.constructor == Object && i in current) || (Array.isArray(current) && current.length >= i)) {
+                        if (Array.isArray(starter[i]) || starter[i].constructor == Object)
+                            starter[i] = this.recursiveJSONAssignment(starter[i], current[i]);
+                        else
+                            starter[i] = current[i];
+                    }
+                } catch (ex) {
+                    //
+                }
+            }
+        }
+        return starter;
     }
 }

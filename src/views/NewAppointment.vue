@@ -5,7 +5,7 @@
       <div class="col">
         <h1 class="heading">
           <button className="btn back btn-primary second-add" @click="requestCancel()"><i className="fa-solid fa-arrow-left"></i></button>
-          Создание приёма</h1>
+          {{state.id !== -1 ? 'Редактирование приема' : (state.isFirst ? 'Создание приёма' : 'Повторный прием')}}</h1>
       </div>
     </div>
     <div class="container-fluid main-items">
@@ -147,7 +147,7 @@
             <td>
               <div class="d-flex align-items-center">
                 <div class="ms-3">
-                  <p class="fw-bold mb-1">{{ crop.date }}</p>
+                  <p class="fw-bold mb-1">{{ crop.date.length > 0 ? new Date(crop.date).toLocaleDateString('ru') : '' }}</p>
                 </div>
               </div>
             </td>
@@ -161,14 +161,14 @@
             <td>
               <div class="d-flex align-items-center">
                 <div class="ms-3">
-                  <p class="fw-bold mb-1">{{ crops_constants[1][crop.flora-1] }}</p>
+                  <p class="fw-bold mb-1">{{ crops_constants[1][crop.flora] }}</p>
                 </div>
               </div>
             </td>
             <td>
               <div class="d-flex align-items-center">
                 <div class="ms-3">
-                  <p class="fw-bold mb-1">{{ crops_constants[2][crop.value-1] }}</p>
+                  <p class="fw-bold mb-1">{{ crops_constants[2][crop.value] }}</p>
                 </div>
               </div>
             </td>
@@ -437,7 +437,7 @@
       </div>
     </div>
     <div class="row save-buttons">
-      <button class="btn btn-primary save-first"><i class="fa-solid fa-plus button-icon"></i>Сохранить</button>
+      <button class="btn btn-primary save-first" @click="save(()=>{router().push({name: 'appointments'})})"><i class="fa-solid fa-plus button-icon"></i>Сохранить</button>
       <button class="btn btn-primary save-second"><i class="fa-solid fa-download button-icon"></i>Сохранить и вывести консультативное заключение</button>
     </div>
   </div>
@@ -1060,24 +1060,138 @@ export default {
       if(sessionStorage.getItem("appointmentLastState")) {
         this.state = JSON.parse(sessionStorage.getItem("appointmentLastState"));
         sessionStorage.removeItem("appointmentLastState");
-        console.log(this.state);
         return true;
       }
       return false;
     },
+    save(callback) {
+      let stateCopy = JSON.parse(JSON.stringify(this.state));
+      let patientId = this.state.patient.id;
+      let doctorId = this.state.doctor.id;
+      let id = this.state.id;
+      let isFirst = this.state.isFirst;
+      delete stateCopy.patient;
+      delete stateCopy.doctor;
+      delete stateCopy.id;
+      delete stateCopy.isFirst;
+      /*for(let i = 1; i < 8; i++) {
+        stateCopy.detailed[`options${i}`] = [];
+        for(let option of this.state.detailed[`options${i}`]) {
+          if(option.selected)
+            stateCopy.detailed[`options${i}`].push(option.name);
+        }
+      }
+      stateCopy.anameses_desiases = [];
+      for(let option of this.state.anameses_desiases) {
+        if(option.selected)
+          stateCopy.anameses_desiases.push(option.name);
+      }
+      stateCopy.analyzes_genes = [];
+      for(let option of this.state.analyzes_genes) {
+        if(option.selected)
+          stateCopy.analyzes_genes.push(option.name);
+      }
+      stateCopy.diagnosis.checkboxes = [];
+      for(let i of this.state.diagnosis.checkboxes)
+        for(let box of i.boxes)
+          if(box.value) stateCopy.diagnosis.checkboxes.push(box.label)
+      stateCopy.recommended.checkboxes = [];
+      for(let box of this.state.recommended.checkboxes)
+        if(box.value) stateCopy.recommended.checkboxes.push(box.label)*/
+      let result = {
+        id: id,
+        patientId: patientId,
+        isFirst: isFirst,
+        doctorId: doctorId,
+        state: stateCopy
+      };
+      console.log(result);
+      if(id === -1) {
+        methods.authorizedPOSTRequest(
+            this.$cookies,
+            `/appointment`,
+            {
+              is_first: isFirst,
+              patient_id: patientId,
+              // TODO add doctor ID
+              value: JSON.stringify(stateCopy)
+            },
+            ()=>{
+              methods.runNotification("Прием сохранен");
+              if(callback) callback();
+            },
+            error=>{
+              if(error.code === "ERR_NETWORK") {
+                methods.runNotification("Не удалось подключиться к серверу");
+                return;
+              }
+              methods.runNotification("Не удалось сохранить прием");
+              console.log(error);
+            }
+        )
+      } else {
+        methods.authorizedPATCHRequest(
+            this.$cookies,
+            `/appointment`,
+            {
+              id: id,
+              patient_id: patientId,
+              // TODO add doctor ID
+              value: JSON.stringify(stateCopy)
+            },
+            ()=>{
+              methods.runNotification("Прием сохранен");
+              if(callback) callback();
+            },
+            error=>{
+              if(error.code === "ERR_NETWORK") {
+                methods.runNotification("Не удалось подключиться к серверу");
+                return;
+              }
+              methods.runNotification("Не удалось сохранить прием");
+              console.log(error);
+            }
+        )
+      }
+    },
+    loadFromResponse(response) {
+      this.state = response.value;
+      this.state.id = response.id;
+      this.state.isFirst = response.is_first;
+      this.state.patient = {
+        id: response.patient.id,
+        surname: response.patient.surname,
+        name: response.patient.name,
+        patronymic: response.patient.lastname,
+        birthdate: response.patient.birthday
+      };
+      this.state.doctor = {
+        id: response.doctor.id,
+        fullName: response.doctor.surname + ' ' + response.doctor.name + ' ' + response.doctor.lastname
+      };
+      /*for(let i = 1; i < 8; i++)
+        for (let option of this.state.detailed[`options${i}`])
+          if (option.name in response.detailed[`options${i}`])
+            option.selected = true;
+      for (let option of this.state.anameses_desiases)
+        if (option.name in response.anameses_desiases)
+          option.selected = true;
+      for (let option of this.state.analyzes_genes)
+        if (option.name in response.analyzes_genes)
+          option.selected = true;
+      for(let i of this.state.diagnosis.checkboxes)
+        for(let box of i.boxes)
+          if(box.label in response.diagnosis.checkboxes)
+            box.value = true;
+      for(let i of this.state.recommended.checkboxes)
+        for(let box of i.boxes)
+          if(box.label in response.recommended.checkboxes)
+            box.value = true;*/
+
+    },
     saveState(after) {
       sessionStorage.setItem("appointmentLastState", JSON.stringify(this.state));
       after();
-    },
-    copyData(last) {
-      this.state.patient = {
-        id: last.patient.id,
-        surname: last.patient.surname,
-        name: last.patient.name,
-        patronymic: last.patient.lastname,
-        birthdate: last.patient.birthday
-      };
-      // TODO copy data from last appointment
     },
     preload() {
       this.loadState();
@@ -1091,34 +1205,43 @@ export default {
         console.log(meta);
         if(meta.setDoctor) {
           this.state.doctor.id = meta.doctor.id;
-          this.state.doctor.fullName = meta.doctor.surname + ' ' + meta.doctor.name + ' ' + meta.doctor.patronymic + ' ';
+          this.state.doctor.fullName = meta.doctor.surname + ' ' + meta.doctor.name + ' ' + meta.doctor.patronymic;
           return;
         }
         if(meta.isNew) {
           if(meta.copyFromLast) {
-            methods.authorizedGETRequest(
-                this.$cookies,
-                `/appointment/${meta.appointment.id}`,
-                response => {
-                  this.copyData(response.data.body);
-                },
-                error => {
-                  if(error.code === "ERR_NETWORK") {
-                    methods.runNotification("Не удалось подключиться к серверу");
-                    return;
-                  }
-                  methods.runNotification("Не удалось получить данные");
-                  console.log(error);
-                }
-            )
+            this.loadByID(meta.appointment.id, ()=>{
+              this.state.isFirst = false;
+              this.state.id = -1;
+            });
           } else {
             this.state.patient = meta.patient;
           }
         } else {
-          // TODO we've got some other data to analyze ? or are we need to
+          this.loadByID(meta.appointment.id);
         }
-      }
-      //else router.go(-1);
+      } else router.go(-1);
+    },
+    loadByID(id, callback) {
+      methods.authorizedGETRequest(
+          this.$cookies,
+          `/appointment/${id}`,
+          response => {
+            this.loadFromResponse(response.data.body);
+            for(let pid = 1; pid < 8; pid++) {
+              this.$refs[`options${pid}`].updateSelected(this.state.detailed[`options${pid}`], this.state.detailed[`option${pid}`]);
+            }
+            if(callback) callback();
+          },
+          error => {
+            if(error.code === "ERR_NETWORK") {
+              methods.runNotification("Не удалось подключиться к серверу");
+              return;
+            }
+            methods.runNotification("Не удалось получить данные");
+            console.log(error);
+          }
+      )
     },
     selectTableElement(data, element) {
       if(this.selections[element].id === data.id)
@@ -1263,10 +1386,12 @@ export default {
       ],
       crops_constants: [
           ["Посев мочи", "Посев из ц/канала", "Посев из носа", "Посев из зева"],
-          ["E. coli", "Enterococcus sp.", "Enterococcus faecalis", "Klebsiella sp.", "Staphyloc. ep.", "Streptococcus anginosus", "Streptococcus agalact.", "Streptococcus or.", "Streptococcus spp", "Streptococcus pneumoniae", "Candida albicans", "Lactobacillus sp.", "Proteus mirabilis", "Citrobacter", "Enterobacteriaceae", "Pseudomonas aeruginosa", "Haemophilus influenzae", "Moraxella catarrhalis", "Neisseria sicca", "Neisseria spp.", "Corynebacterium spp"],
-          ["10³ КОЕ/мл", "10⁴ КОЕ/мл", "10⁵ КОЕ/мл", "10⁶ КОЕ/мл", "10⁷ КОЕ/мл", "10⁸ КОЕ/мл"]
+          ["Не выделена", "E. coli", "Enterococcus sp.", "Enterococcus faecalis", "Klebsiella sp.", "Staphyloc. ep.", "Streptococcus anginosus", "Streptococcus agalact.", "Streptococcus or.", "Streptococcus spp", "Streptococcus pneumoniae", "Candida albicans", "Lactobacillus sp.", "Proteus mirabilis", "Citrobacter", "Enterobacteriaceae", "Pseudomonas aeruginosa", "Haemophilus influenzae", "Moraxella catarrhalis", "Neisseria sicca", "Neisseria spp.", "Corynebacterium spp"],
+          ["Не выделена", "10³ КОЕ/мл", "10⁴ КОЕ/мл", "10⁵ КОЕ/мл", "10⁶ КОЕ/мл", "10⁷ КОЕ/мл", "10⁸ КОЕ/мл"]
       ],
       state: {
+        id: -1,
+        isFirst: true,
         detailed: {
           option1: "",
           option3: "",

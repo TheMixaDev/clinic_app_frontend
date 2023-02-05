@@ -475,7 +475,11 @@ export default {
       router.push({name: 'new-appointment'});
     },
     editAppointment() {
-      // TODO
+      methods.setMeta({
+        isNew: false,
+        appointment: this.selectedAppointment
+      });
+      router.push({name: 'new-appointment'});
     }
   },
   beforeMount() {
