@@ -39,27 +39,39 @@ export const methods = {
         }
     },
     authorizedGETRequest(cookies, route, success, fail) {
-        axios.get(`${settings.serverUrl}${route}`, {
-            headers: {'Authorization': `Bearer ${cookies.get("token")}`}
-        }).then(success).catch(fail);
+        (async () => {
+            let response = await axios.get(`${settings.serverUrl}${route}`, {
+                headers: {'Authorization': `Bearer ${cookies.get("token")}`}
+            }).catch(fail);
+            success(response);
+        })();
     },
     authorizedPOSTRequest(cookies, route, data, success, fail) {
-        axios.post(`${settings.serverUrl}${route}`, data,
-        {
-            headers: {'Authorization': `Bearer ${cookies.get("token")}`}
-        }).then(success).catch(fail);
+        (async () => {
+            let response = await axios.post(`${settings.serverUrl}${route}`, data,
+                {
+                    headers: {'Authorization': `Bearer ${cookies.get("token")}`}
+                }).catch(fail);
+            success(response);
+        })();
     },
     authorizedDELRequest(cookies, route, success, fail) {
-        axios.delete(`${settings.serverUrl}${route}`,
-            {
-                headers: {'Authorization': `Bearer ${cookies.get("token")}`}
-            }).then(success).catch(fail);
+        (async () => {
+            let response = await axios.delete(`${settings.serverUrl}${route}`,
+                {
+                    headers: {'Authorization': `Bearer ${cookies.get("token")}`}
+                }).catch(fail);
+            success(response);
+        })();
     },
     authorizedPATCHRequest(cookies, route, data, success, fail) {
-        axios.patch(`${settings.serverUrl}${route}`, data,
-            {
-                headers: {'Authorization': `Bearer ${cookies.get("token")}`}
-            }).then(success).catch(fail);
+        (async () => {
+            let response = await axios.patch(`${settings.serverUrl}${route}`, data,
+                {
+                    headers: {'Authorization': `Bearer ${cookies.get("token")}`}
+                }).catch(fail);
+            success(response);
+        })();
     },
     setMeta(data) {
         if(settings.alertMode)

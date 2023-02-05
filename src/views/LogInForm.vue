@@ -73,19 +73,20 @@ export default {
       let data = {
         "login": this.login,
         "password": this.password
-      }
-      axios.post(`${settings.serverUrl}/user/login`, data).then(response => {
+      };
+      (async () => {
+        let response = await axios.post(`${settings.serverUrl}/user/login`, data).catch(error => {
+          if(error.code === "ERR_NETWORK") {
+            methods.runNotification("Не удалось подключиться к серверу");
+            return;
+          }
+          methods.runNotification("Неверный логин или пароль");
+        });
         if(response.status === 200) {
           this.$cookies.set("token",response.data.body.token,"1y");
           methods.checkCookies(this.$cookies, constants.Role.UNAUTHORIZED)
         }
-      }).catch(error => {
-        if(error.code === "ERR_NETWORK") {
-          methods.runNotification("Не удалось подключиться к серверу");
-          return;
-        }
-        methods.runNotification("Неверный логин или пароль");
-      });
+      })();
     }
   },
   beforeMount() {
