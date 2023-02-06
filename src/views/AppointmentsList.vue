@@ -116,12 +116,9 @@
 }
 .download-btn:hover {
   border: none!important;
-}
-.download-btn:hover {
   background: transparent!important;
   color: #000000;
   box-shadow: none!important;
-  border: none!important;
   margin-top: 2rem;
   text-align: left;
 }
@@ -176,6 +173,10 @@ thead {
   color: white;
   background: linear-gradient(94.83deg, #00A3FF 1.33%, #00C2FF 100%);
   border-radius: 10px 10px 0px 0px!important;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 999;
 }
 th {
   text-align: left;
@@ -192,7 +193,6 @@ td {
   color: #565656;
   font-size: 1rem;
 }
-tr {}
 .ms-3 {
   margin-left: 0!important;
 }
@@ -251,12 +251,6 @@ th:last-child {
   width: 100vw;
   overflow-y: scroll!important;
 }
-thead {
-  position: sticky;
-  position: -webkit-sticky;
-  top: 0;
-  z-index: 999;
-}
 .table-hover {
   background: rgba(0, 163, 255, 0.03)!important;
 }
@@ -306,7 +300,7 @@ thead {
   padding-left: 2rem;
   padding-right: 2rem;
 }
-edit:hover {
+.edit:hover {
   border: none!important;
 }
 .delete {

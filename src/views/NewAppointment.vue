@@ -505,6 +505,9 @@ input.name-tag {
 }
 .recomendations-text {
   height: 40vh;
+  /*height: 20rem;*/
+  border-left: 1px solid rgba(0, 117, 255, 0.3)!important;
+  border-radius: 9px!important;
 }
 .pregnacy-text {
   height: 1rem;
@@ -827,6 +830,10 @@ thead {
   color: white;
   background: linear-gradient(94.83deg, #00A3FF 1.33%, #00C2FF 100%);
   border-radius: 10px 10px 0px 0px;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 999;
 }
 th {
   text-align: left;
@@ -843,7 +850,6 @@ td {
   color: #565656;
   font-size: 1rem;
 }
-tr {}
 .ms-3 {
   margin-left: 0!important;
 }
@@ -895,12 +901,6 @@ th:last-child {
   width: 100vw;
   overflow-y: scroll;
 }
-thead {
-  position: sticky;
-  position: -webkit-sticky;
-  top: 0;
-  z-index: 999;
-}
 .download {
   color: #323232;
   cursor: pointer;
@@ -940,11 +940,6 @@ thead {
   border-left: 1px solid rgba(0, 117, 255, 0.3)!important;
   border-radius: 9px!important;
 }
-.recomendations-text {
-  height: 20rem;
-  border-left: 1px solid rgba(0, 117, 255, 0.3)!important;
-  border-radius: 9px!important;
-}
 .second-add {
   background: linear-gradient(94.83deg, #00A3FF 1.33%, #00C2FF 100%);
   border: 1px solid rgba(0, 117, 255, 0.3);
@@ -971,7 +966,7 @@ thead {
 .attach:hover {
   border: none!important;
 }
-edit:hover {
+.edit:hover {
   border: none!important;
 }
 .delete {

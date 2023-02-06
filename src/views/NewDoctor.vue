@@ -15,8 +15,6 @@
       <input class="input-outline" type="text" ref="patronymic" v-model="edit.doctor.lastname">
       <h6>Должность</h6>
       <input class="input-outline" type="text" ref="position" v-model="edit.doctor.position">
-      <!--router-link className="btn btn-primary first-add" to="/doctors-directory">Сбросить пароль
-      </router-link-->
       <h6>Логин</h6>
       <input class="input-outline" type="text" ref="login" v-model="edit.doctor.login">
       <h6 v-if="!edit.enabled">Пароль</h6>
@@ -63,6 +61,10 @@ thead {
   color: white;
   background: linear-gradient(94.83deg, #00A3FF 1.33%, #00C2FF 100%);
   border-radius: 10px 10px 0px 0px;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 999;
 }
 .btn:disabled {
   opacity: 0.3!important;
@@ -84,9 +86,6 @@ td {
   font-weight: 400 !important;
   color: #565656;
   font-size: 1rem;
-}
-
-tr {
 }
 
 .ms-3 {
@@ -137,9 +136,6 @@ tr {
   padding-right: 0.5rem;
 }
 
-.date {
-}
-
 th:first-child {
   border-radius: 14px 0px 0px 0px;
 }
@@ -158,13 +154,6 @@ th:last-child {
   width: 100vw;
   align-items: center;
   overflow: hidden;
-}
-
-thead {
-  position: sticky;
-  position: -webkit-sticky;
-  top: 0;
-  z-index: 999;
 }
 
 .table-hover {
@@ -218,12 +207,11 @@ thead {
   padding-right: 2rem;
 }
 
-edit:hover {
+.edit:hover {
   border: none !important;
 }
 
 .delete {
-  background: linear-gradient(92.84deg, #EF5DA8 0.31%, #FF003D 152.41%);
   background: linear-gradient(92.84deg, #EF5DA8 0.31%, #FF003D 152.41%);
   box-shadow: 0 4px 9px -4px #FF003D;
   border-radius: 9px;

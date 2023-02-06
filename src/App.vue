@@ -3,31 +3,29 @@
 </template>
 
 <style>
-  *::-webkit-scrollbar-track {
-  width:7px
-}
-  *::-webkit-scrollbar-track {
+*::-webkit-scrollbar-track {
+  width:7px;
   background: #f2f2f2;
 }
-  *::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb {
   background-color: #42c6ff;
   border-radius: 10px;
 }
-  *::-webkit-scrollbar-thumb:hover {
+*::-webkit-scrollbar-thumb:hover {
   background-color: #42c6ff;}
 
-  /* Firefox */
-  * {
+/* Firefox */
+* {
     scrollbar-width: thin;
     scrollbar-color: #B8C0C2 #42c6ff!important;
-  }
+}
 
-  /* Chrome, Edge and Safari */
-  *::-webkit-scrollbar {
+/* Chrome, Edge and Safari */
+*::-webkit-scrollbar {
     width: 7px;
     max-height: 70vh;
-  }
-  #app {
+}
+#app {
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
