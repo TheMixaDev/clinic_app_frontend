@@ -23,7 +23,7 @@
           <button class="btn btn-primary exit-button" @click="requestLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Выход</button>
         </div>
       </div>
-      <div class="container main-part">
+      <div class="container main-part" ref="scrollHandler">
         <table class="table align-middle mb-0 table-hover table-striped table-bordered bg-white">
           <thead class="bg-light">
             <tr class="table-first-row">
@@ -339,7 +339,13 @@ export default {
       appointments: [],
       selectedAppointment: -1,
       sortDesc: true,
-      doctorName: methods.getDoctorName()
+      doctorName: methods.getDoctorName(),
+      loadInfo: {
+        dataFinished: false,
+        loadedPage: 0,
+        currentPage: 1,
+        savedFilters: {}
+      },
     }
   },
   name: 'AppointmentsList',
@@ -371,10 +377,21 @@ export default {
       let filters = {
         filters: {
           sortDate: this.sortDesc ? "DESC" : "ASC",
-          page: 1,
+          page: this.loadInfo.currentPage,
           patientFullname: this.$refs.searchInput.value
         }
       };
+      if(this.loadInfo.savedFilters.patientFullname !== filters.filters.patientFullname ||
+          this.loadInfo.savedFilters.sortDate !== filters.filters.sortDate) {
+        filters.filters.page = 1;
+        this.loadInfo = {
+          dataFinished: false,
+          loadedPage: 0,
+          currentPage: 1,
+          savedFilters: filters.filters
+        };
+        this.$refs.scrollHandler.scrollTop = 0;
+      }
       methods.authorizedPOSTRequest(
           this.$cookies,
           `/appointment/all`,
@@ -383,7 +400,8 @@ export default {
             if(response.status === 200) {
               if(settings.alertMode)
                 methods.runNotification("Загружено "+response.data.body.length+" элементов");
-              this.appointments = [];
+              if(filters.filters.page === 1)
+                this.appointments = [];
               for(let appointment of response.data.body) {
                 this.appointments.push({
                   id: appointment.id,
@@ -395,6 +413,9 @@ export default {
                   doctor: appointment.doctor.surname + " " + appointment.doctor.name.substring(0,1) + "." + appointment.doctor.lastname.substring(0,1)+".",
                   date: new Date(appointment.createdAt).toLocaleDateString('ru-RU')
                 });
+                this.loadInfo.loadedPage = filters.filters.page;
+                if(response.data.body.length !== 50)
+                  this.loadInfo.dataFinished = true;
               }
             }
           },
@@ -475,6 +496,14 @@ export default {
         appointment: this.selectedAppointment
       });
       router.push({name: 'new-appointment'});
+    },
+    scrollCheck(e) {
+      if(this.loadInfo.dataFinished) return;
+      if(this.loadInfo.loadedPage !== this.loadInfo.currentPage)  return;
+      if(e.target.scrollHeight - e.target.scrollTop > e.target.clientHeight*3) return;
+      console.log("Requested further load");
+      this.loadInfo.currentPage++;
+      this.applyFiltersSearch();
     }
   },
   beforeMount() {
@@ -482,6 +511,10 @@ export default {
   },
   mounted() {
     this.loadData()
+    this.$refs.scrollHandler.addEventListener("scroll", this.scrollCheck)
+  },
+  beforeUnmount() {
+    this.$refs.scrollHandler.removeEventListener("scroll", this.scrollCheck)
   }
 }
 </script>

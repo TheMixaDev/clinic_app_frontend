@@ -29,7 +29,7 @@
         <button class="btn btn-primary exit-button"><i class="fa-solid fa-arrow-right-from-bracket"></i> Выход</button>
       </div-->
     </div>
-    <div className="container patients-directory-main-part">
+    <div className="container patients-directory-main-part" ref="scrollHandler">
       <table className="table align-middle mb-0 table-hover table-striped table-bordered bg-white">
         <thead className="bg-light">
         <tr class="table-first-row">
@@ -346,7 +346,13 @@ export default {
     return {
       patients: [],
       selectedPatient: -1,
-      onlyNew: true
+      onlyNew: true,
+      loadInfo: {
+        dataFinished: false,
+        loadedPage: 0,
+        currentPage: 1,
+        savedFilters: {}
+      },
     }
   },
   name: 'PatientsDirectory',
@@ -360,12 +366,23 @@ export default {
       let filters = {
         filters: {
           role: constants.Role.PATIENT,
-          page: 1,
+          page: this.loadInfo.currentPage,
           fullName: this.$refs.searchInput.value
         }
       };
       if(this.onlyNew)
         filters.filters.hasAppointment = false;
+      if(this.loadInfo.savedFilters.fullName !== filters.filters.fullName ||
+          this.loadInfo.savedFilters.hasAppointment !== filters.filters.hasAppointment) {
+        filters.filters.page = 1;
+        this.loadInfo = {
+          dataFinished: false,
+          loadedPage: 0,
+          currentPage: 1,
+          savedFilters: filters.filters
+        };
+        this.$refs.scrollHandler.scrollTop = 0;
+      }
       methods.authorizedPOSTRequest(
           this.$cookies,
           `/user/all`,
@@ -374,7 +391,8 @@ export default {
             if(response.status === 200) {
               if(settings.alertMode)
                 methods.runNotification("Загружено "+response.data.body.length+" элементов");
-              this.patients = [];
+              if(filters.filters.page === 1)
+                this.patients = [];
               for(let patient of response.data.body) {
                 this.patients.push({
                   id: patient.id,
@@ -385,6 +403,9 @@ export default {
                   birthdate: patient.birthday
                 });
               }
+              this.loadInfo.loadedPage = filters.filters.page;
+              if(response.data.body.length !== 50)
+                this.loadInfo.dataFinished = true;
             }
           },
           error => {
@@ -461,10 +482,24 @@ export default {
         patient: this.selectedPatient
       });
       router.push({name: 'new-appointment'});
+    },
+    scrollCheck(e) {
+      if(this.loadInfo.dataFinished) return;
+      if(this.loadInfo.loadedPage !== this.loadInfo.currentPage)  return;
+      if(e.target.scrollHeight - e.target.scrollTop > e.target.clientHeight*3) return;
+      console.log("Requested further load");
+      this.loadInfo.currentPage++;
+      this.applyFiltersSearch();
     }
   },
   beforeMount() {
     methods.checkCookies(this.$cookies, constants.Role.DOCTOR, this.loadData);
+  },
+  mounted() {
+    this.$refs.scrollHandler.addEventListener("scroll", this.scrollCheck)
+  },
+  beforeUnmount() {
+    this.$refs.scrollHandler.removeEventListener("scroll", this.scrollCheck)
   }
 }
 </script>

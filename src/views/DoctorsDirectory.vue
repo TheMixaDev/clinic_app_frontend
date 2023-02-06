@@ -24,7 +24,7 @@
         <button class="btn btn-primary exit-button" @click="requestLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Выход</button>
       </div>
     </div>
-    <div className="container main-part">
+    <div className="container main-part" ref="scrollHandler">
       <table className="table align-middle mb-0 table-hover table-striped table-bordered bg-white">
         <thead className="bg-light">
         <tr class="table-first-row">
@@ -379,7 +379,13 @@ export default {
     return {
       doctors: [],
       selectedDoctor: -1,
-      doctorMode: false
+      doctorMode: false,
+      loadInfo: {
+        dataFinished: false,
+        loadedPage: 0,
+        currentPage: 1,
+        savedFilters: {}
+      },
     }
   },
   methods: {
@@ -443,10 +449,20 @@ export default {
       let filters = {
         filters: {
           role: constants.Role.DOCTOR,
-          page: 1,
+          page: this.loadInfo.currentPage,
           fullName: this.$refs.searchInput.value
         }
       };
+      if(this.loadInfo.savedFilters.fullName !== filters.filters.fullName) {
+        filters.filters.page = 1;
+        this.loadInfo = {
+          dataFinished: false,
+          loadedPage: 0,
+          currentPage: 1,
+          savedFilters: filters.filters
+        };
+        this.$refs.scrollHandler.scrollTop = 0;
+      }
       methods.authorizedPOSTRequest(
           this.$cookies,
           `/user/all`,
@@ -455,7 +471,8 @@ export default {
             if(response.status === 200) {
               if(settings.alertMode)
                 methods.runNotification("Загружено "+response.data.body.length+" элементов");
-              this.doctors = [];
+              if(filters.filters.page === 1)
+                this.doctors = [];
               for(let doctor of response.data.body) {
                 this.doctors.push({
                   id: doctor.id,
@@ -467,6 +484,9 @@ export default {
                   login: doctor.login
                 });
               }
+              this.loadInfo.loadedPage = filters.filters.page;
+              if(response.data.body.length !== 50)
+                this.loadInfo.dataFinished = true;
             }
           },
           error => {
@@ -538,6 +558,14 @@ export default {
     editDoctor() {
       methods.setMeta(this.selectedDoctor);
       router.push({name: 'new-doctor'});
+    },
+    scrollCheck(e) {
+      if(this.loadInfo.dataFinished) return;
+      if(this.loadInfo.loadedPage !== this.loadInfo.currentPage)  return;
+      if(e.target.scrollHeight - e.target.scrollTop > e.target.clientHeight*3) return;
+      console.log("Requested further load");
+      this.loadInfo.currentPage++;
+      this.applyFiltersSearch();
     }
   },
   beforeMount() {
@@ -545,6 +573,12 @@ export default {
     if(meta && meta.doctorMode)
       this.doctorMode = true;
     methods.checkCookies(this.$cookies, constants.Role.ANY, this.loadData)
+  },
+  mounted() {
+    this.$refs.scrollHandler.addEventListener("scroll", this.scrollCheck)
+  },
+  beforeUnmount() {
+    this.$refs.scrollHandler.removeEventListener("scroll", this.scrollCheck)
   }
 }
 </script>
