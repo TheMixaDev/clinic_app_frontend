@@ -92,7 +92,7 @@
       <div class="container buttons-container">
         <div class="row row-buttons">
           <div class="col col-buttons">
-            <button class="btn btn-primary first-add" v-if="selectedAppointment !== -1"><i class="fa-solid fa-download"></i> Выгрузить консультативное заключение</button>
+            <button class="btn btn-primary first-add" @click="downloadDocx()" v-if="selectedAppointment !== -1"><i class="fa-solid fa-download"></i> {{downloading ? 'Скачивание...' : 'Выгрузить консультативное заключение'}}</button>
             <button class="btn btn-primary first-add" @click="router().push({name: 'patients-directory'})" v-if="selectedAppointment === -1"><i class="fa-solid fa-plus button-icon"></i>Создать первичный приём</button>
             <button class="btn btn-primary second-add" @click="repeatAppointment()" v-bind:disabled="selectedAppointment === -1"><i class="fa-solid fa-plus button-icon"></i>Создать повторный приём</button>
           </div>
@@ -340,6 +340,7 @@ export default {
         currentPage: 1,
         savedFilters: {}
       },
+      downloading: false
     }
   },
   name: 'AppointmentsList',
@@ -440,6 +441,8 @@ export default {
       this.applyFiltersSearch();
     },
     selectAppointment(data) {
+      if(this.downloading)
+        return methods.runNotification("Нельзя выбрать другой прием во время скачивания заключения");
       if(this.selectedAppointment.id === data.id)
         return this.selectedAppointment = -1;
       this.selectedAppointment = data;
@@ -490,6 +493,35 @@ export default {
         appointment: this.selectedAppointment
       });
       router.push({name: 'new-appointment'});
+    },
+    downloadDocx() {
+      this.downloading = true;
+      let failure = error => {
+        if(error.code === "ERR_NETWORK") {
+          methods.runNotification("Не удалось подключиться к серверу");
+          return;
+        }
+        methods.runNotification("Не удалось скачать файл");
+        console.log(error);
+        this.downloading = false;
+      };
+      methods.authorizedGETRequest(
+          this.$cookies,
+          `/appointment/${this.selectedAppointment.id}/doc`,
+          key => {
+            methods.authorizedGETDownload(
+                this.$cookies,
+                `/appointment/doc/${key.data.key}`,
+                response => {
+                  methods.downloadFile(`КонсультативноеЗаключение_${this.selectedAppointment.id}.docx`, response.data);
+                  this.downloading = false;
+                  router.push({name: 'appointments'});
+                },
+                failure
+            );
+          },
+          failure
+      )
     },
     scrollCheck(e) {
       if(this.loadInfo.dataFinished) return;

@@ -436,7 +436,7 @@
     </div>
     <div class="row save-buttons">
       <button class="btn btn-primary save-first" @click="save(()=>{router().push({name: 'appointments'})})"><i class="fa-solid fa-plus button-icon"></i>Сохранить</button>
-      <button class="btn btn-primary save-second"><i class="fa-solid fa-download button-icon"></i>Сохранить и вывести консультативное заключение</button>
+      <button class="btn btn-primary save-second" @click="save(downloadDocx)" v-bind:disabled="this.downloading"><i class="fa-solid fa-download button-icon"></i> {{ this.downloading ? 'Скачивание...' : 'Сохранить и вывести консультативное заключение'}}</button>
     </div>
   </div>
 </template>
@@ -1114,11 +1114,11 @@ export default {
               // TODO add doctor ID
               value: JSON.stringify(stateCopy)
             },
-            ()=>{
+            response => {
               methods.runNotification("Прием сохранен");
-              if(callback) callback();
+              if(callback) callback(response);
             },
-            error=>{
+            error => {
               if(error.code === "ERR_NETWORK") {
                 methods.runNotification("Не удалось подключиться к серверу");
                 return;
@@ -1135,12 +1135,11 @@ export default {
               id: id,
               patient_id: patientId,
               doctor_id: doctorId,
-              // TODO add doctor ID
               value: JSON.stringify(stateCopy)
             },
-            ()=>{
+            response => {
               methods.runNotification("Прием сохранен");
-              if(callback) callback();
+              if(callback) callback(response);
             },
             error=>{
               if(error.code === "ERR_NETWORK") {
@@ -1154,7 +1153,7 @@ export default {
       }
     },
     loadFromResponse(response) {
-      this.state = response.value;
+      this.state = JSON.parse(response.value);
       this.state.id = response.id;
       this.state.isFirst = response.is_first;
       this.state.patient = {
@@ -1371,15 +1370,7 @@ export default {
           this.$cookies,
           `/appointment/file/${file.id}/read`,
           response => {
-            console.log(response);
-            const href = URL.createObjectURL(response.data);
-            const link = document.createElement('a');
-            link.href = href;
-            link.setAttribute('download', file.name); //or any other extension
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(href);
+            methods.downloadFile(file.name, response.data);
             this.ongoingFileLoading = false;
           },
           error => {
@@ -1418,6 +1409,35 @@ export default {
             }
         )
       }
+    },
+    downloadDocx(appointment) {
+      this.downloading = true;
+      let failure = error => {
+        if(error.code === "ERR_NETWORK") {
+          methods.runNotification("Не удалось подключиться к серверу");
+          return;
+        }
+        methods.runNotification("Не удалось скачать файл");
+        console.log(error);
+        this.downloading = false;
+      };
+      methods.authorizedGETRequest(
+          this.$cookies,
+          `/appointment/${appointment.data.body.id}/doc`,
+          key => {
+            methods.authorizedGETDownload(
+                this.$cookies,
+                `/appointment/doc/${key.data.key}`,
+                response => {
+                  methods.downloadFile(`КонсультативноеЗаключение_${appointment.data.body.id}.docx`, response.data);
+                  this.downloading = false;
+                  router.push({name: 'appointments'});
+                },
+                failure
+            );
+          },
+          failure
+      )
     }
   },
   beforeMount() {
@@ -1431,6 +1451,7 @@ export default {
     return {
       uploadedFile: '',
       ongoingFileLoading: false,
+      downloading: false,
       analyze_constants: [
           ["Протромбиновый индекс", "МНО", "Фибриноген", "АПТВ", "Тромбиновое время", "Антитромбин III", "Тест на LA", "Д-димер", "Гомоцистеин", "Протеин C", "Протеин S"],
           ["АТ к β2-гликопротеину", "АТ к кардиолипину", "АТ к аннексину V", "АТ к ХГЧ", "АТ к протромбину", "АТ к фосфатидилсерину", "АТ к фосфатидил к-те", "АТ к фосфатидилинозитолу", "Антинуклеарный фактор", "АТ к 2сп ДНК"],
