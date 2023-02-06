@@ -42,7 +42,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="appointment in appointments" :key="appointment.id" @click="selectAppointment(appointment)" :style="appointment.highlight ? `background-color: #cceffd` : ``">
+            <tr v-for="appointment in appointments" :key="appointment.id" @click="selectAppointment(appointment)" :style="selectedAppointment !== -1 && selectedAppointment.id === appointment.id ? `background-color: #cceffd` : ``">
               <td>
                 <div class="d-flex align-items-center">
                   <div class="ms-3">
@@ -92,7 +92,8 @@
       <div class="container buttons-container">
         <div class="row row-buttons">
           <div class="col col-buttons">
-            <button class="btn btn-primary first-add" @click="router().push({name: 'patients-directory'})" v-bind:disabled="selectedAppointment !== -1"><i class="fa-solid fa-plus button-icon"></i>Создать первичный приём</button>
+            <button class="btn btn-primary first-add" v-if="selectedAppointment !== -1"><i class="fa-solid fa-download"></i> Выгрузить консультативное заключение</button>
+            <button class="btn btn-primary first-add" @click="router().push({name: 'patients-directory'})" v-if="selectedAppointment === -1"><i class="fa-solid fa-plus button-icon"></i>Создать первичный приём</button>
             <button class="btn btn-primary second-add" @click="repeatAppointment()" v-bind:disabled="selectedAppointment === -1"><i class="fa-solid fa-plus button-icon"></i>Создать повторный приём</button>
           </div>
           <div class="col col-buttons">
@@ -101,9 +102,6 @@
           </div>
         </div>
       </div>
-    <div class="container download-btn-row">
-      <button class="btn btn-primary download-btn" v-bind:disabled="selectedAppointment === -1"><i class="fa-solid fa-download"></i> Выгрузить консультативное заключение</button>
-    </div>
   </div>
 </template>
 <style>
@@ -395,9 +393,7 @@ export default {
                   patronymic: appointment.patient.lastname,
                   birthdate: new Date(appointment.patient.birthday).toLocaleDateString('ru-RU'),
                   doctor: appointment.doctor.surname + " " + appointment.doctor.name.substring(0,1) + "." + appointment.doctor.lastname.substring(0,1)+".",
-                  date: new Date(appointment.createdAt).toLocaleDateString('ru-RU'),
-
-                  highlight: false
+                  date: new Date(appointment.createdAt).toLocaleDateString('ru-RU')
                 });
               }
             }
@@ -422,23 +418,15 @@ export default {
             patronymic: "Ивановна",
             birthdate: "13.02.2023",
             doctor: "Павлович В.И.",
-            date: "29.03.2023",
-
-            highlight: false
+            date: "29.03.2023"
           });
         return;
       }
       this.applyFiltersSearch();
     },
     selectAppointment(data) {
-      if(this.selectedAppointment !== -1)
-        this.selectedAppointment.highlight = false;
-      if(this.selectedAppointment.id === data.id) {
-        data.highlight = false;
-        this.selectedAppointment = -1;
-        return;
-      }
-      data.highlight = true;
+      if(this.selectedAppointment.id === data.id)
+        return this.selectedAppointment = -1;
       this.selectedAppointment = data;
     },
     deleteAppointment() {

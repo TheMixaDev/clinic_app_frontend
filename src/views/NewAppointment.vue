@@ -1220,7 +1220,7 @@ export default {
               this.state.id = -1;
             });
           } else {
-            //this.state.patient = meta.patient;
+            this.state.patient = meta.patient;
           }
         } else {
           this.loadByID(meta.appointment.id);

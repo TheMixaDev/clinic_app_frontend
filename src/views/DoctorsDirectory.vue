@@ -38,7 +38,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="doctor in doctors" :key="doctor.id" @click="selectDoctor(doctor)" :style="doctor.highlight ? `background-color: #cceffd` : ``">
+        <tr v-for="doctor in doctors" :key="doctor.id" @click="selectDoctor(doctor)" :style="selectedDoctor !== -1 && selectedDoctor.id === doctor.id ? `background-color: #cceffd` : ``">
           <td>
             <div className="d-flex align-items-center">
               <div className="ms-3">
@@ -491,26 +491,15 @@ export default {
             patronymic: "Ивановна",
             rank: "Врач",
             position: "Генерал-майор",
-            login: "login",
-
-            highlight: false
+            login: "login"
           });
         return;
       }
       this.applyFiltersSearch();
     },
-    changePassword() {
-      // TODO via modal
-    },
     selectDoctor(data) {
-      if(this.selectedDoctor !== -1)
-        this.selectedDoctor.highlight = false;
-      if(this.selectedDoctor.id === data.id) {
-        data.highlight = false;
-        this.selectedDoctor = -1;
-        return;
-      }
-      data.highlight = true;
+      if(this.selectedDoctor.id === data.id)
+        return this.selectedDoctor = -1;
       this.selectedDoctor = data;
     },
     deleteDoctor() {

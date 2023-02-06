@@ -40,7 +40,7 @@
         </tr>
         </thead>
         <tbody>
-          <tr v-for="patient in patients" :key="patient.id" @click="selectPatient(patient)" :style="patient.highlight ? `background-color: #cceffd` : ``">
+          <tr v-for="patient in patients" :key="patient.id" @click="selectPatient(patient)" :style="selectedPatient !== -1 && selectedPatient.id === patient.id ? `background-color: #cceffd` : ``">
             <td>
               <div className="d-flex align-items-center">
                 <div className="ms-3">
@@ -413,14 +413,8 @@ export default {
       this.applyFiltersSearch();
     },
     selectPatient(data) {
-      if(this.selectedPatient !== -1)
-        this.selectedPatient.highlight = false;
-      if(this.selectedPatient.id === data.id) {
-        data.highlight = false;
-        this.selectedPatient = -1;
-        return;
-      }
-      data.highlight = true;
+      if(this.selectedPatient.id === data.id)
+        return this.selectedPatient = -1;
       this.selectedPatient = data;
     },
     deletePatient() {
@@ -449,7 +443,7 @@ export default {
           heading: 'Удаление пациента',
           icon: 'delete',
           text: 'Подтвердите удаление пациента',
-          highlighted: this.selectedDoctor.surname + ' ' + this.selectedDoctor.name + ' ' + this.selectedDoctor.patronymic,
+          highlighted: this.selectedPatient.surname + ' ' + this.selectedPatient.name + ' ' + this.selectedPatient.patronymic,
           proceedButton: 'Удалить'
         },
         callback: this.deletePatient
