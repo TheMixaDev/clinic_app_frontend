@@ -192,7 +192,7 @@ export default {
 </script>
 
 <style scoped>
-@media screen and (max-width: 1500px) {
+@media screen and (max-width: 1800px) {
   .container.modal-box {
     padding-top: 1rem!important;
     padding-bottom: 1rem!important;

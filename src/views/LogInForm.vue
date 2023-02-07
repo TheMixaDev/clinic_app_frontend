@@ -18,7 +18,7 @@
 </template>
 
 <style scoped>
-@media screen and (max-width: 1500px) {
+@media screen and (max-width: 1800px) {
   .container-fluid {
     height: 70vh!important;
     width: 50vw!important;

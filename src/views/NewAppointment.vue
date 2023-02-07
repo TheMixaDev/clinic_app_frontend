@@ -445,7 +445,7 @@
   </div>
 </template>
 <style>
-@media screen and (max-width: 1500px) {
+@media screen and (max-width: 1800px) {
   .save-second {
     width: 40vw!important;
   }

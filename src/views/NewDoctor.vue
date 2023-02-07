@@ -28,7 +28,7 @@
   </div>
 </template>
 <style scoped>
-@media screen and (max-width: 1500px) {
+@media screen and (max-width: 1800px) {
   .main-part {
     width: 87vw !important;
     margin-left: 0 !important;

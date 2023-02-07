@@ -105,7 +105,7 @@
   </div>
 </template>
 <style scoped>
-@media screen and (max-width: 1500px) {
+@media screen and (max-width: 1800px) {
   .first-add {
     width: 23vw!important;
   }

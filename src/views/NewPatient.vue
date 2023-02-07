@@ -24,7 +24,7 @@
   </div>
 </template>
 <style scoped>
-@media screen and (max-width: 1500px) {
+@media screen and (max-width: 1800px) {
   .container.main-part {
     overflow-y: scroll!important;
     gap: 1rem!important;
