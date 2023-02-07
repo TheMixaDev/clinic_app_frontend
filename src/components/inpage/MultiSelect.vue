@@ -4,7 +4,7 @@
       !showSelect ?
       (
           selected.length > 0 || customInput.length > 0 ?
-              (selected.length > 0 ? selected.map(el => el.name).join(", ") : '')+
+              (selected.length > 0 ? selected.map(el => el.label).join(", ") : '')+
               (selected.length > 0 && customInput.length > 0 ? ", " : '')+
               customInput
               : 'Выбрать'
@@ -15,8 +15,8 @@
   <template v-if="showSelect">
     <input class="search animate__animated animate__fadeInDownBig" type="text" placeholder="Ручной ввод" v-model="customInput" v-if="custom" @change="saveCustom();">
     <div class="select">
-      <div class="option" :class="{'selected': option.selected}" @click="select(option)" v-for="(option, index) in input" :key="pid*1000+index">
-        {{ option.name }}
+      <div class="option" :class="{'selected': option.value}" @click="select(option)" v-for="(option, index) in input" :key="pid*1000+index">
+        {{ option.label }}
       </div>
     </div>
   </template>
@@ -43,15 +43,15 @@ export default {
   },
   methods: {
     select(option) {
-      option.selected = !option.selected;
-      if(option.selected)
+      option.value = !option.value;
+      if(option.value)
         this.selected.push(option);
-      this.selected = this.selected.filter(el => el.selected && el.name !== option.selected.name);
+      this.selected = this.selected.filter(el => el.value);
     },
     updateSelected(data, custom) {
       console.log(data);
       for(let i of data)
-        if(i.selected)
+        if(i.value)
           this.selected.push(i);
       if(custom)
         this.customInput = custom;
