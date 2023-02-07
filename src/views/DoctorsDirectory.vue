@@ -108,6 +108,24 @@
   </div>
 </template>
 <style scoped>
+@media screen and (max-width: 1500px) {
+  .main-part {
+    width: 87vw !important;
+    margin-left: 0 !important;
+    max-height: 45vh !important;
+  }
+
+  .container-fluid {
+    max-height: 80vh !important;
+    max-width: 100vw !important;
+  }
+  .buttons-container {
+    margin-top: 2rem!important;
+  }
+  .heading {
+    font-size: 1.5rem!important;
+  }
+}
 .profile {
   display: flex;
   gap: 2rem;

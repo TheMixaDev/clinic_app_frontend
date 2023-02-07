@@ -18,6 +18,12 @@
 </template>
 
 <style scoped>
+@media screen and (max-width: 1500px) {
+  .container-fluid {
+    height: 70vh!important;
+    width: 50vw!important;
+  }
+}
 .container-fluid.login-box {
   overflow-y: hidden;
 }

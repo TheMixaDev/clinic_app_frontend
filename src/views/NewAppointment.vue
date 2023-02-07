@@ -46,12 +46,12 @@
             <h6 class="patient-name">Дата последних месячных</h6>
             <input class="date" type="date" v-model="state.mensesDate">
           </div>
+        </div>
+        <div class="row row-wrapper">
           <div class="col select-wrapper">
             <h6 class="patient-name">Операции, травмы</h6>
             <MultiSelect :input="state.detailed.options1" :pid=1 :custom=true ref="options1" @custom-update="updateCustomOption"></MultiSelect>
           </div>
-        </div>
-        <div class="row row-wrapper">
           <div class="col select-wrapper">
           <h6 class="patient-name">Перенесенные заболевания</h6>
             <MultiSelect :input="state.detailed.options2" :pid=2 ref="options2"></MultiSelect>
@@ -270,7 +270,9 @@
             </div>
           </div>
         </div>
-        <div class="container-fluid diagnosis-checks">
+      </div>
+      <div class="container-fluid additional-checks">
+        <div class="row">
           <div class="col">
             Рубец на матке:
             <select class="form-select" v-model="state.diagnosis.dropdowns.rubec">
@@ -282,7 +284,7 @@
               <option value="5">Рубец на матке после консервативной миомэктомии</option>
             </select>
           </div>
-          <div class="">
+          <div class="col">
             Нарушения гемодинамики:
             <select class="form-select" v-model="state.diagnosis.dropdowns.hemodynamics">
               <option value="0">Отсутствуют</option>
@@ -311,6 +313,8 @@
               <option value="6">ПХРД</option>
             </select>
           </div>
+        </div>
+        <div class="row">
           <div class="col">
             Ожирение:
             <select class="form-select" disabled>
@@ -441,6 +445,11 @@
   </div>
 </template>
 <style>
+@media screen and (max-width: 1500px) {
+  .save-second {
+    width: 40vw!important;
+  }
+}
 .save-first {
   width: 15vw;
   background: linear-gradient(94.83deg, #00A3FF 1.33%, #00C2FF 100%);
@@ -524,6 +533,9 @@ input.name-tag {
   box-shadow: 0px 16px 47px 16px rgb(61 61 61 / 10%);
   overflow-y: scroll;
 }
+.patient-name {
+  margin-bottom: 1rem;
+}
 .pregnacy-checks {
   display: flex;
   flex-direction: row!important;
@@ -533,6 +545,20 @@ h6 {
   margin: 0;
 }
 .container-fluid.diagnosis {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-bottom: 2rem;
+  text-align: left;
+  margin-top: 2rem;
+  background: transparent;
+  width: 100%;
+  height: auto;
+  border-radius: 0;
+  box-shadow: none;
+}
+.container-fluid.additional-checks {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -804,6 +830,7 @@ h6 {
 }
 .row-wrapper {
   width: 100%;
+  gap: 1rem;
 }
 .attachment-row {
   display: flex;

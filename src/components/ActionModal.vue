@@ -30,6 +30,13 @@ export default {
 </script>
 
 <style scoped>
+@media screen and (max-width: 1500px) {
+  .container.modal-box {
+    padding-top: 3rem!important;
+    padding-bottom: 3rem!important;
+    max-width: 57vw!important;
+  }
+}
 .icon {
   width: 10rem;
 }

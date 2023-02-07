@@ -24,6 +24,24 @@
   </div>
 </template>
 <style scoped>
+@media screen and (max-width: 1500px) {
+  .container.main-part {
+    overflow-y: scroll!important;
+    gap: 1rem!important;
+  }
+  .back {
+    background: transparent!important;
+    color: black;
+    border: none!important;
+    font-size: 1rem;
+    padding-left: 0!important;
+    padding-right: 2rem!important;
+    padding-top: 0!important;
+    padding-bottom: 0.2rem!important;
+    box-shadow: none;
+    width: 1rem!important;
+  }
+}
 .input-outline {
   padding: 0.3rem!important;
   background: #F5F9FF!important;

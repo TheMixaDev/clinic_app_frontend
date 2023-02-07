@@ -22,7 +22,7 @@
       <div class="col">
         <div class="form-check">
           <input class="form-check-input" type="checkbox" v-model="onlyNew" @change="applyFiltersSearch();"/>
-          <label class="form-check-label searchCheckBox" @click="onlyNew = !onlyNew; applyFiltersSearch();">Только пациенты без первого приема</label>
+          <label class="form-check-label searchCheckBox" @click="onlyNew = !onlyNew; applyFiltersSearch();">Без первого приёма</label>
         </div>
       </div>
     </div>
@@ -84,6 +84,54 @@
   </div>
 </template>
 <style scoped>
+@media screen and (max-width: 1500px) {
+  .main-part {
+    width: 87vw!important;
+    margin-left: 0!important;
+    max-height: 45vh!important;
+  }
+  .container-fluid {
+    max-height: 80vh!important;
+    max-width: 100vw!important;
+  }
+  .patients-directory-main-part {
+    width: 88vw!important;
+    max-height: 45vh!important;
+  }
+  .first-add {
+    width: 25vw!important;
+  }
+  .second-add {
+    width: 25vw!important;
+  }
+  .first-download {
+    padding-left: 0!important;
+    padding-right: 0!important;
+    font-size: 10px!important;
+  }
+  .heading {
+    font-size: 1.5rem!important;
+  }
+  .back {
+    background: transparent!important;
+    color: black;
+    border: none!important;
+    font-size: 1rem;
+    padding-left: 0!important;
+    padding-right: 0rem!important;
+    padding-top: 10px!important;
+    padding-bottom: 0px!important;
+    box-shadow: none;
+    width: 1rem!important;
+  }
+  .searchCheckBox {
+    font-size: 0.9rem!important;
+    text-align: left!important;
+  }
+  .buttons-container {
+    margin-top: 2rem!important;
+  }
+}
 .col.search-col {
   display: flex;
   width: 100%;
@@ -119,6 +167,7 @@
 .container-fluid {
   background: #FAFAFA;
   width: 90vw;
+  max-width: 70vw;
   height: 50vw;
   border-radius: 25px;
   box-shadow: 0px 16px 47px 16px rgb(61 61 61 / 10%);

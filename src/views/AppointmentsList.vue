@@ -92,7 +92,7 @@
       <div class="container buttons-container">
         <div class="row row-buttons">
           <div class="col col-buttons">
-            <button class="btn btn-primary first-add" @click="downloadDocx()" v-if="selectedAppointment !== -1"><i class="fa-solid fa-download"></i> {{downloading ? 'Скачивание...' : 'Выгрузить консультативное заключение'}}</button>
+            <button class="btn btn-primary first-add first-download" @click="downloadDocx()" v-if="selectedAppointment !== -1"><i class="fa-solid fa-download"></i> {{downloading ? 'Скачивание...' : 'Выгрузить консультативное заключение'}}</button>
             <button class="btn btn-primary first-add" @click="router().push({name: 'patients-directory'})" v-if="selectedAppointment === -1"><i class="fa-solid fa-plus button-icon"></i>Создать первичный приём</button>
             <button class="btn btn-primary second-add" @click="repeatAppointment()" v-bind:disabled="selectedAppointment === -1"><i class="fa-solid fa-plus button-icon"></i>Создать повторный приём</button>
           </div>
@@ -104,7 +104,29 @@
       </div>
   </div>
 </template>
-<style>
+<style scoped>
+@media screen and (max-width: 1500px) {
+  .first-add {
+    width: 23vw!important;
+  }
+  .second-add {
+    width: 23vw!important;
+  }
+  .first-download {
+    padding-left: 0!important;
+    padding-right: 0!important;
+    font-size: 10px!important;
+  }
+  .main-part {
+    width: 87vw!important;
+    margin-left: 0!important;
+    max-height: 45vh!important;
+  }
+  .container-fluid {
+    max-height: 80vh!important;
+    max-width: 100vw!important;
+  }
+}
 .download-btn {
   background: linear-gradient(94.83deg, #00A3FF 1.33%, #00C2FF 100%);
   border: 1px solid rgba(0, 117, 255, 0.3);
@@ -151,6 +173,8 @@
 .container-fluid {
   background: #FAFAFA;
   width: 90vw;
+  max-width: 80vw;
+  max-height: 90vh;
   height: 50vw;
   border-radius: 25px;
   box-shadow: 0px 16px 47px 16px rgb(61 61 61 / 10%);
