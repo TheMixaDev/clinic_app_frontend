@@ -114,7 +114,6 @@
     margin-left: 0 !important;
     max-height: 45vh !important;
   }
-
   .container-fluid {
     max-height: 80vh !important;
     max-width: 100vw !important;

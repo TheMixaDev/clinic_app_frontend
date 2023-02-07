@@ -42,6 +42,42 @@
     width: 1rem!important;
   }
 }
+@media screen and (max-width: 1366px) {
+  .container-fluid {
+    height: 80vh!important;
+  }
+  .main-part {
+    width: 87vw !important;
+    margin-left: 0 !important;
+    max-height: 45vh !important;
+  }
+  .container.main-part {
+    overflow-y: hidden!important;
+    overflow-x: hidden!important;
+    height: 100%!important;
+    max-height: 55vh!important;
+    margin-right: 0!important;
+    margin-left: 0!important;
+  }
+}
+@media screen and (max-width: 1280px) {
+  .container-fluid {
+    height: 90vh!important;
+  }
+  .main-part {
+    width: 87vw !important;
+    margin-left: 0 !important;
+    max-height: 45vh !important;
+  }
+  .container.main-part {
+    overflow-y: hidden!important;
+    overflow-x: hidden!important;
+    height: 100%!important;
+    max-height: 55vh!important;
+    margin-right: 0!important;
+    margin-left: 0!important;
+  }
+}
 .input-outline {
   padding: 0.3rem!important;
   background: #F5F9FF!important;
