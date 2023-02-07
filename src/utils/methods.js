@@ -18,7 +18,7 @@ export const methods = {
         const app = createApp(NotificationProgress, {text: text});
         this.currentNotification = app.mount(div);
     },
-    checkCookies(cookies, access, callback) {
+    checkCookies(cookies, access, callback, failCallback) {
         if(settings.designMode)
             return callback ? callback() : null;
         if(cookies.get("token") != null) {
@@ -37,12 +37,18 @@ export const methods = {
                 console.log(error);
                 if(error.code === "ERR_NETWORK")
                     this.runNotification("Не удалось подключиться к серверу");
-                if(access !== constants.Role.UNAUTHORIZED)
-                    router.push({ name: "login" })
+                if(access !== constants.Role.UNAUTHORIZED) {
+                    router.push({name: "login"})
+                    if(failCallback)
+                        failCallback();
+                }
             });
         } else if(access !== constants.Role.UNAUTHORIZED) {
             router.push({ name: "login" })
-        }
+            if(failCallback)
+                failCallback();
+        } else if(access === constants.Role.UNAUTHORIZED && failCallback)
+            failCallback();
     },
     authorizedGETRequest(cookies, route, success, fail) {
         (async () => {
