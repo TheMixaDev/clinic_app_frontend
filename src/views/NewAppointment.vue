@@ -40,7 +40,7 @@
           </div>
           <div class="col imt-wrapper">
             <h6 class="patient-name">ИМТ</h6>
-            <input type="text" id="name" class="form-control" placeholder="Автоматический рассчет" v-bind:value="Math.floor(state.weight / Math.pow(state.height/100,2) * 10) / 10 || ``" disabled>
+            <input type="text" id="name" class="form-control" placeholder="Автоматический рассчет" v-bind:value="methods.getIMT(state.weight, state.height) || ``" disabled>
           </div>
           <div class="col date-wrapper">
             <h6 class="patient-name">Дата последних месячных</h6>
@@ -50,40 +50,40 @@
         <div class="row row-wrapper">
           <div class="col select-wrapper">
             <h6 class="patient-name">Операции, травмы</h6>
-            <MultiSelect :input="state.detailed.options1" :pid=1 :custom=true ref="options1" @custom-update="updateCustomOption"></MultiSelect>
+            <MultiSelect :input="state.detailed.operations" :pid="'operations'" ref="operations" :custom=true @custom-update="updateCustomOption"></MultiSelect>
           </div>
           <div class="col select-wrapper">
           <h6 class="patient-name">Перенесенные заболевания</h6>
-            <MultiSelect :input="state.detailed.options2" :pid=2 ref="options2"></MultiSelect>
+            <MultiSelect :input="state.detailed.illnesses" :pid="'illnesses'" ref="illnesses"></MultiSelect>
         </div>
           <div class="col select-wrapper">
             <h6 class="patient-name">Туберкулез, венерические заболевания, гепатиты</h6>
-            <MultiSelect :input="state.detailed.options3" :pid=3 :custom=true ref="options3" @custom-update="updateCustomOption"></MultiSelect>
+            <MultiSelect :input="state.detailed.tvg" :pid="'tvg'" ref="tvg" :custom=true @custom-update="updateCustomOption"></MultiSelect>
           </div>
           <div class="col select-wrapper">
             <h6 class="patient-name">Аллергические реакции</h6>
-            <MultiSelect :input="state.detailed.options4" :pid=4 :custom=true ref="options4" @custom-update="updateCustomOption"></MultiSelect>
+            <MultiSelect :input="state.detailed.allergic" :pid="'allergic'" ref="allergic" :custom=true @custom-update="updateCustomOption"></MultiSelect>
           </div>
         </div>
         <div class="row row-wrapper">
           <div class="col select-wrapper">
             <h6 class="patient-name">Гемотрансфузии</h6>
-            <MultiSelect :input="state.detailed.options5" :pid=5 :custom=true ref="options5" @custom-update="updateCustomOption"></MultiSelect>
+            <MultiSelect :input="state.detailed.hemotransfusios" :pid="'hemotransfusios'" ref="hemotransfusios" :custom=true @custom-update="updateCustomOption"></MultiSelect>
           </div>
           <div class="col select-wrapper">
             <h6 class="patient-name">Наследственность</h6>
-            <MultiSelect :input="state.detailed.options6" :pid=6 :custom=true ref="options6" @custom-update="updateCustomOption"></MultiSelect>
+            <MultiSelect :input="state.detailed.inheritance" :pid="'inheritance'" ref="inheritance" :custom=true @custom-update="updateCustomOption"></MultiSelect>
           </div>
           <div class="col select-wrapper">
             <h6 class="patient-name">Обследование на наследственную тромбофилию</h6>
-            <MultiSelect :input="state.detailed.options7" :pid=7 ref="options7"></MultiSelect>
+            <MultiSelect :input="state.detailed.trombofilia" :pid="'trombofilia'" ref="trombofilia"></MultiSelect>
           </div>
         </div>
       </div>
       <div class="container-fluid anamnesis">
         <h4>Гинекологический анамнез</h4>
         Гинекологические заболевания:
-        <MultiSelect :input="state.anameses_desiases" :pid=101 ref="anameses_desiases"></MultiSelect>
+        <MultiSelect :input="state.detailed.anameses_desiases" :pid="'anameses_desiases'" ref="anameses_desiases"></MultiSelect>
         <div class="form-outline">
           <textarea class="form-control anamnesis-text" id="textAreaExample1" rows="4" v-model="state.anameses"></textarea>
           <label class="form-label" for="textAreaExample"></label>
@@ -92,8 +92,8 @@
       <div class="container-fluid analyzes">
         <h4>Анализы</h4>
         Гены наследственной тромбофилии:
-        <MultiSelect :input="state.analyzes_genes" :pid=201 ref="analyzes_genes"></MultiSelect>
-        <div v-for="(constants, key) in analyze_constants" :key="key">
+        <MultiSelect :input="state.detailed.analyzes_genes" :pid="'analyzes_genes'" ref="analyzes_genes"></MultiSelect>
+        <div v-for="(table, key) in constants().analyze_constants" :key="key">
           <table class="table align-middle mb-0 table-hover table-striped table-bordered bg-white" v-if="state[`analyzes_${key+1}`].length > 0">
             <thead class="bg-light">
               <tr class="table-first-row">
@@ -104,7 +104,7 @@
               </tr>
             </thead>
             <tbody>
-            <tr v-for="(type, index) in constants" :key="index">
+            <tr v-for="(type, index) in table" :key="index">
               <td>
                 <div class="d-flex align-items-center">
                   <div class="ms-3">
@@ -125,8 +125,8 @@
           <EmptyTableDisplay v-else/>
           <br>
           <div class="row col-buttons">
-            <button class="btn btn-primary first-add" @click="requestAddAnalyzes(`analyzes_${key+1}`, analyze_constants[key])"><i class="fa-solid fa-plus button-icon"></i>Добавить</button>
-            <button class="btn btn-primary edit" v-if="state[`analyzes_${key+1}`].length > 0" v-bind:disabled="selections[`analyzes_${key+1}`] === -1" @click="requestEdit(AddAnalyzesComponent, `analyzes_${key+1}`, analyze_constants[key])"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>
+            <button class="btn btn-primary first-add" @click="requestAddAnalyzes(`analyzes_${key+1}`, constants().analyze_constants[key])"><i class="fa-solid fa-plus button-icon"></i>Добавить</button>
+            <button class="btn btn-primary edit" v-if="state[`analyzes_${key+1}`].length > 0" v-bind:disabled="selections[`analyzes_${key+1}`] === -1" @click="requestEdit(AddAnalyzesComponent, `analyzes_${key+1}`, constants().analyze_constants[key])"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>
             <button class="btn btn-primary delete" v-if="state[`analyzes_${key+1}`].length > 0" v-bind:disabled="selections[`analyzes_${key+1}`] === -1" @click="requestDeleteElement('анализов',`analyzes_${key+1}`)"><i class="fa-solid fa-trash button-icon"></i>Удалить</button>
           </div>
         </div>
@@ -154,21 +154,21 @@
             <td>
               <div class="d-flex align-items-center">
                 <div class="ms-3">
-                  <p class="fw-bold mb-1">{{ crops_constants[0][crop.localization-1] }}</p>
+                  <p class="fw-bold mb-1">{{ constants().crops_constants[0][crop.localization-1] }}</p>
                 </div>
               </div>
             </td>
             <td>
               <div class="d-flex align-items-center">
                 <div class="ms-3">
-                  <p class="fw-bold mb-1">{{ crops_constants[1][crop.flora] }}</p>
+                  <p class="fw-bold mb-1">{{ constants().crops_constants[1][crop.flora] }}</p>
                 </div>
               </div>
             </td>
             <td>
               <div class="d-flex align-items-center">
                 <div class="ms-3">
-                  <p class="fw-bold mb-1">{{ crops_constants[2][crop.value] }}</p>
+                  <p class="fw-bold mb-1">{{ constants().crops_constants[2][crop.value] }}</p>
                 </div>
               </div>
             </td>
@@ -317,7 +317,7 @@
         <div class="row">
           <div class="col">
             Ожирение:
-            <select class="form-select" disabled>
+            <select class="form-select" v-bind:value="methods.limit(Math.ceil((methods.getIMT(state.weight, state.height) - 30) / 5), 0, 4)+''" disabled>
               <option value="0">Отсутствует</option>
               <option value="1">I степени</option>
               <option value="2">II степени</option>
@@ -1064,7 +1064,7 @@ export default {
       return constants
     },
     updateCustomOption(value, pid) {
-      this.state.detailed[`option${pid}`] = value;
+      this.state.detailed[`${pid}Custom`] = value;
     },
     requestCancel() {
       const div = document.getElementById("modal");
@@ -1098,38 +1098,14 @@ export default {
       delete stateCopy.doctor;
       delete stateCopy.id;
       delete stateCopy.isFirst;
-      /*for(let i = 1; i < 8; i++) {
-        stateCopy.detailed[`options${i}`] = [];
-        for(let option of this.state.detailed[`options${i}`]) {
-          if(option.selected)
-            stateCopy.detailed[`options${i}`].push(option.name);
-        }
-      }
-      stateCopy.anameses_desiases = [];
-      for(let option of this.state.anameses_desiases) {
-        if(option.selected)
-          stateCopy.anameses_desiases.push(option.name);
-      }
-      stateCopy.analyzes_genes = [];
-      for(let option of this.state.analyzes_genes) {
-        if(option.selected)
-          stateCopy.analyzes_genes.push(option.name);
-      }
-      stateCopy.diagnosis.checkboxes = [];
-      for(let i of this.state.diagnosis.checkboxes)
-        for(let box of i.boxes)
-          if(box.value) stateCopy.diagnosis.checkboxes.push(box.label)
-      stateCopy.recommended.checkboxes = [];
-      for(let box of this.state.recommended.checkboxes)
-        if(box.value) stateCopy.recommended.checkboxes.push(box.label)*/
-      let result = {
-        id: id,
-        patientId: patientId,
-        isFirst: isFirst,
-        doctorId: doctorId,
-        state: stateCopy
-      };
-      console.log(result);
+      for(let i in stateCopy.detailed)
+        if(!i.includes("Custom"))
+          stateCopy.detailed[i] = methods.getSelectedIds(stateCopy.detailed[i]);
+      for(let i in stateCopy.diagnosis.checkboxes)
+        stateCopy.diagnosis.checkboxes[i].boxes = methods.getSelectedIds(stateCopy.diagnosis.checkboxes[i].boxes);
+      stateCopy.recommended.checkboxes = methods.getSelectedIds(stateCopy.recommended.checkboxes);
+      stateCopy.diagnosis.dropdowns.fatness = methods.limit(Math.ceil((methods.getIMT(stateCopy.weight, stateCopy.height) - 30) / 5), 0, 4)+'';
+      console.log(stateCopy);
       if(id === -1) {
         methods.authorizedPOSTRequest(
             this.$cookies,
@@ -1138,7 +1114,6 @@ export default {
               is_first: isFirst,
               patient_id: patientId,
               doctor_id: doctorId,
-              // TODO add doctor ID
               value: JSON.stringify(stateCopy)
             },
             response => {
@@ -1180,39 +1155,27 @@ export default {
       }
     },
     loadFromResponse(response) {
-      this.state = JSON.parse(response.value);
-      this.state.id = response.id;
-      this.state.isFirst = response.is_first;
-      this.state.patient = {
+      let stateCopy = JSON.parse(response.value);
+      stateCopy.id = response.id;
+      stateCopy.isFirst = response.is_first;
+      stateCopy.patient = {
         id: response.patient.id,
         surname: response.patient.surname,
         name: response.patient.name,
         patronymic: response.patient.lastname,
         birthdate: response.patient.birthday
       };
-      this.state.doctor = {
+      stateCopy.doctor = {
         id: response.doctor.id,
         fullName: response.doctor.surname + ' ' + response.doctor.name + ' ' + response.doctor.lastname
       };
-      /*for(let i = 1; i < 8; i++)
-        for (let option of this.state.detailed[`options${i}`])
-          if (option.name in response.detailed[`options${i}`])
-            option.selected = true;
-      for (let option of this.state.anameses_desiases)
-        if (option.name in response.anameses_desiases)
-          option.selected = true;
-      for (let option of this.state.analyzes_genes)
-        if (option.name in response.analyzes_genes)
-          option.selected = true;
-      for(let i of this.state.diagnosis.checkboxes)
-        for(let box of i.boxes)
-          if(box.label in response.diagnosis.checkboxes)
-            box.value = true;
-      for(let i of this.state.recommended.checkboxes)
-        for(let box of i.boxes)
-          if(box.label in response.recommended.checkboxes)
-            box.value = true;*/
-
+      for(let i in stateCopy.detailed)
+        if(!i.includes("Custom"))
+          stateCopy.detailed[i] = methods.getFromSelectedIds(this.state.detailed[i], stateCopy.detailed[i]);
+      for(let i in stateCopy.diagnosis.checkboxes)
+        stateCopy.diagnosis.checkboxes[i].boxes = methods.getFromSelectedIds(this.state.diagnosis.checkboxes[i].boxes, stateCopy.diagnosis.checkboxes[i].boxes);
+      stateCopy.recommended.checkboxes = methods.getFromSelectedIds(this.state.recommended.checkboxes, stateCopy.recommended.checkboxes);
+      this.state = stateCopy;
     },
     saveState(after) {
       sessionStorage.setItem("appointmentLastState", JSON.stringify(this.state));
@@ -1220,9 +1183,7 @@ export default {
     },
     preload() {
       this.loadState();
-      for(let pid = 1; pid < 8; pid++) {
-        this.$refs[`options${pid}`].updateSelected(this.state.detailed[`options${pid}`], this.state.detailed[`option${pid}`]);
-      }
+      this.updateMultiselectors();
       if(settings.designMode)
         return;
       let meta = methods.getMeta();
@@ -1235,8 +1196,7 @@ export default {
         }
         if(meta.isNew) {
           if(meta.copyFromLast) {
-            // TODO switch to patientId
-            this.loadByID(meta.appointment.id, false,()=>{
+            this.loadByID(meta.appointment.patientId, true,()=>{
               this.state.isFirst = false;
               this.state.id = -1;
             });
@@ -1254,9 +1214,7 @@ export default {
           `/appointment/${isLast ? 'last/' : ''}${id}`,
           response => {
             this.loadFromResponse(response.data.body);
-            for(let pid = 1; pid < 8; pid++) {
-              this.$refs[`options${pid}`].updateSelected(this.state.detailed[`options${pid}`], this.state.detailed[`option${pid}`]);
-            }
+            this.updateMultiselectors();
             if(callback) callback();
           },
           error => {
@@ -1465,6 +1423,14 @@ export default {
           },
           failure
       )
+    },
+    updateMultiselectors() {
+      for(let i in this.state.detailed) {
+        if(Array.isArray(this.state.detailed[i]))
+          this.$refs[i].updateSelected(this.state.detailed[i], false);
+        else
+          this.$refs[i.replace("Custom","")].updateSelected([], this.state.detailed[i]);
+      }
     }
   },
   beforeMount() {
@@ -1479,104 +1445,122 @@ export default {
       uploadedFile: '',
       ongoingFileLoading: false,
       downloading: false,
-      analyze_constants: [
-          ["Протромбиновый индекс", "МНО", "Фибриноген", "АПТВ", "Тромбиновое время", "Антитромбин III", "Тест на LA", "Д-димер", "Гомоцистеин", "Протеин C", "Протеин S"],
-          ["АТ к β2-гликопротеину", "АТ к кардиолипину", "АТ к аннексину V", "АТ к ХГЧ", "АТ к протромбину", "АТ к фосфатидилсерину", "АТ к фосфатидил к-те", "АТ к фосфатидилинозитолу", "Антинуклеарный фактор", "АТ к 2сп ДНК"],
-          ["Lei", "Hb", "Ht", "Tr", "Ферритин", "ТТГ"]
-      ],
-      crops_constants: [
-          ["Посев мочи", "Посев из ц/канала", "Посев из носа", "Посев из зева"],
-          ["Не выделена", "E. coli", "Enterococcus sp.", "Enterococcus faecalis", "Klebsiella sp.", "Staphyloc. ep.", "Streptococcus anginosus", "Streptococcus agalact.", "Streptococcus or.", "Streptococcus spp", "Streptococcus pneumoniae", "Candida albicans", "Lactobacillus sp.", "Proteus mirabilis", "Citrobacter", "Enterobacteriaceae", "Pseudomonas aeruginosa", "Haemophilus influenzae", "Moraxella catarrhalis", "Neisseria sicca", "Neisseria spp.", "Corynebacterium spp"],
-          ["Не выделена", "10³ КОЕ/мл", "10⁴ КОЕ/мл", "10⁵ КОЕ/мл", "10⁶ КОЕ/мл", "10⁷ КОЕ/мл", "10⁸ КОЕ/мл"]
-      ],
       state: {
         id: -1,
         isFirst: true,
         detailed: {
-          option1: "",
-          option3: "",
-          option4: "",
-          option5: "",
-          option6: "",
-          options1: [
-            {label: "Флебэктомия в анамнезе", value: false},
-            {label: "Гемиструмэктомия в анамнезе", value: false},
-            {label: "Лазерная коррекция зрения в анамнезе", value: false},
-            {label: "Спленэктомия в анамнезе", value: false},
-            {label: "Оперативное лечение хронического геморроя", value: false},
-            {label: "Секторальная резекция молочной железы", value: false}
+          operationsCustom: "",
+          tvgCustom: "",
+          allergicCustom: "",
+          hemotransfusiosCustom: "",
+          inheritanceCustom: "",
+          operations: [
+            {id: 1, label: "Флебэктомия в анамнезе", value: false},
+            {id: 2, label: "Гемиструмэктомия в анамнезе", value: false},
+            {id: 3, label: "Лазерная коррекция зрения в анамнезе", value: false},
+            {id: 4, label: "Спленэктомия в анамнезе", value: false},
+            {id: 5, label: "Оперативное лечение хронического геморроя", value: false},
+            {id: 6, label: "Секторальная резекция молочной железы", value: false}
           ],
-          options2: [
-            {label: "Хронический тонзиллит", value: false},
-            {label: "Хронический пиелонефрит", value: false},
-            {label: "Хронический цистит", value: false},
-            {label: "МКБ", value: false},
-            {label: "Единственная почка", value: false},
-            {label: "Хроническая АГ", value: false},
-            {label: "Варикозная болезнь", value: false},
-            {label: "Тромбоз в анамнезе", value: false},
-            {label: "Флебэктомия в анамнезе", value: false},
-            {label: "АИТ. Эутиреоз", value: false},
-            {label: "Субклинический гипотиреоз (ЗГТ)", value: false},
-            {label: "Узловой зоб", value: false},
-            {label: "Тиреотоксикоз", value: false},
-            {label: "ФАМ молочных желёз", value: false},
-            {label: "Секторальная резекция молочной железы", value: false},
-            {label: "Заболевания глаз", value: false},
-            {label: "Лазерная коррекция зрения в анамнезе", value: false},
-            {label: "Микропролактинома гипофиза", value: false},
-            {label: "Образование надпочечников", value: false},
-            {label: "Ожирение", value: false},
-            {label: "Сахарный диабет", value: false},
-            {label: "Хроническая никотиновая интоксикация", value: false},
-            {label: "ДЖВП", value: false},
-            {label: "ЖКБ", value: false},
-            {label: "Холецистэктомия в анамнезе", value: false},
-            {label: "Нейросенсорная тугоухость", value: false},
-            {label: "Лекарственная аллергия", value: false},
-            {label: "Бронхиальная астма", value: false},
-            {label: "ТИА в анамнезе", value: false},
-            {label: "ТЭЛА в анамнезе", value: false},
-            {label: "Мигрень", value: false},
-            {label: "Спленэктомия в анамнезе", value: false},
-            {label: "Хронический гепатит", value: false},
-            {label: "Tbc в анамнезе", value: false},
-            {label: "Lues в анамнезе", value: false},
-            {label: "Узловая эритема", value: false},
-            {label: "Атопический дерматит", value: false},
-            {label: "Болезнь Виллебранда", value: false},
-            {label: "Пролапс МК", value: false},
-            {label: "Аномалия сосудов ГМ", value: false},
-            {label: "Очаг.образ.печени", value: false},
-            {label: "Хронический гастрит", value: false},
-            {label: "НЯК", value: false},
-            {label: "Хронический геморрой", value: false},
-            {label: "Оперативное лечение хронического геморроя", value: false}
+          illnesses: [
+            {id: 1, label: "Хронический тонзиллит", value: false},
+            {id: 2, label: "Хронический пиелонефрит", value: false},
+            {id: 3, label: "Хронический цистит", value: false},
+            {id: 4, label: "МКБ", value: false},
+            {id: 5, label: "Единственная почка", value: false},
+            {id: 6, label: "Хроническая АГ", value: false},
+            {id: 7, label: "Варикозная болезнь", value: false},
+            {id: 8, label: "Тромбоз в анамнезе", value: false},
+            {id: 9, label: "Флебэктомия в анамнезе", value: false},
+            {id: 10, label: "АИТ. Эутиреоз", value: false},
+            {id: 11, label: "Субклинический гипотиреоз (ЗГТ)", value: false},
+            {id: 12, label: "Узловой зоб", value: false},
+            {id: 13, label: "Тиреотоксикоз", value: false},
+            {id: 14, label: "ФАМ молочных желёз", value: false},
+            {id: 15, label: "Секторальная резекция молочной железы", value: false},
+            {id: 16, label: "Заболевания глаз", value: false},
+            {id: 17, label: "Лазерная коррекция зрения в анамнезе", value: false},
+            {id: 18, label: "Микропролактинома гипофиза", value: false},
+            {id: 19, label: "Образование надпочечников", value: false},
+            {id: 20, label: "Ожирение", value: false},
+            {id: 21, label: "Сахарный диабет", value: false},
+            {id: 22, label: "Хроническая никотиновая интоксикация", value: false},
+            {id: 23, label: "ДЖВП", value: false},
+            {id: 24, label: "ЖКБ", value: false},
+            {id: 25, label: "Холецистэктомия в анамнезе", value: false},
+            {id: 26, label: "Нейросенсорная тугоухость", value: false},
+            {id: 27, label: "Лекарственная аллергия", value: false},
+            {id: 28, label: "Бронхиальная астма", value: false},
+            {id: 29, label: "ТИА в анамнезе", value: false},
+            {id: 30, label: "ТЭЛА в анамнезе", value: false},
+            {id: 31, label: "Мигрень", value: false},
+            {id: 32, label: "Спленэктомия в анамнезе", value: false},
+            {id: 33, label: "Хронический гепатит", value: false},
+            {id: 34, label: "Tbc в анамнезе", value: false},
+            {id: 35, label: "Lues в анамнезе", value: false},
+            {id: 36, label: "Узловая эритема", value: false},
+            {id: 37, label: "Атопический дерматит", value: false},
+            {id: 38, label: "Болезнь Виллебранда", value: false},
+            {id: 39, label: "Пролапс МК", value: false},
+            {id: 40, label: "Аномалия сосудов ГМ", value: false},
+            {id: 41, label: "Очаг.образ.печени", value: false},
+            {id: 42, label: "Хронический гастрит", value: false},
+            {id: 43, label: "НЯК", value: false},
+            {id: 44, label: "Хронический геморрой", value: false},
+            {id: 45, label: "Оперативное лечение хронического геморроя", value: false}
           ],
-          options3: [
-            {label: "Отрицает", value: false}
+          tvg: [
+            {id: 1, label: "Отрицает", value: false}
           ],
-          options4: [
-            {label: "Отрицает", value: false}
+          allergic: [
+            {id: 1, label: "Отрицает", value: false}
           ],
-          options5: [
-            {label: "Отрицает", value: false},
-            {label: "Гемотрансфузии в анамнезе", value: false}
+          hemotransfusios: [
+            {id: 1, label: "Отрицает", value: false},
+            {id: 2, label: "Гемотрансфузии в анамнезе", value: false}
           ],
-          options6: [
-            {label: "ТЭЛА у близких родственников", value: false},
-            {label: "ИМ до 45 лет у близких родственников", value: false},
-            {label: "ОНМК до 45 лет у близких родственников", value: false},
-            {label: "Тромбозы у близких родственников", value: false},
-            {label: "ГБ у близких", value: false},
-            {label: "СД у близких", value: false}
+          inheritance: [
+            {id: 1, label: "ТЭЛА у близких родственников", value: false},
+            {id: 2, label: "ИМ до 45 лет у близких родственников", value: false},
+            {id: 3, label: "ОНМК до 45 лет у близких родственников", value: false},
+            {id: 4, label: "Тромбозы у близких родственников", value: false},
+            {id: 5, label: "ГБ у близких", value: false},
+            {id: 6, label: "СД у близких", value: false}
           ],
-          options7: [
-            {label: "АФС", value: false},
-            {label: "Носительство LA", value: false},
-            {label: "Наследственная тромбофилия", value: false},
-            {label: "FV", value: false},
-            {label: "FII", value: false}
+          trombofilia: [
+            {id: 1, label: "АФС", value: false},
+            {id: 2, label: "Носительство LA", value: false},
+            {id: 3, label: "Наследственная тромбофилия", value: false},
+            {id: 4, label: "FV", value: false},
+            {id: 5, label: "FII", value: false}
+          ],
+
+          anameses_desiases: [
+            {id: 1, label: "Миома матки", value: false},
+            {id: 2, label: "Хронический эндометрит", value: false},
+            {id: 3, label: "Хронический аднексит", value: false},
+            {id: 4, label: "Привычное невынашивание", value: false}
+          ],
+          analyzes_genes: [
+            {id: 1, label: "FGB G/A", value: false},
+            {id: 2, label: "FGB A/A", value: false},
+            {id: 3, label: "GPIIIa T/C", value: false},
+            {id: 4, label: "GPIIIa C/C", value: false},
+            {id: 5, label: "PAI-1 5G/4G", value: false},
+            {id: 6, label: "PAI-1 4G/4G", value: false},
+            {id: 7, label: "PLAT I/D", value: false},
+            {id: 8, label: "PLAT I/I", value: false},
+            {id: 9, label: "GPIa T/C", value: false},
+            {id: 10, label: "GPIa C/C", value: false},
+            {id: 11, label: "F7 A/G", value: false},
+            {id: 12, label: "MTHFR C/T", value: false},
+            {id: 13, label: "MTHFR T/T", value: false},
+            {id: 14, label: "MTHFR A/G", value: false},
+            {id: 15, label: "MTHFR G/G", value: false},
+            {id: 16, label: "MTRR A/G", value: false},
+            {id: 17, label: "MTRR G/G", value: false},
+            {id: 18, label: "MTR A/G", value: false},
+            {id: 19, label: "MTR G/G", value: false}
           ]
         },
         patient: {
@@ -1595,33 +1579,6 @@ export default {
         height: "",
         mensesDate: "",
         anameses: "",
-        anameses_desiases: [
-          {label: "Миома матки", value: false},
-          {label: "Хронический эндометрит", value: false},
-          {label: "Хронический аднексит", value: false},
-          {label: "Привычное невынашивание", value: false}
-        ],
-        analyzes_genes: [
-          {label: "FGB G/A", value: false},
-          {label: "FGB A/A", value: false},
-          {label: "GPIIIa T/C", value: false},
-          {label: "GPIIIa C/C", value: false},
-          {label: "PAI-1 5G/4G", value: false},
-          {label: "PAI-1 4G/4G", value: false},
-          {label: "PLAT I/D", value: false},
-          {label: "PLAT I/I", value: false},
-          {label: "GPIa T/C", value: false},
-          {label: "GPIa C/C", value: false},
-          {label: "F7 A/G", value: false},
-          {label: "MTHFR C/T", value: false},
-          {label: "MTHFR T/T", value: false},
-          {label: "MTHFR A/G", value: false},
-          {label: "MTHFR G/G", value: false},
-          {label: "MTRR A/G", value: false},
-          {label: "MTRR G/G", value: false},
-          {label: "MTR A/G", value: false},
-          {label: "MTR G/G", value: false}
-        ],
         analyzes_1: [],
         analyzes_2: [],
         analyzes_3: [],
@@ -1654,56 +1611,56 @@ export default {
             {
               id: 0,
               boxes: [
-                {label: "Рвота берем", value: false},
-                {label: "Угроза прерывания беременности", value: false},
-                {label: "Угрожающие преждевременные роды", value: false},
-                {label: "Отеки беременных", value: false},
-                {label: "Гестационная АГ", value: false},
-                {label: "Умеренная преэклампсия", value: false},
-                {label: "Низкая плацентация", value: false},
-                {label: "Предлежание плаценты", value: false},
-                {label: "Децидуальный полип", value: false},
-                {label: "Гипергомоцистеинемия", value: false}, //DV / EB ?
-                {label: "Анемия беременных", value: false},
-                {label: "Крупный плод", value: false},
-                {label: "ИЦН", value: false}, // DL. DN ? start
-                {label: "Установка РАП", value: false}
+                {id: 1, label: "Рвота берем", value: false},
+                {id: 2, label: "Угроза прерывания беременности", value: false},
+                {id: 3, label: "Угрожающие преждевременные роды", value: false},
+                {id: 4, label: "Отеки беременных", value: false},
+                {id: 5, label: "Гестационная АГ", value: false},
+                {id: 6, label: "Умеренная преэклампсия", value: false},
+                {id: 7, label: "Низкая плацентация", value: false},
+                {id: 8, label: "Предлежание плаценты", value: false},
+                {id: 9, label: "Децидуальный полип", value: false},
+                {id: 10, label: "Гипергомоцистеинемия", value: false}, //DV / EB ?
+                {id: 11, label: "Анемия беременных", value: false},
+                {id: 12, label: "Крупный плод", value: false},
+                {id: 13, label: "ИЦН", value: false}, // DL. DN ? start
+                {id: 14, label: "Установка РАП", value: false}
               ]
             },
             {
               id: 1,
               boxes: [
-                {label: "Шов на шейке матки", value: false}, // DL. DN ? end
-                {label: "Гестационный пиелонефрит", value: false},
-                {label: "ИМВП при беременности", value: false},
-                {label: "ХПН", value: false},
-                {label: "Гипотрофия плода", value: false},
-                {label: "Ангидрамнион", value: false},
-                {label: "Маловодие", value: false},
-                {label: "Многоводие", value: false},
-                {label: "Холестаз при беременности", value: false},
-                {label: "Гепатоз беременных", value: false},
-                {label: "Тазовое предлежание", value: false},
-                {label: "Поперечное пол", value: false},
-                {label: "Симфизиопатия", value: false},
-                {label: "УЗ-маркры ХПП", value: false}
+                {id: 15, label: "Шов на шейке матки", value: false}, // DL. DN ? end
+                {id: 16, label: "Гестационный пиелонефрит", value: false},
+                {id: 17, label: "ИМВП при беременности", value: false},
+                {id: 18, label: "ХПН", value: false},
+                {id: 19, label: "Гипотрофия плода", value: false},
+                {id: 20, label: "Ангидрамнион", value: false},
+                {id: 21, label: "Маловодие", value: false},
+                {id: 22, label: "Многоводие", value: false},
+                {id: 23, label: "Холестаз при беременности", value: false},
+                {id: 24, label: "Гепатоз беременных", value: false},
+                {id: 25, label: "Тазовое предлежание", value: false},
+                {id: 26, label: "Поперечное пол", value: false},
+                {id: 27, label: "Симфизиопатия", value: false},
+                {id: 28, label: "УЗ-маркры ХПП", value: false}
               ]
             },
             {
               id: 2,
               boxes: [
-                {label: "Б/х маркеры ХПП", value: false},
-                {label: "Узкий таз", value: false},
-                {label: "Rh(-) без АТ", value: false},
-                {label: "Гипергомоцистеинемия", value: false},
-                {label: "ДДЗП с грыжеобразованием", value: false},
-                {label: "ОГА", value: false},
-                {label: "Привычное невынашивание", value: false},
-                {label: "Кольпит", value: false},
-                {label: "Антенатальная гибель плода при сроке 30 недель", value: false},
-                {label: "Неразвивающаяся беременность 7 недель", value: false},
-                {label: "Преждевременные роды – эстренное кесарево сечение", value: false},
-                {label: "ХПН", value: false},
+                {id: 29, label: "Б/х маркеры ХПП", value: false},
+                {id: 30, label: "Узкий таз", value: false},
+                {id: 31, label: "Rh(-) без АТ", value: false},
+                {id: 32, label: "Гипергомоцистеинемия", value: false},
+                {id: 33, label: "ДДЗП с грыжеобразованием", value: false},
+                {id: 34, label: "ОГА", value: false},
+                {id: 35, label: "Привычное невынашивание", value: false},
+                {id: 36, label: "Кольпит", value: false},
+                {id: 37, label: "Антенатальная гибель плода при сроке 30 недель", value: false},
+                {id: 38, label: "Неразвивающаяся беременность 7 недель", value: false},
+                {id: 39, label: "Преждевременные роды – эстренное кесарево сечение", value: false},
+                {id: 40, label: "ХПН", value: false},
               ]
             }
           ]
@@ -1711,28 +1668,28 @@ export default {
         recommended: {
           text: "",
           checkboxes: [
-            {label: "Компрессионный трикотаж I класса компрессии (Medi Step) — носить ежедневно!!!", value: false},
-            {label: "Водный режим (2000-2500 мл в день)!!!", value: false},
-            {label: "Осмотр эндокринолога в ближайшее время", value: false},
-            {label: "Осмотр терапевта, кардиолога, ЛОР", value: false},
-            {label: "Коленно-локтевое положение 15-20 минут 3-4 раза в день", value: false},
-            {label: "Фемибион-I + метафолин 800 + Витамин Д 5000 МЕ - ежедневно", value: false},
-            {label: "Клексан 0,4 п/к (флюксум 0,4 / фрагмин 5000 Ед / цибор 5000 Ед / фраксипарин 0,4) – продолжить", value: false},
-            {label: "Канефрон 2 т х 3 раза до родов", value: false},
-            {label: "Галакси 1 т х 3 раза + свечи с папаверином ректально 2-3 раза в день — при болях, либо при нагрузке", value: false},
-            {label: "Утрожестан 200 мг х 3 раза (утро + день - перорально, на ночь — вагинально) длительно!!!", value: false},
-            {label: "Магнелис В6 форте 1 х 2-3 раза в день – в постоянном режиме", value: false},
-            {label: "Допегит 250 мг х 3 раза в день + контроль АД х 3 раза + ведение дневника АД!!!", value: false},
-            {label: "Учитывая наличие патогенной микрофлоры в посевах мочи и ц/канала, а также наличия сахарного диабета беременных на инсулинотерапии – рекомендовано начать курс антибактериальной терапии (с учетом чувствительности микрофлоры) - Амоксиклав (875 мг + 125 мг) по 1 т х 2 раза 7 дней + Линекс 1 к х 3 раза 14 дней + Эссенциале форте 1 х 3 раза 10-14 дней Свечи Нео-пенотран форте вагинально на ночь по 1 свече 7 дней, далее – Лактожиналь вагинально на ночь 14 дней", value: false},
-            {label: "На данном этапе показано проведение 2 курса внутривенных иммуноглобулинов – Октагам 5% - 100 в/в капельно медленно №3 с интервалом 3 дня (Интратект / Привиджен / Иммуновенин), либо курса плазмафереза", value: false},
-            {label: "УЗИ плода + ранний допплер в 16 недель", value: false},
-            {label: "Расширенная коагулограмма (ПТИ, ФГ, АПТВ, ТВ, МНО, АТ III), Д-димер, гомоцистеин, волчаночный антикоагулянт (скрининг+подтверждение), клинический анализ крови, ферритин – через 2 недели", value: false},
-            {label: "Кровь на гены наследственной тромбофилии (12 генов)", value: false},
-            {label: "Кровь на АТ: к β2-гликопротеину, кардиолипину, аннексину V, ХГЧ, протромбину, фосфатидилсерину, фосфатидиловой кислоте, фосфатидилинозитолу, 2 спиральной ДНК, антинуклеарный фактор", value: false},
-            {label: "Кровь на субпопуляцию лимфоцитов", value: false},
-            {label: "Биопсия эндометрия с выполнением ИГХ (19-21 д.м.ц., забор материала в НИИ АГиР им. Д.О. Отта, запись на прием к врачам отделения оперативной гинекологии)", value: false},
-            {label: "Посев мочи + посев из ц/канала – через неделю после окончания антибактериальной терапии", value: false},
-            {label: "Посев из носа, посев из зева", value: false}
+            {id: 1, label: "Компрессионный трикотаж I класса компрессии (Medi Step) — носить ежедневно!!!", value: false},
+            {id: 2, label: "Водный режим (2000-2500 мл в день)!!!", value: false},
+            {id: 3, label: "Осмотр эндокринолога в ближайшее время", value: false},
+            {id: 4, label: "Осмотр терапевта, кардиолога, ЛОР", value: false},
+            {id: 5, label: "Коленно-локтевое положение 15-20 минут 3-4 раза в день", value: false},
+            {id: 6, label: "Фемибион-I + метафолин 800 + Витамин Д 5000 МЕ - ежедневно", value: false},
+            {id: 7, label: "Клексан 0,4 п/к (флюксум 0,4 / фрагмин 5000 Ед / цибор 5000 Ед / фраксипарин 0,4) – продолжить", value: false},
+            {id: 8, label: "Канефрон 2 т х 3 раза до родов", value: false},
+            {id: 9, label: "Галакси 1 т х 3 раза + свечи с папаверином ректально 2-3 раза в день — при болях, либо при нагрузке", value: false},
+            {id: 10, label: "Утрожестан 200 мг х 3 раза (утро + день - перорально, на ночь — вагинально) длительно!!!", value: false},
+            {id: 11, label: "Магнелис В6 форте 1 х 2-3 раза в день – в постоянном режиме", value: false},
+            {id: 12, label: "Допегит 250 мг х 3 раза в день + контроль АД х 3 раза + ведение дневника АД!!!", value: false},
+            {id: 13, label: "Учитывая наличие патогенной микрофлоры в посевах мочи и ц/канала, а также наличия сахарного диабета беременных на инсулинотерапии – рекомендовано начать курс антибактериальной терапии (с учетом чувствительности микрофлоры) - Амоксиклав (875 мг + 125 мг) по 1 т х 2 раза 7 дней + Линекс 1 к х 3 раза 14 дней + Эссенциале форте 1 х 3 раза 10-14 дней Свечи Нео-пенотран форте вагинально на ночь по 1 свече 7 дней, далее – Лактожиналь вагинально на ночь 14 дней", value: false},
+            {id: 14, label: "На данном этапе показано проведение 2 курса внутривенных иммуноглобулинов – Октагам 5% - 100 в/в капельно медленно №3 с интервалом 3 дня (Интратект / Привиджен / Иммуновенин), либо курса плазмафереза", value: false},
+            {id: 15, label: "УЗИ плода + ранний допплер в 16 недель", value: false},
+            {id: 16, label: "Расширенная коагулограмма (ПТИ, ФГ, АПТВ, ТВ, МНО, АТ III), Д-димер, гомоцистеин, волчаночный антикоагулянт (скрининг+подтверждение), клинический анализ крови, ферритин – через 2 недели", value: false},
+            {id: 17, label: "Кровь на гены наследственной тромбофилии (12 генов)", value: false},
+            {id: 18, label: "Кровь на АТ: к β2-гликопротеину, кардиолипину, аннексину V, ХГЧ, протромбину, фосфатидилсерину, фосфатидиловой кислоте, фосфатидилинозитолу, 2 спиральной ДНК, антинуклеарный фактор", value: false},
+            {id: 19, label: "Кровь на субпопуляцию лимфоцитов", value: false},
+            {id: 20, label: "Биопсия эндометрия с выполнением ИГХ (19-21 д.м.ц., забор материала в НИИ АГиР им. Д.О. Отта, запись на прием к врачам отделения оперативной гинекологии)", value: false},
+            {id: 21, label: "Посев мочи + посев из ц/канала – через неделю после окончания антибактериальной терапии", value: false},
+            {id: 22, label: "Посев из носа, посев из зева", value: false}
           ]
         },
         birth: []

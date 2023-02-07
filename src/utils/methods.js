@@ -37,11 +37,10 @@ export const methods = {
                 console.log(error);
                 if(error.code === "ERR_NETWORK")
                     this.runNotification("Не удалось подключиться к серверу");
-                if(access !== constants.Role.UNAUTHORIZED) {
+                if(access !== constants.Role.UNAUTHORIZED)
                     router.push({name: "login"})
-                    if(failCallback)
-                        failCallback();
-                }
+                if(failCallback)
+                    failCallback();
             });
         } else if(access !== constants.Role.UNAUTHORIZED) {
             router.push({ name: "login" })
@@ -176,5 +175,27 @@ export const methods = {
         link.click();
         document.body.removeChild(link);
         URL.revokeObjectURL(href);
+    },
+    getIMT(weight, height, numeric) {
+        let IMT = Math.floor(weight / Math.pow(height/100,2) * 10) / 10;
+        if(IMT)
+            return IMT > 200 ? (numeric ? 0 : '') : IMT;
+        return (numeric ? 0 : '');
+    },
+    limit(number, min, max) {
+        return number >= min ? (number <= max ? number : max) : min;
+    },
+    getSelectedIds(arr) {
+        let result = [];
+        for(let i of arr)
+            if(i.value)
+                result.push(i.id);
+        return result;
+    },
+    getFromSelectedIds(original, selected) {
+        for(let i of original)
+            if(selected.includes(i.id))
+                i.value = true;
+        return original;
     }
 }

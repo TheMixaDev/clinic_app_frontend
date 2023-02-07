@@ -122,8 +122,8 @@ export default {
                   });
                   if(response && response.status === 200) {
                     methods.runNotification("Пароль администратора обновлен");
-                    router.go(0);
-                    methods.checkCookies(this.$cookies, constants.Role.UNAUTHORIZED)
+                    this.login = "";
+                    this.password = "";
                   }
                 })();
               }
@@ -171,8 +171,9 @@ export default {
             });
             if(response && response.status === 200) {
               methods.runNotification("Администратор создан");
-              router.go(0);
-              methods.checkCookies(this.$cookies, constants.Role.UNAUTHORIZED)
+              this.login = "";
+              this.password = "";
+              this.setupMode = false;
             }
           })();
         }

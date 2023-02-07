@@ -477,6 +477,7 @@ export default {
           `/appointment/${this.selectedAppointment.id}`,
           () => {
             methods.runNotification("Прием удален");
+            this.selectedAppointment = -1;
             this.applyFiltersSearch();
           },
           error => {

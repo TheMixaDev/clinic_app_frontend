@@ -15,7 +15,7 @@
   <template v-if="showSelect">
     <input class="search animate__animated animate__fadeInDownBig" type="text" placeholder="Ручной ввод" v-model="customInput" v-if="custom" @change="saveCustom();">
     <div class="select">
-      <div class="option" :class="{'selected': option.value}" @click="select(option)" v-for="(option, index) in input" :key="pid*1000+index">
+      <div class="option" :class="{'selected': option.value}" @click="select(option)" v-for="option in input" :key="option.label">
         {{ option.label }}
       </div>
     </div>
@@ -27,7 +27,7 @@ export default {
   name: "MultiSelect",
   props: {
     input: Array,
-    pid: Number,
+    pid: String,
     custom: {
       default: false,
       type: Boolean
@@ -49,7 +49,6 @@ export default {
       this.selected = this.selected.filter(el => el.value);
     },
     updateSelected(data, custom) {
-      console.log(data);
       for(let i of data)
         if(i.value)
           this.selected.push(i);
