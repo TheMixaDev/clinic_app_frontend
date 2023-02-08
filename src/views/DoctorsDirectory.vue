@@ -101,8 +101,7 @@
       <div className="col row-button" v-if="!doctorMode">
         <button class="btn btn-primary edit" v-bind:disabled="this.selectedDoctor === -1" @click="editDoctor()"><i class="fa-solid fa-pen button-icon"></i>Редактировать</button>
         <button class="btn btn-primary delete" v-bind:disabled="this.selectedDoctor === -1" @click="requestDelete()"><i class="fa-solid fa-trash button-icon"></i>Удалить</button>
-        <button class="btn btn-primary download"><i class="fa-solid fa-cloud-arrow-down"></i> Выгрузить в StatTech
-        </button>
+        <button class="btn btn-primary download" @click="excelExport()"><i class="fa-solid fa-cloud-arrow-down"></i> Выгрузить в StatTech</button>
       </div>
     </div>
   </div>
@@ -380,6 +379,7 @@ import {createApp} from "vue";
 import ActionModal from "@/components/ActionModal.vue";
 import router from "@/router";
 import PasswordChange from "@/components/PasswordChange.vue";
+import ExcelExport from "@/components/ExcelExport.vue";
 
 export default {
   name: 'DoctorsDirectory',
@@ -574,6 +574,11 @@ export default {
       console.log("Requested further load");
       this.loadInfo.currentPage++;
       this.applyFiltersSearch();
+    },
+    excelExport() {
+      const div = document.getElementById("modal");
+      const app = createApp(ExcelExport, {cookies: this.$cookies});
+      app.mount(div);
     }
   },
   beforeMount() {

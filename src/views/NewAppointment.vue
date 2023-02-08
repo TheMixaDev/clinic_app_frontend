@@ -1174,8 +1174,10 @@ export default {
       for(let i in stateCopy.detailed)
         if(!i.includes("Custom"))
           stateCopy.detailed[i] = methods.getFromSelectedIds(this.state.detailed[i], stateCopy.detailed[i]);
-      for(let i in stateCopy.diagnosis.checkboxes)
-        stateCopy.diagnosis.checkboxes[i].boxes = methods.getFromSelectedIds(this.state.diagnosis.checkboxes[i].boxes, stateCopy.diagnosis.checkboxes);
+      let newCheckboxes = JSON.parse(JSON.stringify(this.state.diagnosis.checkboxes));
+      for(let i in newCheckboxes)
+        newCheckboxes[i].boxes = methods.getFromSelectedIds(this.state.diagnosis.checkboxes[i].boxes, stateCopy.diagnosis.checkboxes);
+      stateCopy.diagnosis.checkboxes = newCheckboxes;
       stateCopy.recommended.checkboxes = methods.getFromSelectedIds(this.state.recommended.checkboxes, stateCopy.recommended.checkboxes);
       this.state = stateCopy;
     },
