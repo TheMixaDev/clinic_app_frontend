@@ -1101,8 +1101,10 @@ export default {
       for(let i in stateCopy.detailed)
         if(!i.includes("Custom"))
           stateCopy.detailed[i] = methods.getSelectedIds(stateCopy.detailed[i]);
+      let diagnosisCheckboxes = [];
       for(let i in stateCopy.diagnosis.checkboxes)
-        stateCopy.diagnosis.checkboxes[i].boxes = methods.getSelectedIds(stateCopy.diagnosis.checkboxes[i].boxes);
+        diagnosisCheckboxes = diagnosisCheckboxes.concat(methods.getSelectedIds(stateCopy.diagnosis.checkboxes[i].boxes));
+      stateCopy.diagnosis.checkboxes = diagnosisCheckboxes;
       stateCopy.recommended.checkboxes = methods.getSelectedIds(stateCopy.recommended.checkboxes);
       stateCopy.diagnosis.dropdowns.fatness = methods.limit(Math.ceil((methods.getIMT(stateCopy.weight, stateCopy.height) - 30) / 5), 0, 4)+'';
       console.log(stateCopy);
@@ -1173,7 +1175,7 @@ export default {
         if(!i.includes("Custom"))
           stateCopy.detailed[i] = methods.getFromSelectedIds(this.state.detailed[i], stateCopy.detailed[i]);
       for(let i in stateCopy.diagnosis.checkboxes)
-        stateCopy.diagnosis.checkboxes[i].boxes = methods.getFromSelectedIds(this.state.diagnosis.checkboxes[i].boxes, stateCopy.diagnosis.checkboxes[i].boxes);
+        stateCopy.diagnosis.checkboxes[i].boxes = methods.getFromSelectedIds(this.state.diagnosis.checkboxes[i].boxes, stateCopy.diagnosis.checkboxes);
       stateCopy.recommended.checkboxes = methods.getFromSelectedIds(this.state.recommended.checkboxes, stateCopy.recommended.checkboxes);
       this.state = stateCopy;
     },
