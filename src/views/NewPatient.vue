@@ -95,7 +95,7 @@
   background: #FAFAFA;
   overflow: hidden;
   width: 90vw;
-  height: 50vw;
+  height: 95vh;
   border-radius: 25px;
   box-shadow: 0px 16px 47px 16px rgb(61 61 61 / 10%);
 }
@@ -236,6 +236,7 @@ th:last-child {
 
 .first-add {
   width: 15vw;
+  min-width: 130px;
   background: linear-gradient(94.83deg, #00A3FF 1.33%, #00C2FF 100%);
   border: 1px solid rgba(0, 117, 255, 0.3);
   border-radius: 9px;
@@ -249,6 +250,7 @@ th:last-child {
   border-radius: 9px;
   padding-left: 2rem;
   padding-right: 2rem;
+  min-width: 120px;
 }
 
 .edit {

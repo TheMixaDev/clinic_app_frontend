@@ -208,21 +208,58 @@ export default {
       writeFileXLSX(wb, filename);
     },
     abort() {
-      methods.runNotification("Network error");
+      methods.runNotification("Процесс выгрузки был прерван из-за потери интернет соединения");
+      this.$.appContext.app.unmount();
     }
   }
 }
 </script>
 
 <style scoped>
+@media screen and (max-width: 1800px) {
+  .container.modal-box {
+    padding-top: 1rem!important;
+    padding-bottom: 1rem!important;
+    display: flex!important;
+    padding-left: 2rem!important;
+    padding-right: 2rem!important;
+    flex-direction: column!important;
+    align-items: center!important;
+    justify-content: flex-start!important;
+    background-color: white!important;
+    border-radius: 25px!important;
+    max-width: 40vw!important;
+    max-height: 93vh!important;
+    overflow-y: scroll!important;
+    overflow-x: hidden!important;
+  }
+  *::-webkit-scrollbar-track {
+    width:7px;
+    margin-top: 2rem!important;
+    margin-bottom: 2rem!important;
+    background: #f2f2f2;
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: #42c6ff;
+    border-radius: 10px;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: #42c6ff;}
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #B8C0C2 #42c6ff!important;
+  }
+
+  /* Chrome, Edge and Safari */
+  *::-webkit-scrollbar {
+    width: 7px;
+    max-height: 60vh!important;
+  }
+}
+
 .heading-pass {
-  margin-bottom: 1rem;
-}
-.btn {
-  margin: 5px;
-}
-.pass {
-  width: 15vw;
   margin-bottom: 1rem;
 }
 .delete {
@@ -263,10 +300,15 @@ export default {
   padding-bottom: 1rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
+thead {
+  position: relative;
+}
 .container.modal-box {
-  padding-top: 7rem;
-  padding-bottom: 7rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   display: flex;
+  padding-left: 2rem;
+  padding-right: 2rem;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -292,5 +334,15 @@ export default {
   left: 0;
   backdrop-filter: blur(10px);
   background-color: rgba(38, 38, 38, 0.46);
+}
+.edit {
+  margin-top: 1rem;
+}
+.input-outline {
+  background: #F5F9FF!important;
+  border: 1px solid rgba(0, 163, 255, 0.3)!important;
+  border-radius: 9px!important;
+  color: #7e7e7e;
+  width: 10vw;
 }
 </style>

@@ -40,6 +40,7 @@
 }
 .form {
   width: 15vw;
+  min-width: 130px;
 }
 .btn {
   background: linear-gradient(94.83deg, #00A3FF 1.33%, #00C2FF 100%);

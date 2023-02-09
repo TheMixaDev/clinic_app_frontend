@@ -175,7 +175,7 @@
   width: 90vw;
   max-width: 80vw;
   max-height: 90vh;
-  height: 50vw;
+  height: 95vh;
   border-radius: 25px;
   box-shadow: 0px 16px 47px 16px rgb(61 61 61 / 10%);
 }
@@ -301,7 +301,7 @@ th:last-child {
 }
 .first-add {
   width: 20vw;
-  height: 2.4rem;
+  /*height: 2.4rem;*/
   background: linear-gradient(94.83deg, #00A3FF 1.33%, #00C2FF 100%);
   border: 1px solid rgba(0, 117, 255, 0.3);
   border-radius: 9px;
@@ -310,12 +310,13 @@ th:last-child {
 }
 .second-add {
   width: 20vw;
-  height: 2.4rem;
+  /*height: 2.4rem;*/
   background: linear-gradient(94.83deg, #00A3FF 1.33%, #00C2FF 100%);
   border: 1px solid rgba(0, 117, 255, 0.3);
   border-radius: 9px;
   padding-left: 2rem;
   padding-right: 2rem;
+  min-width: 120px;
 }
 .edit {
   background: linear-gradient(94.83deg, #00A3FF 1.33%, #00C2FF 100%);
@@ -325,7 +326,7 @@ th:last-child {
   padding-right: 2rem;
 }
 .edit:hover {
-  border: none!important;
+  border: solid 1px transparent!important;
 }
 .delete {
   background: linear-gradient(92.84deg, #EF5DA8 0.31%, #FF003D 152.41%);

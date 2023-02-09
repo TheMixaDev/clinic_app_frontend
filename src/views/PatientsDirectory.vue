@@ -72,7 +72,7 @@
     </div>
     <div className="container buttons-container">
       <div className="col row-buttons">
-        <button className="btn btn-primary second-add select" v-bind:disabled="this.selectedPatient === -1" @click="proceed()">Выбрать</button>
+        <button className="btn btn-primary second-add select" v-bind:disabled="this.selectedPatient === -1" @click="proceed()" v-if="onlyNew">Выбрать</button>
           <router-link className="btn btn-primary first-add" to="/patient" v-bind:disabled="this.selectedPatient !== -1"><i
               className="fa-solid fa-plus button-icon"></i>Новый
           </router-link></div>
@@ -168,7 +168,7 @@
   background: #FAFAFA;
   width: 90vw;
   max-width: 70vw;
-  height: 50vw;
+  height: 95vh;
   border-radius: 25px;
   box-shadow: 0px 16px 47px 16px rgb(61 61 61 / 10%);
 }
@@ -316,6 +316,7 @@ th:last-child {
 
 .first-add {
   width: 15vw;
+  min-width: 130px;
   background: linear-gradient(94.83deg, #00A3FF 1.33%, #00C2FF 100%);
   border: 1px solid rgba(0, 117, 255, 0.3);
   border-radius: 9px;
@@ -329,6 +330,7 @@ th:last-child {
   border-radius: 9px;
   padding-left: 2rem;
   padding-right: 2rem;
+  min-width: 120px;
 }
 
 .edit {
@@ -350,7 +352,7 @@ th:last-child {
 }
 
 .edit:hover {
-  border: none !important;
+  border: solid 1px transparent!important;
 }
 
 .delete {

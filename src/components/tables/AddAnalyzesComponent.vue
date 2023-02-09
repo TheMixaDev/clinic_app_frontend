@@ -118,6 +118,7 @@ export default {
 }
 .pass {
   width: 15vw;
+  min-width: 130px;
   margin-bottom: 1rem;
 }
 .delete {
