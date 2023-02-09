@@ -21,18 +21,19 @@
       <input class="input-outline" type="text" ref="password" v-if="!edit.enabled" v-model="edit.doctor.password">
     </div>
     <div className="container buttons-container">
-      <div className="col row-buttons">
-        <button className="btn btn-primary first-add" @click="createDoctor()">Сохранить</button>
-      </div>
+    <div className="col row-buttons">
+      <button className="btn btn-primary first-add" @click="createDoctor()">Сохранить</button>
     </div>
+  </div>
   </div>
 </template>
 <style scoped>
 @media screen and (max-width: 1800px) {
   .main-part {
-    width: 87vw !important;
+    width: 100% !important;
     margin-left: 0 !important;
     max-height: 45vh !important;
+    min-width: 100%!important;
   }
   .container.main-part {
     overflow-y: scroll!important;
@@ -45,12 +46,13 @@
 }
 @media screen and (max-width: 1366px) {
   .container-fluid {
-    height: 80vh!important;
+    height: 90vh!important;
   }
   .main-part {
-    width: 87vw !important;
+    width: 100% !important;
     margin-left: 0 !important;
     max-height: 45vh !important;
+    min-width: 100%!important;
   }
   .container.main-part {
     overflow-y: scroll!important;
@@ -66,12 +68,14 @@
     height: 90vh!important;
   }
   .main-part {
-    width: 87vw !important;
+    width: 100% !important;
     margin-left: 0 !important;
+    margin-right: 0!important;
     max-height: 45vh !important;
+    min-width: 100%!important;
   }
   .container.main-part {
-    overflow-y: hidden!important;
+    overflow-y: scroll!important;
     overflow-x: hidden!important;
     height: 100%!important;
     max-height: 55vh!important;
@@ -90,7 +94,7 @@
 .container-fluid {
   background: #FAFAFA;
   overflow: hidden;
-  width: 90vw;
+  width: 100;
   height: 50vw;
   border-radius: 25px;
   box-shadow: 0px 16px 47px 16px rgb(61 61 61 / 10%);
@@ -201,8 +205,9 @@ th:last-child {
   flex-direction: column;
   display: flex;
   max-height: 70vh;
+  margin-right: 0;
   gap: 1.5rem;
-  width: 100vw;
+  width: 100%;
   align-items: center;
   overflow: hidden;
 }

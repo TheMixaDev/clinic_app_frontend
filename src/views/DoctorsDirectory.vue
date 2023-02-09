@@ -112,13 +112,24 @@
     width: 87vw !important;
     margin-left: 0 !important;
     max-height: 45vh !important;
+    min-width: 100% !important;
   }
   .container-fluid {
     max-height: 80vh !important;
     max-width: 100vw !important;
+    overflow-x: hidden!important;
   }
   .buttons-container {
     margin-top: 2rem!important;
+  }
+  .edit {
+    width: 25vw!important;
+  }
+  .download {
+    width: 25vw!important;
+  }
+  .delete {
+    width: 25vw!important;
   }
   .heading {
     font-size: 1.5rem!important;

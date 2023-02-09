@@ -25,34 +25,33 @@
 </template>
 <style scoped>
 @media screen and (max-width: 1800px) {
+  .main-part {
+    width: 100% !important;
+    margin-left: 0 !important;
+    max-height: 45vh !important;
+    min-width: 100%!important;
+  }
   .container.main-part {
     overflow-y: scroll!important;
-    gap: 1rem!important;
-  }
-  .back {
-    background: transparent!important;
-    color: black;
-    border: none!important;
-    font-size: 1rem;
-    padding-left: 0!important;
-    padding-right: 2rem!important;
-    padding-top: 0!important;
-    padding-bottom: 0.2rem!important;
-    box-shadow: none;
-    width: 1rem!important;
+    overflow-x: hidden!important;
+    height: 100%!important;
+    max-height: 55vh!important;
+    margin-right: 0!important;
+    margin-left: 0!important;
   }
 }
 @media screen and (max-width: 1366px) {
   .container-fluid {
-    height: 80vh!important;
+    height: 90vh!important;
   }
   .main-part {
-    width: 87vw !important;
+    width: 100% !important;
     margin-left: 0 !important;
     max-height: 45vh !important;
+    min-width: 100%!important;
   }
   .container.main-part {
-    overflow-y: hidden!important;
+    overflow-y: scroll!important;
     overflow-x: hidden!important;
     height: 100%!important;
     max-height: 55vh!important;
@@ -65,12 +64,14 @@
     height: 90vh!important;
   }
   .main-part {
-    width: 87vw !important;
+    width: 100% !important;
     margin-left: 0 !important;
+    margin-right: 0!important;
     max-height: 45vh !important;
+    min-width: 100%!important;
   }
   .container.main-part {
-    overflow-y: hidden!important;
+    overflow-y: scroll!important;
     overflow-x: hidden!important;
     height: 100%!important;
     max-height: 55vh!important;
@@ -84,6 +85,7 @@
   border: 1px solid rgba(0, 163, 255, 0.3)!important;
   border-radius: 9px!important;
   color: #7e7e7e;
+  min-height: 5vh!important;
   width: 30vw;
 }
 .main-part {

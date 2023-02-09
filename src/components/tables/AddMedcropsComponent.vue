@@ -138,6 +138,49 @@ export default {
 </script>
 
 <style scoped>
+@media screen and (min-width: 768px) {
+  .container.modal-box {
+    padding-top: 1rem!important;
+    padding-bottom: 1rem!important;
+    display: flex!important;
+    padding-left: 2rem!important;
+    padding-right: 2rem!important;
+    flex-direction: column!important;
+    align-items: center!important;
+    justify-content: flex-start!important;
+    background-color: white!important;
+    border-radius: 25px!important;
+    max-width: 60vw!important;
+    max-height: 93vh!important;
+    overflow-y: hidden!important;
+    overflow-x: hidden!important;
+  }
+  *::-webkit-scrollbar-track {
+    width:7px;
+    margin-top: 2rem!important;
+    margin-bottom: 2rem!important;
+    background: #f2f2f2;
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: #42c6ff;
+    border-radius: 10px;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: #42c6ff;}
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #B8C0C2 #42c6ff!important;
+  }
+
+  /* Chrome, Edge and Safari */
+  *::-webkit-scrollbar {
+    width: 7px;
+    max-height: 60vh!important;
+  }
+}
+
 .form-select {
   width: 246px;
 }
