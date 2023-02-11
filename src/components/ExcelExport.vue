@@ -129,32 +129,24 @@ export default {
           `/appointment/${this.process.appointmentTable.baseData[index].id}`,
           response => {
             let state = JSON.parse(response.data.body.value);
-            let diagnosis = state.diagnosis.checkboxes.map(i => constants.diagnosisCheckboxes[i])
-                .concat(state.detailed.illnesses.map(i => constants.illnesses[i]))
-                .concat(state.detailed.trombofilia.map(i => constants.trombofilia[i]))
-                .concat(Object.keys(state.diagnosis.dropdowns).filter(key => state.diagnosis.dropdowns[key] != 0).map(key => {
-                  const val = state.diagnosis.dropdowns[key];
-                  return constants.dropdowns.keyNames[key] + ": " +constants.dropdowns[key][parseInt(val)];
-                }))
-                .join(", ");
-            let recommendations = state.recommended.checkboxes.map(i => constants.recommendedCheckboxes[i]).concat([state.recommended.text]).join(", ");
             let element = {
               id: response.data.body.id,
               PatientId: response.data.body.patient.id,
               DoctorId: response.data.body.doctor.id,
-              IsFirst: response.data.body.is_first,
-              Anamesis: state.anameses,
-              Uzi: state.uzi.text,
-              Doppler: state.doppler.value,
-              CurrentPregnancy: state.pregnancy,
-              Hospitalizations: state.hospital,
-              ObjectiveResearch: state.research,
-              GynecologicalExamination: state.docResearch,
-              Additional: state.additional,
+              IsFirst: response.data.body.is_first ? 1 : 0,
+              Doppler: state.doppler.value*1,
               PregnancyWeek: state.diagnosis.weeks,
-              Diagnosis: diagnosis,
-              Recommendations: recommendations
             };
+            for(let checkbox in constants.diagnosisCheckboxes)
+              element["Diagnosis_"+constants.diagnosisCheckboxes[checkbox].replaceAll(" ", "_")] = state.diagnosis.checkboxes.includes(checkbox*1) ? 1 : 0
+            for(let checkbox in constants.illnesses)
+              element["Diagnosis_"+constants.illnesses[checkbox].replaceAll(" ", "_")] = state.detailed.illnesses.includes(checkbox*1) ? 1 : 0
+            for(let checkbox in constants.trombofilia)
+              element["Diagnosis_"+constants.trombofilia[checkbox].replaceAll(" ", "_")] = state.detailed.trombofilia.includes(checkbox*1) ? 1 : 0
+            for(let dropdown in constants.dropdowns.keyNames)
+              element["Diagnosis_"+constants.dropdowns.keyNames[dropdown].replaceAll(" ", "_")] = state.diagnosis.dropdowns[dropdown]*1;
+            for(let recommendation in constants.recommendedCheckboxes)
+              element["Recommendation_"+constants.recommendedCheckboxes[recommendation].replaceAll(" ", "_")] = state.recommended.checkboxes.includes(recommendation) ? 1 : 0
             for(let analyzeIndex = 0; analyzeIndex < 3; analyzeIndex++) {
               state[`analyzes_${analyzeIndex+1}`].forEach(el => {
                 let analyze = {
@@ -173,9 +165,9 @@ export default {
                 id: this.process.subTables.crops.index + 0,
                 AppointmentId: element.id,
                 Date: el.date,
-                Localization: constants.crops_constants[0][el.localization-1],
-                Flora: constants.crops_constants[1][el.flora],
-                Value: constants.crops_constants[2][el.value]
+                Localization: el.localization*1,
+                Flora: el.flora*1,
+                Value: el.value*1
               });
               this.process.subTables.crops.index++;
             });
@@ -183,14 +175,14 @@ export default {
               this.process.subTables.births.data.push({
                 id: this.process.subTables.births.index + 0,
                 AppointmentId: element.id,
-                ERP: el.birth,
-                Characteristic: el.character === "1" ? "Плановое" : "Экстренное",
+                ERP: el.birth ? 1 : 0,
+                Characteristic: el.character*1,
                 Weight: el.weight,
                 Height: el.height,
                 Apgar: el.apgar,
-                Bloodloss: el.bloodloss,
-                OnDueDate: el.timeperiod,
-                Complications: el.complications
+                Bloodloss: el.bloodloss ? 1 : 0,
+                OnDueDate: el.timeperiod ? 1 : 0,
+                Complications: el.complications ? 1 : 0
               });
               this.process.subTables.births.index++;
             })
