@@ -48,6 +48,7 @@ export default {
         appointmentTable: {
           current: 0,
           max: 1,
+          userMax: {},
           baseData: [],
           data: []
         },
@@ -109,7 +110,8 @@ export default {
             this.process.appointmentTable.baseData = response.data.body.map(el => {return {id: el.id, Patient: el.patient.id, Doctor: el.doctor.id}});
             this.process.appointmentTable.max = this.process.appointmentTable.baseData.length;
             this.process.starterData.current++;
-            console.log(this.process);
+            for(let i of this.process.appointmentTable.baseData)
+              this.process.appointmentTable.userMax[i.Patient] = i.id;
             this.loadAppointment(0);
           },
           this.loadAppointmentList
@@ -131,61 +133,86 @@ export default {
             let state = JSON.parse(response.data.body.value);
             let element = {
               id: response.data.body.id,
-              PatientId: response.data.body.patient.id,
-              DoctorId: response.data.body.doctor.id,
+              Patient: response.data.body.patient.surname + " " + response.data.body.patient.name + " " + response.data.body.patient.lastname,
+              Doctor: response.data.body.doctor.surname + " " + response.data.body.doctor.name + " " + response.data.body.doctor.lastname,
               IsFirst: response.data.body.is_first ? 1 : 0,
+              Weight: state.weight.replace(",", ".")*1,
+              Height: state.height.replace(",", ".")*1,
+              IMT: methods.getIMT(state.weight, state.height),
+              MensesDate: state.mensesDate,
               Doppler: state.doppler.value*1,
+              DopplerDate: state.doppler.date,
               PregnancyWeek: state.diagnosis.weeks,
+              TVG: state.detailed.tvgCustom,
+              Allergic: state.detailed.allergicCustom
             };
+            for(let checkbox in constants.detailed.operations)
+              element["Operations_"+constants.detailed.operations[checkbox].replaceAll(" ", "_")] = state.detailed.operations.includes(checkbox*1) ? 1 : 0
+            element["OperationsCustom"] = state.detailed.operationsCustom;
+            for(let checkbox in constants.detailed.trombofilia)
+              element["Trombofilia_"+constants.detailed.trombofilia[checkbox].replaceAll(" ", "_")] = state.detailed.trombofilia.includes(checkbox*1) ? 1 : 0
+            for(let checkbox in constants.detailed.illnesses)
+              element["Illnesses_"+constants.detailed.illnesses[checkbox].replaceAll(" ", "_")] = state.detailed.illnesses.includes(checkbox*1) ? 1 : 0
+            for(let checkbox in constants.detailed.hemotransfusios)
+              element["Hemotransfusios_"+constants.detailed.hemotransfusios[checkbox].replaceAll(" ", "_")] = state.detailed.hemotransfusios.includes(checkbox*1) ? 1 : 0
+            element["HemotransfusiosCustom"] = state.detailed.hemotransfusiosCustom;
+            for(let checkbox in constants.detailed.inheritance)
+              element["Inheritance_"+constants.detailed.inheritance[checkbox].replaceAll(" ", "_")] = state.detailed.inheritance.includes(checkbox*1) ? 1 : 0
+            element["InheritanceCustom"] = state.detailed.inheritanceCustom;
+            for(let checkbox in constants.detailed.anameses_desiases)
+              element["GynecologicalDisease_"+constants.detailed.anameses_desiases[checkbox].replaceAll(" ", "_")] = state.detailed.anameses_desiases.includes(checkbox*1) ? 1 : 0
             for(let checkbox in constants.diagnosisCheckboxes)
               element["Diagnosis_"+constants.diagnosisCheckboxes[checkbox].replaceAll(" ", "_")] = state.diagnosis.checkboxes.includes(checkbox*1) ? 1 : 0
-            for(let checkbox in constants.illnesses)
-              element["Diagnosis_"+constants.illnesses[checkbox].replaceAll(" ", "_")] = state.detailed.illnesses.includes(checkbox*1) ? 1 : 0
-            for(let checkbox in constants.trombofilia)
-              element["Diagnosis_"+constants.trombofilia[checkbox].replaceAll(" ", "_")] = state.detailed.trombofilia.includes(checkbox*1) ? 1 : 0
             for(let dropdown in constants.dropdowns.keyNames)
               element["Diagnosis_"+constants.dropdowns.keyNames[dropdown].replaceAll(" ", "_")] = state.diagnosis.dropdowns[dropdown]*1;
             for(let recommendation in constants.recommendedCheckboxes)
               element["Recommendation_"+constants.recommendedCheckboxes[recommendation].replaceAll(" ", "_")] = state.recommended.checkboxes.includes(recommendation) ? 1 : 0
-            for(let analyzeIndex = 0; analyzeIndex < 3; analyzeIndex++) {
-              state[`analyzes_${analyzeIndex+1}`].forEach(el => {
+            if(this.process.appointmentTable.userMax[response.data.body.patient.id] === response.data.body.id) {
+              for (let analyzeIndex = 0; analyzeIndex < 3; analyzeIndex++) {
                 let analyze = {
-                  id: this.process.subTables[`analyzes_${analyzeIndex+1}`].index + 0,
-                  AppointmentId: element.id,
-                  Date: el.date,
+                  id: response.data.body.patient.id,
+                  Patient: response.data.body.patient.surname + " " + response.data.body.patient.name + " " + response.data.body.patient.lastname,
                 };
-                for (let i in constants.analyze_constants[analyzeIndex])
-                  analyze[constants.analyze_constants[analyzeIndex][i]] = el.values[i];
-                this.process.subTables[`analyzes_${analyzeIndex+1}`].data.push(analyze);
-                this.process.subTables[`analyzes_${analyzeIndex+1}`].index++;
+                for(let trimesterConst of ["?", "I", "II", "III"]) {
+                  for (let i in constants.analyze_constants[analyzeIndex])
+                    analyze[constants.analyze_constants[analyzeIndex][i] + "_" + trimesterConst] = "";
+                }
+                state[`analyzes_${analyzeIndex + 1}`].forEach(el => {
+                  let trimester = methods.getTrimester(state.mensesDate, el.date).replace("(","").replace(")","");
+                  trimester = trimester.length > 0 ? trimester : "?";
+                  for(let i in constants.analyze_constants[analyzeIndex])
+                    analyze[constants.analyze_constants[analyzeIndex][i] + "_" + trimester] = el.values[i];
+                });
+                this.process.subTables[`analyzes_${analyzeIndex + 1}`].data.push(analyze);
+                this.process.subTables[`analyzes_${analyzeIndex + 1}`].index++;
+              }
+              state.crops.forEach(el => {
+                this.process.subTables.crops.data.push({
+                  id: this.process.subTables.crops.index + 0,
+                  Patient: response.data.body.patient.surname + " " + response.data.body.patient.name + " " + response.data.body.patient.lastname,
+                  Date: el.date,
+                  Localization: el.localization * 1,
+                  Flora: el.flora * 1,
+                  Value: el.value * 1
+                });
+                this.process.subTables.crops.index++;
+              });
+              state.birth.forEach(el => {
+                this.process.subTables.births.data.push({
+                  id: this.process.subTables.births.index + 0,
+                  Patient: response.data.body.patient.surname + " " + response.data.body.patient.name + " " + response.data.body.patient.lastname,
+                  ERP: el.birth ? 1 : 0,
+                  Characteristic: el.character * 1,
+                  Weight: el.weight,
+                  Height: el.height,
+                  Apgar: el.apgar,
+                  Bloodloss: el.bloodloss ? 1 : 0,
+                  OnDueDate: el.timeperiod ? 1 : 0,
+                  Complications: el.complications ? 1 : 0
+                });
+                this.process.subTables.births.index++;
               });
             }
-            state.crops.forEach(el => {
-              this.process.subTables.crops.data.push({
-                id: this.process.subTables.crops.index + 0,
-                AppointmentId: element.id,
-                Date: el.date,
-                Localization: el.localization*1,
-                Flora: el.flora*1,
-                Value: el.value*1
-              });
-              this.process.subTables.crops.index++;
-            });
-            state.birth.forEach(el => {
-              this.process.subTables.births.data.push({
-                id: this.process.subTables.births.index + 0,
-                AppointmentId: element.id,
-                ERP: el.birth ? 1 : 0,
-                Characteristic: el.character*1,
-                Weight: el.weight,
-                Height: el.height,
-                Apgar: el.apgar,
-                Bloodloss: el.bloodloss ? 1 : 0,
-                OnDueDate: el.timeperiod ? 1 : 0,
-                Complications: el.complications ? 1 : 0
-              });
-              this.process.subTables.births.index++;
-            })
             this.process.appointmentTable.data.push(element);
             this.process.appointmentTable.current++;
             this.loadAppointment(index+1);
