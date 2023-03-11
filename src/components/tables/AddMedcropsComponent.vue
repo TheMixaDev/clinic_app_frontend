@@ -26,6 +26,7 @@
                   <option value="1">Посев мочи</option>
                   <option value="2">Посев из ц/канала</option>
                   <option value="3">Посев из носа</option>
+                  <option value="4">Посев из зева</option>
                 </select>
               </div>
             </div>
@@ -49,6 +50,7 @@
                   <option value="3">Enterococcus faecalis</option>
                   <option value="4">Klebsiella sp.</option>
                   <option value="5">Staphyloc. ep.</option>
+                  <option value="22">Staphylococcus aureus</option>
                   <option value="6">Streptococcus anginosus</option>
                   <option value="7">Streptococcus agalact.</option>
                   <option value="8">Streptococcus or.</option>

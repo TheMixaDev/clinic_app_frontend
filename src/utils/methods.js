@@ -177,7 +177,7 @@ export const methods = {
         URL.revokeObjectURL(href);
     },
     getIMT(weight, height, numeric) {
-        let IMT = Math.floor(weight / Math.pow(height/100,2) * 10) / 10;
+        let IMT = Math.floor(weight.replace(",",".") / Math.pow(height.replace(",",".")/100,2) * 10) / 10;
         if(IMT)
             return IMT > 200 ? (numeric ? 0 : '') : IMT;
         return (numeric ? 0 : '');
