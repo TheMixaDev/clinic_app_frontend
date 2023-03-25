@@ -139,6 +139,8 @@ export const methods = {
     getTrimester(startDateString, dateString) {
         if(startDateString.length !== 10) return "";
         if(dateString.length !== 10) return "";
+        if(startDateString[0] === '0') startDateString = startDateString.replace('0','2');
+        if(dateString[0] === '0') dateString = dateString.replace('0','2');
         let startDate = new Date(startDateString);
         let date = new Date(dateString);
         let week = (date-startDate) / (1000*60*60*24*7) + 1;
@@ -147,10 +149,12 @@ export const methods = {
         if(week < 28) return "(II)"
         return "(III)";
     },
-    recursiveJSONAssignment(starter, current) { // may be useful in future
+    recursiveJSONAssignment(starter, current) {
         if(Array.isArray(starter) || starter.constructor == Object) {
             if(Array.isArray(starter) !== Array.isArray(current))
                 return starter;
+            if(Array.isArray(starter) && Array.isArray(current) && starter.length === 0 && current.length !== 0)
+                return current; // MAY BE HARMFUL IN FUTURE UPDATES
             for(let i in starter) {
                 try {
                     if ((starter.constructor == Object && i in current) || (Array.isArray(current) && current.length >= i)) {
@@ -197,5 +201,17 @@ export const methods = {
             if(selected.includes(i.id))
                 i.value = true;
         return original;
+    },
+    dateDisplayDDMMGG(date) { // may be useful
+        let dd = date.getDate();
+        if (dd < 10) dd = '0' + dd;
+        let mm = date.getMonth() + 1;
+        if (mm < 10) mm = '0' + mm;
+        let yy = date.getFullYear() % 100;
+        if (yy < 10) yy = '0' + yy;
+        return dd + '.' + mm + '.' + yy;
+    },
+    dateFromDDMMGG(date) {
+        return date.replace("00","20");
     }
 }

@@ -41,7 +41,8 @@
             </div>
           </td>
           <td>
-            <div class="d-flex align-items-center">
+            <MultiSelect :input="multiflora" :pid="'multiflora'" ref="multiflora" v-if="!edit.enabled"/>
+            <div class="d-flex align-items-center" v-else>
               <div class="ms-3">
                 <select class="form-select" aria-label="Default select example" v-model="edit.model.flora">
                   <option value="0">Не выделена</option>
@@ -107,14 +108,19 @@
 <script>
 
 import {settings} from "@/utils/settings";
+import MultiSelect from "@/components/inpage/MultiSelect.vue";
+import {methods} from "@/utils/methods";
 
 export default {
   name: "AddMedcropsComponent",
+  components: {MultiSelect},
   props: ['info', 'callback'],
   methods: {
     proceed() {
       if(settings.designMode)
         return;
+      this.edit.model.date = methods.dateFromDDMMGG(this.edit.model.date);
+      this.edit.multiflora = this.multiflora;
       this.callback(this.edit, "crops", "Посевы");
       this.$.appContext.app.unmount();
     }
@@ -133,7 +139,32 @@ export default {
           flora: "0",
           value: "0"
         }
-      }
+      },
+      multiflora: [
+        {id: 0, label: "Не выделена", value: false},
+        {id: 1, label: "E. coli", value: false},
+        {id: 2, label: "Enterococcus sp.", value: false},
+        {id: 3, label: "Enterococcus faecalis", value: false},
+        {id: 4, label: "Klebsiella sp.", value: false},
+        {id: 5, label: "Staphyloc. ep.", value: false},
+        {id: 22, label: "Staphylococcus aureus", value: false},
+        {id: 6, label: "Streptococcus anginosus", value: false},
+        {id: 7, label: "Streptococcus agalact.", value: false},
+        {id: 8, label: "Streptococcus or.", value: false},
+        {id: 9, label: "Streptococcus spp", value: false},
+        {id: 10, label: "Streptococcus pneumoniae", value: false},
+        {id: 11, label: "Candida albicans", value: false},
+        {id: 12, label: "Lactobacillus sp.", value: false},
+        {id: 13, label: "Proteus mirabilis", value: false},
+        {id: 14, label: "Citrobacter", value: false},
+        {id: 15, label: "Enterobacteriaceae", value: false},
+        {id: 16, label: "Pseudomonas aeruginosa", value: false},
+        {id: 17, label: "Haemophilus influenzae", value: false},
+        {id: 18, label: "Moraxella catarrhalis", value: false},
+        {id: 19, label: "Neisseria sicca", value: false},
+        {id: 20, label: "Neisseria spp.", value: false},
+        {id: 21, label: "Corynebacterium spp", value: false}
+      ]
     }
   }
 }

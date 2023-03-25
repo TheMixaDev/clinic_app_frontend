@@ -37,6 +37,7 @@
 <script>
 
 import {settings} from "@/utils/settings";
+import {methods} from "@/utils/methods";
 
 export default {
   name: "AddAnalyzesComponent",
@@ -45,6 +46,7 @@ export default {
     proceed() {
       if(settings.designMode)
         return;
+      this.edit.model.date = methods.dateFromDDMMGG(this.edit.model.date);
       this.callback(this.edit, this.edit.table, "Анализы");
       this.$.appContext.app.unmount();
     }

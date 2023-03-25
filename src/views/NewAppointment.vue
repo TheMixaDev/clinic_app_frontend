@@ -30,19 +30,19 @@
       </div>
       <div class="container-fluid detailed-info">
         <div class="row row-wrapper">
-          <div class="col weight-wrapper">
+          <div class="col">
             <h6 class="patient-name">Вес (кг)</h6>
             <input type="text" id="name" class="form-control" placeholder="Введите вес" v-model="state.weight">
           </div>
-          <div class="col height-wrapper">
+          <div class="col">
             <h6 class="patient-name">Рост (см)</h6>
             <input type="text" id="name" class="form-control" placeholder="Введите рост" v-model="state.height">
           </div>
-          <div class="col imt-wrapper">
+          <div class="col">
             <h6 class="patient-name">ИМТ</h6>
             <input type="text" id="name" class="form-control" placeholder="Автоматический рассчет" v-bind:value="methods.getIMT(state.weight, state.height) || ``" disabled>
           </div>
-          <div class="col date-wrapper">
+          <div class="col">
             <h6 class="patient-name">Дата последних месячных</h6>
             <input class="date" type="date" v-model="state.mensesDate">
           </div>
@@ -55,7 +55,7 @@
           <div class="col select-wrapper">
           <h6 class="patient-name">Перенесенные заболевания</h6>
             <MultiSelect :input="state.detailed.illnesses" :pid="'illnesses'" ref="illnesses"></MultiSelect>
-        </div>
+          </div>
           <div class="col select-wrapper">
             <h6 class="patient-name">Туберкулез, венерические заболевания, гепатиты</h6>
             <MultiSelect :input="state.detailed.tvg" :pid="'tvg'" ref="tvg" :custom=true @custom-update="updateCustomOption"></MultiSelect>
@@ -84,6 +84,12 @@
         <h4>Гинекологический анамнез</h4>
         Гинекологические заболевания:
         <MultiSelect :input="state.detailed.anameses_desiases" :pid="'anameses_desiases'" ref="anameses_desiases"></MultiSelect>
+        <div class="row row-wrapper">
+          <div class="col select-wrapper" v-for="(value, key) in state.anameses_textblocks" :key="key">
+            <h6 class="patient-name">{{ key }}</h6>
+            <input type="text" class="form-control" placeholder="" style="width: 21rem" v-model="state.anameses_textblocks[key]">
+          </div>
+        </div>
         <div class="form-outline">
           <textarea class="form-control anamnesis-text" id="textAreaExample1" rows="4" v-model="state.anameses"></textarea>
           <label class="form-label" for="textAreaExample"></label>
@@ -251,6 +257,34 @@
         <h4>Дополнительная информация</h4>
         <div class="form-outline">
           <textarea class="form-control anamnesis-text" id="textAreaExample1" rows="4" v-model="state.additional"></textarea>
+        </div>
+        <div class="row row-wrapper">
+          <div class="col select-wrapper">
+            <h6 class="patient-name">ЭКО</h6>
+            <MultiSelect :input="state.additional_blocks.eko" :pid="'eko'" ref="eko"></MultiSelect>
+          </div>
+          <div class="col select-wrapper">
+            <h6 class="patient-name">Двойня</h6>
+            <MultiSelect :input="state.additional_blocks.dvoina" :pid="'dvoina'" ref="dvoina"></MultiSelect>
+          </div>
+          <div class="col select-wrapper">
+            <h6 class="patient-name">А/б терапия</h6>
+            <MultiSelect :input="state.additional_blocks.ab_therapy" :pid="'ab_therapy'" ref="ab_therapy"></MultiSelect>
+          </div>
+          <div class="col select-wrapper">
+            <h6 class="patient-name">ВВИГ</h6>
+            <MultiSelect :input="state.additional_blocks.vvig" :pid="'vvig'" ref="vvig"></MultiSelect>
+          </div>
+        </div>
+        <div class="row row-wrapper">
+          <div class="col select-wrapper">
+            <h6 class="patient-name">Плазмаферез</h6>
+            <MultiSelect :input="state.additional_blocks.plasmapheres" :pid="'plasmapheres'" ref="plasmapheres"></MultiSelect>
+          </div>
+          <div class="col select-wrapper">
+            <h6 class="patient-name">НМГ</h6>
+            <MultiSelect :input="state.additional_blocks.nmg" :pid="'nmg'" ref="nmg"></MultiSelect>
+          </div>
         </div>
       </div>
       <div class="container-fluid diagnosis">
@@ -1063,6 +1097,8 @@ export default {
       stateCopy.diagnosis.checkboxes = diagnosisCheckboxes;
       stateCopy.recommended.checkboxes = methods.getSelectedIds(stateCopy.recommended.checkboxes);
       stateCopy.diagnosis.dropdowns.fatness = methods.limit(Math.ceil((methods.getIMT(stateCopy.weight, stateCopy.height) - 30) / 5), 0, 4)+'';
+      for(let i in stateCopy.additional_blocks)
+        stateCopy.additional_blocks[i] = methods.getSelectedIds(stateCopy.additional_blocks[i]);
       console.log(stateCopy);
       if(id === -1) {
         methods.authorizedPOSTRequest(
@@ -1135,7 +1171,11 @@ export default {
         newCheckboxes[i].boxes = methods.getFromSelectedIds(this.state.diagnosis.checkboxes[i].boxes, stateCopy.diagnosis.checkboxes);
       stateCopy.diagnosis.checkboxes = newCheckboxes;
       stateCopy.recommended.checkboxes = methods.getFromSelectedIds(this.state.recommended.checkboxes, stateCopy.recommended.checkboxes);
-      this.state = stateCopy;
+      try {
+        for (let i in stateCopy.additional_blocks)
+          stateCopy.additional_blocks[i] = methods.getFromSelectedIds(this.state.additional_blocks[i], stateCopy.additional_blocks[i]);
+      } catch (e) {/**/}
+      this.state = methods.recursiveJSONAssignment(this.state, stateCopy);
     },
     saveState(after) {
       sessionStorage.setItem("appointmentLastState", JSON.stringify(this.state));
@@ -1220,9 +1260,23 @@ export default {
     },
     proceedTable(data, table, label) {
       if(data.model.id === -1) {
-        data.model.id = this.findNextId(this.state[table]);
-        this.state[table].push(data.model);
-        methods.runNotification(label+" добавлены");
+        if(data.multiflora) {
+          for (let flora of data.multiflora)
+            if (flora.value)
+              this.proceedTable({
+                model: {
+                  id: -1,
+                  date: data.model.date,
+                  localization: data.model.localization,
+                  flora: flora.id,
+                  value: data.model.value
+                }
+              }, table, label);
+        } else {
+          data.model.id = this.findNextId(this.state[table]);
+          this.state[table].push(data.model);
+          methods.runNotification(label + " добавлены");
+        }
       } else {
         for(let i of this.state[table])
           if(i.id === data.model.id)
@@ -1391,6 +1445,9 @@ export default {
         else
           this.$refs[i.replace("Custom","")].updateSelected([], this.state.detailed[i]);
       }
+      for(let i in this.state.additional_blocks) {
+        this.$refs[i].updateSelected(this.state.additional_blocks[i], false);
+      }
     }
   },
   beforeMount() {
@@ -1441,12 +1498,9 @@ export default {
             {id: 13, label: "Тиреотоксикоз", value: false},
             {id: 14, label: "ФАМ молочных желёз", value: false},
             {id: 15, label: "Секторальная резекция молочной железы", value: false},
-            {id: 16, label: "Заболевания глаз", value: false},
             {id: 17, label: "Лазерная коррекция зрения в анамнезе", value: false},
             {id: 18, label: "Микропролактинома гипофиза", value: false},
             {id: 19, label: "Образование надпочечников", value: false},
-            {id: 20, label: "Ожирение", value: false},
-            {id: 21, label: "Сахарный диабет", value: false},
             {id: 22, label: "Хроническая никотиновая интоксикация", value: false},
             {id: 23, label: "ДЖВП", value: false},
             {id: 24, label: "ЖКБ", value: false},
@@ -1593,6 +1647,29 @@ export default {
             "IX.\t2021 - срочные роды через ЕРП, антенатальная гибель плода в 36/37 недель, девочка 2600/48, гистология - ХПН с острой декомпенсацией. Серозно-гнойный хориодецидуит, интервиллузит. При беременности - ГСД, диету со слов соблюдала, за уровнем глюкозы следила. В 15/16 недель - антибактериальная терапия амоксиклавом в связи с бактериурией. После родов выписана на 2 сутки, антирезусный Ig не вводили.\n" +
             "X.\t2023 - неразвивающаяся беременность 7/8 недель (после 1 попытки ЭКО, криопротокол). Проведена вакуум-аспирация полости матки. Генетика 46 XY, гистология - децидуальная ткань с признакаами хронического воспаления, фибрин, свертки крови\n" +
             "XI.\tНастоящая\n",
+        anameses_textblocks: {
+          "Срок берем при обращении": "",
+          "Беременность по счету": "",
+          "Неудачи ЭКО": "",
+          "Роды по счету": "",
+          "Всего потерь берем": "",
+          "Роды в анамнезе": "",
+          "Неразвив бер в анамнезе": "",
+          "Выкидыши в анамнезе": "",
+          "Аборты в анамнезе": "",
+          "Анэмбриония": "",
+          "ПОНРП в анам": "",
+          "Срок ПОНРП в анам": "",
+          "Антенат гибель пл": "",
+          "Срок антенат гибели": "",
+          "Интранатал в анамн": "",
+          "Прерыв бер по мед показ в анам": "",
+          "Эктопич бер в анамн": "",
+          "Тяж гестоз в анамн": "",
+          "ХПН в анамнезе": "",
+          "Преждевр роды в анамн": "",
+          "Срок преж родов": ""
+        },
         analyzes_1: [],
         analyzes_2: [],
         analyzes_3: [],
@@ -1626,6 +1703,49 @@ export default {
             "P.S.: слизистая оболочка влагалища чистая, розовая; слизистая влагалищной части шейки матки чистая, розовая, с эктопией. Выделения: слизистые, сукровичные, кровянистые (скудные,умеренные, обильные). Menses, гноевидные, пенистые, творожистые, бели, с запахом, без запаха.\n" +
             "P.V.: шейка матки: конич, цилиндр формы, наружный зев: закрыт. Тело матки: AFV, по средней линии. Размеры: не увеличена, увеличена до    недель; Контуры ровные, бугристое. Консистенция: плотная, мягкая. Подвижность: нормальная, ограничена, безболезненная при пальпации. Придатки матки: правые - нормальных размеров, безболезненные при пальпации, левые - нормальных размеров, безболезенные при пальпации. Своды: свободные, глубокие. Параметрии не инфильтрированы. Смещение шейки матки безболезненно. Инфильтратов в малом тазу нет.\n",
         additional: "",
+        additional_blocks: {
+          eko: [
+            {id: 0, label: "Нет", value: false},
+            {id: 1, label: "ЭКО", value: false},
+            {id: 2, label: "ЭКО+ИКСИ", value: false},
+            {id: 3, label: "ДЯ", value: false}
+          ],
+          dvoina: [
+            {id: 0, label: "Нет", value: false},
+            {id: 1, label: "ДХДА", value: false},
+            {id: 2, label: "Монохориальная двойня", value: false}
+          ],
+          ab_therapy: [
+            {id: 0, label: "Нет", value: false},
+            {id: 1, label: "Амоксиклав", value: false},
+            {id: 2, label: "Цефтриаксон", value: false},
+            {id: 3, label: "Вильпрафен", value: false},
+            {id: 4, label: "1+2", value: false},
+            {id: 5, label: "Монурал", value: false},
+            {id: 6, label: "Панцеф + азитром", value: false}
+          ],
+          vvig: [
+            {id: 0, label: "Нет", value: false},
+            {id: 1, label: "Октагам", value: false},
+            {id: 2, label: "Интратект", value: false},
+            {id: 3, label: "Привиджен", value: false},
+            {id: 4, label: "Иммуновенин", value: false}
+          ],
+          plasmapheres: [
+            {id: 0, label: "Нет", value: false},
+            {id: 1, label: "При планировании беременности", value: false},
+            {id: 2, label: "При данной беременности", value: false}
+          ],
+          nmg: [
+            {id: 0, label: "Нет", value: false},
+            {id: 1, label: "Фраксипарин 0,3", value: false},
+            {id: 2, label: "Фраксипарин 0,3х2", value: false},
+            {id: 3, label: "Клексан 0,4", value: false},
+            {id: 4, label: "Клексан 0,4x2", value: false},
+            {id: 5, label: "Флюксум 0,4", value: false},
+            {id: 6, label: "Флюксум 0,4x2", value: false}
+          ]
+        },
         diagnosis: {
           weeks: "",
           dropdowns: {
@@ -1647,10 +1767,7 @@ export default {
                 {id: 8, label: "Предлежание плаценты", value: false},
                 {id: 9, label: "Децидуальный полип", value: false},
                 {id: 10, label: "Гипергомоцистеинемия", value: false}, //DV / EB ?
-                {id: 11, label: "Анемия беременных", value: false},
-                {id: 12, label: "Крупный плод", value: false},
-                {id: 13, label: "ИЦН", value: false}, // DL. DN ? start
-                {id: 14, label: "Установка РАП", value: false}
+                {id: 11, label: "Анемия беременных", value: false}
               ]
             },
             {
@@ -1682,7 +1799,10 @@ export default {
                 {id: 35, label: "Привычное невынашивание", value: false},
                 {id: 36, label: "Кольпит", value: false},
                 {id: 37, label: "Планирование беременности", value: false},
-                {id: 38, label: "Планирование протокола ЭКО", value: false}
+                {id: 38, label: "Планирование протокола ЭКО", value: false},
+                {id: 12, label: "Крупный плод", value: false},
+                {id: 13, label: "ИЦН", value: false}, // DL. DN ? start
+                {id: 14, label: "Установка РАП", value: false}
               ]
             }
           ]
