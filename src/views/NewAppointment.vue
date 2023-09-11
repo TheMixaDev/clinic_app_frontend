@@ -54,7 +54,7 @@
           </div>
           <div class="col select-wrapper">
           <h6 class="patient-name">Перенесенные заболевания</h6>
-            <MultiSelect :input="state.detailed.illnesses" :pid="'illnesses'" ref="illnesses"></MultiSelect>
+            <MultiSelect :input="state.detailed.illnesses" :pid="'illnesses'" ref="illnesses" :custom=true @custom-update="updateCustomOption"></MultiSelect>
           </div>
           <div class="col select-wrapper">
             <h6 class="patient-name">Туберкулез, венерические заболевания, гепатиты</h6>
@@ -75,7 +75,7 @@
             <MultiSelect :input="state.detailed.inheritance" :pid="'inheritance'" ref="inheritance" :custom=true @custom-update="updateCustomOption"></MultiSelect>
           </div>
           <div class="col select-wrapper">
-            <h6 class="patient-name">Обследование на наследственную тромбофилию</h6>
+            <h6 class="patient-name">Обследование на тромбофилию</h6>
             <MultiSelect :input="state.detailed.trombofilia" :pid="'trombofilia'" ref="trombofilia"></MultiSelect>
           </div>
         </div>
@@ -83,7 +83,7 @@
       <div class="container-fluid anamnesis">
         <h4>Гинекологический анамнез</h4>
         Гинекологические заболевания:
-        <MultiSelect :input="state.detailed.anameses_desiases" :pid="'anameses_desiases'" ref="anameses_desiases"></MultiSelect>
+        <MultiSelect :input="state.detailed.anameses_desiases" :pid="'anameses_desiases'" ref="anameses_desiases" :custom=true @custom-update="updateCustomOption"></MultiSelect>
         <div class="row row-wrapper">
           <div class="col select-wrapper" v-for="(value, key) in state.anameses_textblocks" :key="key">
             <h6 class="patient-name">{{ key }}</h6>
@@ -1471,6 +1471,8 @@ export default {
           allergicCustom: "",
           hemotransfusiosCustom: "",
           inheritanceCustom: "",
+          illnessesCustom: "",
+          anameses_desiasesCustom: "",
           operations: [
             {id: 0, label: "Операции, травмы, сотрясение ГМ отрицает", value: false},
             {id: 1, label: "Флебэктомия в анамнезе", value: false},
@@ -1483,62 +1485,60 @@ export default {
             {id: 8, label: "Аппендэктомия, перитонит", value: false}
           ],
           illnesses: [
+            {id: 47, label: "В/оспа", value: false},
+            {id: 48, label: "Краснуха", value: false},
+            {id: 49, label: "Корь", value: false},
+            {id: 52, label: "Пневмония в детстве", value: false},
             {id: 1, label: "Хронический тонзиллит", value: false},
             {id: 2, label: "Хронический пиелонефрит", value: false},
             {id: 3, label: "Хронический цистит", value: false},
+            {id: 50, label: "Хронический отит", value: false},
+            {id: 42, label: "Хронический гастрит", value: false},
+            {id: 43, label: "НЯК", value: false},
+            {id: 44, label: "Хронический геморрой", value: false},
+            {id: 1001, label: "Миопия слабой степени", value: false},
+            {id: 1002, label: "Миопия средней степени", value: false},
+            {id: 1003, label: "Миопия высокой степени", value: false},
+            {id: 51, label: "Гиперметропия", value: false},
+            {id: 1004, label: "Миопический астигматизм", value: false},
+            {id: 1005, label: "Врожденная катаракта", value: false},
+            {id: 1006, label: "ПХРД", value: false},
             {id: 4, label: "МКБ", value: false},
             {id: 5, label: "Единственная почка", value: false},
             {id: 6, label: "Хроническая АГ", value: false},
+            {id: 23, label: "ДЖВП", value: false},
+            {id: 24, label: "ЖКБ", value: false},
             {id: 7, label: "Варикозная болезнь", value: false},
             {id: 8, label: "Тромбоз в анамнезе", value: false},
-            {id: 9, label: "Флебэктомия в анамнезе", value: false},
+            {id: 46, label: "ДДЗП с грыжеобразованием", value: false},
             {id: 10, label: "АИТ. Эутиреоз", value: false},
             {id: 11, label: "Субклинический гипотиреоз (ЗГТ)", value: false},
             {id: 12, label: "Узловой зоб", value: false},
             {id: 13, label: "Тиреотоксикоз", value: false},
             {id: 14, label: "ФАМ молочных желёз", value: false},
-            {id: 15, label: "Секторальная резекция молочной железы", value: false},
-            {id: 17, label: "Лазерная коррекция зрения в анамнезе", value: false},
-            {id: 18, label: "Микропролактинома гипофиза", value: false},
-            {id: 19, label: "Образование надпочечников", value: false},
             {id: 22, label: "Хроническая никотиновая интоксикация", value: false},
-            {id: 23, label: "ДЖВП", value: false},
-            {id: 24, label: "ЖКБ", value: false},
-            {id: 25, label: "Холецистэктомия в анамнезе", value: false},
             {id: 26, label: "Нейросенсорная тугоухость", value: false},
-            {id: 27, label: "Лекарственная аллергия", value: false},
             {id: 28, label: "Бронхиальная астма", value: false},
             {id: 29, label: "ТИА в анамнезе", value: false},
             {id: 30, label: "ТЭЛА в анамнезе", value: false},
             {id: 31, label: "Мигрень", value: false},
-            {id: 32, label: "Спленэктомия в анамнезе", value: false},
             {id: 33, label: "Хронический гепатит", value: false},
-            {id: 34, label: "Tbc в анамнезе", value: false},
-            {id: 35, label: "Lues в анамнезе", value: false},
             {id: 36, label: "Узловая эритема", value: false},
             {id: 37, label: "Атопический дерматит", value: false},
             {id: 38, label: "Болезнь Виллебранда", value: false},
             {id: 39, label: "Пролапс МК", value: false},
             {id: 40, label: "Аномалия сосудов ГМ", value: false},
-            {id: 41, label: "Очаг.образ.печени", value: false},
-            {id: 42, label: "Хронический гастрит", value: false},
-            {id: 43, label: "НЯК", value: false},
-            {id: 44, label: "Хронический геморрой", value: false},
-            {id: 45, label: "Оперативное лечение хронического геморроя", value: false},
-            {id: 46, label: "ДДЗП с грыжеобразованием", value: false},
-            {id: 1001, label: "Миопия слабой степени", value: false},
-            {id: 1002, label: "Миопия средней степени", value: false},
-            {id: 1003, label: "Миопия высокой степени", value: false},
-            {id: 1004, label: "Миопический астигматизм", value: false},
-            {id: 1005, label: "Врожденная катаракта", value: false},
-            {id: 1006, label: "ПХРД", value: false},
+            {id: 18, label: "Микропролактинома гипофиза", value: false},
             {id: 2001, label: "Ожирение I степени", value: false},
             {id: 2002, label: "Ожирение II степени", value: false},
             {id: 2003, label: "Ожирение III степени", value: false},
             {id: 2004, label: "Ожирение IV степени", value: false},
             {id: 3001, label: "Сахарный диабет 1 типа", value: false},
             {id: 3002, label: "Сахарный диабет 2 типа на диете", value: false},
-            {id: 3003, label: "Сахарный диабет 2 типа на инсулине", value: false}
+            {id: 3003, label: "Сахарный диабет 2 типа на инсулине", value: false},
+            {id: 27, label: "Лекарственная аллергия", value: false},
+            {id: 34, label: "Tbc в анамнезе", value: false},
+            {id: 35, label: "Lues в анамнезе", value: false}
           ],
           tvg: [
             {id: 1, label: "Отрицает", value: false}
@@ -1564,12 +1564,13 @@ export default {
             {id: 1, label: "АФС", value: false},
             {id: 2, label: "Носительство LA", value: false},
             {id: 3, label: "Наследственная тромбофилия", value: false},
-            {id: 4, label: "FV", value: false},
-            {id: 5, label: "FII", value: false},
+            {id: 4, label: "FV (G/A)", value: false},
+            {id: 5, label: "FII (G/A)", value: false},
             {id: 6, label: "FV, FII – мутации не выявлены", value: false},
             {id: 7, label: "Дефицит АТIII", value: false},
             {id: 8, label: "Дефицит протеина С", value: false},
             {id: 9, label: "Дефицит протеина S", value: false},
+            {id: 10, label: "Гипергомоцистеинемия", value: false},
             {id: 100, label: "Наследственная тромбофилия не выявлена", value: false},
           ],
 
@@ -1767,13 +1768,13 @@ export default {
                 {id: 8, label: "Предлежание плаценты", value: false},
                 {id: 9, label: "Децидуальный полип", value: false},
                 {id: 10, label: "Гипергомоцистеинемия", value: false}, //DV / EB ?
-                {id: 11, label: "Анемия беременных", value: false}
+                {id: 11, label: "Анемия беременных", value: false},
+                {id: 15, label: "Шов на шейке матки", value: false}, // DL. DN ? end
               ]
             },
             {
               id: 1,
               boxes: [
-                {id: 15, label: "Шов на шейке матки", value: false}, // DL. DN ? end
                 {id: 16, label: "Гестационный пиелонефрит", value: false},
                 {id: 17, label: "ИМВП при беременности", value: false},
                 {id: 19, label: "Гипотрофия плода", value: false},
@@ -1785,13 +1786,13 @@ export default {
                 {id: 25, label: "Тазовое предлежание", value: false},
                 {id: 26, label: "Поперечное пол", value: false},
                 {id: 27, label: "Симфизиопатия", value: false},
-                {id: 28, label: "УЗ-маркры ХПП", value: false}
+                {id: 28, label: "УЗ-маркры ХПП", value: false},
+                {id: 29, label: "Б/х маркеры ХПП", value: false},
               ]
             },
             {
               id: 2,
               boxes: [
-                {id: 29, label: "Б/х маркеры ХПП", value: false},
                 {id: 30, label: "Узкий таз", value: false},
                 {id: 31, label: "Rh(-) без АТ", value: false},
                 {id: 33, label: "ДДЗП с грыжеобразованием", value: false},
@@ -1802,7 +1803,10 @@ export default {
                 {id: 38, label: "Планирование протокола ЭКО", value: false},
                 {id: 12, label: "Крупный плод", value: false},
                 {id: 13, label: "ИЦН", value: false}, // DL. DN ? start
-                {id: 14, label: "Установка РАП", value: false}
+                {id: 14, label: "Установка РАП", value: false},
+                {id: 101, label: "АФС", value: false},
+                {id: 102, label: "Акушерский АФС", value: false},
+                {id: 103, label: "Вероятный АФС", value: false}
               ]
             }
           ]

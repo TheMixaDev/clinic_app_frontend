@@ -50,6 +50,7 @@
                   <option value="2">Enterococcus sp.</option>
                   <option value="3">Enterococcus faecalis</option>
                   <option value="4">Klebsiella sp.</option>
+                  <option value="23">Klebsiella pn.</option>
                   <option value="5">Staphyloc. ep.</option>
                   <option value="22">Staphylococcus aureus</option>
                   <option value="6">Streptococcus anginosus</option>
@@ -146,6 +147,7 @@ export default {
         {id: 2, label: "Enterococcus sp.", value: false},
         {id: 3, label: "Enterococcus faecalis", value: false},
         {id: 4, label: "Klebsiella sp.", value: false},
+        {id: 23, label: "Klebsiella pn.", value: false},
         {id: 5, label: "Staphyloc. ep.", value: false},
         {id: 22, label: "Staphylococcus aureus", value: false},
         {id: 6, label: "Streptococcus anginosus", value: false},
